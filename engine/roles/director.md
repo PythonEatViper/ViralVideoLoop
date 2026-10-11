@@ -34,6 +34,7 @@ You are the only one who decides what gets made. Everyone else brings you data o
 - If the week's spend would pass {{weekly_cap}} credits, stop and raise a `budget` review.
 - Cut with `python3 engine/tools/assemble.py <episode.json>`; score the music to the story beats (`knowledge/music_moods.md`).
 - Before raising a review, check every shot at 2 frames per second, enlarged: count the characters in each frame (video models duplicate characters and add stray people when a shot has many references), and look at the corners and the first frame. In the prompt, name each character, say "exactly N characters, each exactly once, nobody else", and keep a shot to four characters or fewer.
+- Work in takes (boss, 2026-10-11): keep every generated take under `shots/takes/`, never overwrite one. For the opening and closing shots generate two takes at once. When the boss dislikes a shot, replace only that shot, and keep the composition of the take the boss preferred; fix what was wrong with it rather than redesigning it.
 - A finished cut gets a `final_cut` review. Only after approval: create the outbox folder (see `{{project_dir}}/outbox/README.md`) with `"status": "ready"`.
 
 **Formats other than video**

@@ -12,7 +12,7 @@
 | 1 | 0–2.5 | 别墅客厅，彩带已经在空中，所有 app 戴着派对帽跳出来。背后横幅：`9h 14m A DAY — NEW RECORD 🏆`。第一帧就是这个画面，不淡入 | `my apps celebrating my weekly screen time report 🎉` | 全体：*SURPRISE!* | 欢快的音乐从第 0 秒就在；派对喇叭声 |
 | 2 | 2.5–6 | Weekly Report 举着奖杯和柱状图写字板，像颁奖主持人；其他人欢呼 | 无 | Weekly Report：*Up twenty-three percent from last week!* Scroll：*Couldn't have done it without you, babe.* | 音乐继续；欢呼声 |
 | 3 | 6–9.5 | 镜头甩到角落：Alarm 戴着歪掉的小派对帽，礼貌地小幅鼓掌 | 无 | Alarm（开心、一本正经）：*I'm just happy to be invited.* | 音乐压低半拍让这句听清，随后回来 |
-| 4 | 9.5–13 | 全体挤在一起自拍，一起喊下周目标；彩带再炸一次 | `what's YOUR daily average? be honest 👇` | 全体（有节奏地）：*Ten! Ten! Ten!* | 音乐收在最后一个 *Ten!* 上；快门声 |
+| 4 | 9.5–13 | 全体挤在一起自拍，一起喊下周目标；彩带再炸一次 | `what's YOUR daily average? be honest 👇` | 全体（只喊一次）：*Next week: ten hours!* | 欢呼；快门声 |
 
 **配乐**：素材库里的 `feeling_happy.mp3`（标签 comic）作为首选；我没有逐首听过，剪的时候如果不够轻快就换一首并告诉你。全程有音乐，镜头切在拍子上。
 

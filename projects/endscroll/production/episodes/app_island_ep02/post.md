@@ -1,7 +1,7 @@
 # App Island · Ep 2 — Screen Time Party — 发布单
 
-**视频**：`final.mp4`（17.4 秒，全程欢快配乐 `feeling_happy.mp3`）
-**封面**：`cover.jpg`（第 1.6 秒：全体跳起来 + `9h 14m A DAY / NEW RECORD`）
+**视频**：`final.mp4`（17.2 秒，全程欢快配乐 `feeling_happy.mp3`）
+**封面**：`cover.jpg`（第 1.5 秒：统计角色在中间、四个 app 跳起来 + `9h 14m A DAY / NEW RECORD`）
 **AI 标识**：开。
 
 ## 文案

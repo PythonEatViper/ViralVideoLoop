@@ -17,7 +17,8 @@ episode.json:
 }
 Paths are relative to the episode folder; a path starting with "assets/" is relative to
 the repo root (shared sound and music library). "voice_gain" scales the clips' own audio;
-A clip given as an object is cut to "start".."end" seconds (both optional). A caption may
+A clip given as an object is cut to "start".."end" seconds (both optional); "crop":
+[x, y, w, h] (fractions of the frame) keeps only that region, to hide something at an edge. A caption may
 give "y" (pixels from the top) instead of "pos", and a "color". "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
 under dialogue and fades out at the end. The mix is normalised to -14 LUFS (TikTok's loudness).
 Output: <episode>/final.mp4
@@ -55,9 +56,12 @@ def has_audio(path):
     return bool(out)
 
 
-def normalize(src, dst, start=None, end=None):
+def normalize(src, dst, start=None, end=None, crop=None):
     """Scale/crop to 9:16, fixed fps, always one stereo audio track."""
     vf = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},setsar=1"
+    if crop:
+        x, y, w, h = crop
+        vf = f"crop=iw*{w}:ih*{h}:iw*{x}:ih*{y}," + vf
     cut = (["-ss", str(start)] if start else []) + (["-to", str(end)] if end else [])
     cmd = ["ffmpeg", "-y", *cut, "-i", str(src)]
     if has_audio(src):
@@ -115,7 +119,7 @@ def main():
             part = tmp / f"part{i:02d}.mp4"
             if isinstance(clip, str):
                 clip = {"file": clip}
-            normalize(root / clip["file"], part, clip.get("start"), clip.get("end"))
+            normalize(root / clip["file"], part, clip.get("start"), clip.get("end"), clip.get("crop"))
             parts.append(part)
 
         concat_list = tmp / "list.txt"
