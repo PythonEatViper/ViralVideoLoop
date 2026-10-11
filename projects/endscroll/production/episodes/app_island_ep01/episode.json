@@ -1,0 +1,136 @@
+{
+  "clips": [
+    "shots/01_scroll.mp4",
+    "shots/02_autoplay.mp4",
+    "shots/03_filter.mp4",
+    "shots/04_lucky.mp4",
+    "shots/05_alarm.mp4",
+    "shots/06_phoebe.mp4"
+  ],
+  "captions": [
+    {
+      "text": "POV: your apps are\non a dating show",
+      "start": 0,
+      "end": 5,
+      "pos": "top",
+      "size": 70
+    },
+    {
+      "text": "● REC  03:07 AM",
+      "start": 0,
+      "end": 5,
+      "pos": "bottom",
+      "size": 44
+    },
+    {
+      "text": "AUTOPLAY\n\"next episode in 5...\"",
+      "start": 5,
+      "end": 9,
+      "pos": "bottom",
+      "size": 48
+    },
+    {
+      "text": "FILTER\nlives in your Explore tab",
+      "start": 9,
+      "end": 13,
+      "pos": "bottom",
+      "size": 48
+    },
+    {
+      "text": "LUCKY\ndaily login: day 212",
+      "start": 13,
+      "end": 17,
+      "pos": "bottom",
+      "size": 48
+    },
+    {
+      "text": "first elimination: 2 AM\nwho are you picking?",
+      "start": 22,
+      "end": 26,
+      "pos": "center",
+      "size": 66
+    }
+  ],
+  "voice_gain": 1.0,
+  "sfx": [
+    {
+      "file": "assets/sfx/impact.mp3",
+      "start": 3.6,
+      "gain": 0.7,
+      "dur": 1.5
+    },
+    {
+      "file": "assets/sfx/whoosh.mp3",
+      "start": 4.8,
+      "gain": 0.5,
+      "dur": 0.8
+    },
+    {
+      "file": "assets/sfx/whoosh.mp3",
+      "start": 8.9,
+      "gain": 0.5,
+      "dur": 0.8
+    },
+    {
+      "file": "assets/sfx/whoosh.mp3",
+      "start": 13.0,
+      "gain": 0.5,
+      "dur": 0.8
+    },
+    {
+      "file": "assets/sfx/whoosh.mp3",
+      "start": 17.1,
+      "gain": 0.5,
+      "dur": 0.8
+    },
+    {
+      "file": "assets/sfx/whoosh.mp3",
+      "start": 21.4,
+      "gain": 0.5,
+      "dur": 0.8
+    },
+    {
+      "file": "assets/sfx/click.mp3",
+      "start": 5.5,
+      "gain": 0.6
+    },
+    {
+      "file": "assets/sfx/shutter.mp3",
+      "start": 9.6,
+      "gain": 0.8
+    },
+    {
+      "file": "assets/sfx/shutter.mp3",
+      "start": 10.2,
+      "gain": 0.8
+    },
+    {
+      "file": "assets/sfx/sparkle.mp3",
+      "start": 14.0,
+      "gain": 0.6
+    },
+    {
+      "file": "assets/sfx/alarm_ring.mp3",
+      "start": 17.4,
+      "gain": 0.25,
+      "dur": 2.0
+    },
+    {
+      "file": "assets/sfx/trombone_fail.mp3",
+      "start": 20.9,
+      "gain": 0.5,
+      "dur": 0.7
+    },
+    {
+      "file": "assets/sfx/message_pop.mp3",
+      "start": 21.8,
+      "gain": 0.7
+    },
+    {
+      "file": "assets/sfx/suspense.mp3",
+      "start": 23.0,
+      "gain": 0.5,
+      "dur": 3.5
+    }
+  ]
+}

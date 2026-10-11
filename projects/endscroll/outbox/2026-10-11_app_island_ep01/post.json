@@ -1,0 +1,25 @@
+{
+  "id": "2026-10-11_app_island_ep01",
+  "platforms": [
+    "tiktok"
+  ],
+  "status": "ready",
+  "video": "video.mp4",
+  "cover": "cover.jpg",
+  "cover_time_seconds": 4.4,
+  "caption_file": "caption.txt",
+  "pinned_comment_file": "pinned_comment.txt",
+  "ai_generated_label": true,
+  "add_music": false,
+  "privacy": "public",
+  "allow_comments": true,
+  "allow_duet": true,
+  "allow_stitch": true,
+  "publish_window": {
+    "start": "2026-10-10T19:00:00-04:00",
+    "end": "2026-10-10T21:00:00-04:00",
+    "note": "US Eastern 7-9 PM = Beijing 7-9 AM on 2026-10-11"
+  },
+  "duration_seconds": 26.7,
+  "resolution": "1080x1920"
+}

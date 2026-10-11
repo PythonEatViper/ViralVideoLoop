@@ -1,0 +1,14 @@
+# Media and generated files stay out of git.
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.png
+*.jpg
+*.jpeg
+*.webp
+.DS_Store
+__pycache__/
+projects/*/dashboard.html
+projects/*/inbox/_done/
+engine/schedule/director.log

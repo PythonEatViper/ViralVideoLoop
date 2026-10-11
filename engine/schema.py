@@ -1,0 +1,258 @@
+"""Record types: the single definition of every file format in the loop.
+
+Every record is one JSON object. `vvl add` and `vvl ingest` validate against this file and
+store the record as one line in projects/<project>/db/<type>.jsonl. Role prompts and
+`vvl schema` are rendered from here, so this is the only place a format is described.
+
+Field spec: name -> (kind, description). Kinds: str, int, num, bool, list, dict, time
+(ISO 8601 with offset, e.g. 2026-10-11T08:30:00+08:00).
+"key" lists the fields that identify a record: adding a record with the same key updates
+the earlier one (new fields win) instead of creating a duplicate. Types with an empty key
+need an explicit "id" or get a new one each time.
+"""
+
+PLATFORMS = ["tiktok", "reels", "youtube", "x", "news", "other"]
+
+TYPES = {
+    "signal": {
+        "desc": "Something seen in the outside world: a viral video, a trend, a sound, a news item.",
+        "writers": ["scout"],
+        "key": ["url"],
+        "required": {
+            "platform": ("str", "where it was seen"),
+            "kind": ("str", "what it is"),
+            "url": ("str", "link; this is the dedupe key"),
+            "title": ("str", "one line a human can scan"),
+            "summary": ("str", "2-3 sentences: what happens in it"),
+        },
+        "optional": {
+            "hook_text": ("str", "the first words or on-screen text, verbatim"),
+            "why_it_works": ("str", "your judgement of the mechanism: hook, twist, emotion"),
+            "use_for_us": ("str", "how our project could borrow it"),
+            "format": ("str", "e.g. POV skit, 3D animation, talking head, slideshow"),
+            "sound": ("str", "song or sound name, and how the edit uses it"),
+            "duration_s": ("num", "length in seconds"),
+            "views": ("int", ""), "likes": ("int", ""), "shares": ("int", ""), "comments": ("int", ""),
+            "posted_at": ("time", "when it was posted"),
+            "velocity_per_hour": ("num", "views divided by hours since posting"),
+            "stage": ("str", "trend life stage"),
+            "relevance": ("int", "1-5: fit with our project's audience and theme"),
+            "tags": ("list", "free keywords"),
+        },
+        "enums": {"platform": PLATFORMS, "kind": ["video", "trend", "sound", "news", "account"],
+                  "stage": ["rising", "peak", "fading"]},
+    },
+    "publish": {
+        "desc": "One of our posts went live on one platform.",
+        "writers": ["seller"],
+        "key": ["post_id", "platform"],
+        "required": {
+            "post_id": ("str", "the outbox folder name"),
+            "platform": ("str", ""),
+            "account": ("str", "handle it was posted from"),
+            "url": ("str", "link to the live post"),
+            "published_at": ("time", ""),
+        },
+        "optional": {
+            "ai_label_on": ("bool", "was the AI-generated label switched on"),
+            "pinned_comment_posted": ("bool", ""),
+            "sound_added": ("str", "platform sound added at posting time, if any"),
+            "notes": ("str", ""),
+        },
+        "enums": {"platform": PLATFORMS},
+    },
+    "metric": {
+        "desc": "A snapshot of one of our posts' numbers at a given age.",
+        "writers": ["seller"],
+        "key": ["post_id", "platform", "age_hours"],
+        "required": {
+            "post_id": ("str", ""),
+            "platform": ("str", ""),
+            "age_hours": ("num", "which snapshot this is: hours since publishing (1, 6, 24, 72, 168)"),
+            "views": ("int", ""),
+        },
+        "optional": {
+            "likes": ("int", ""), "comments": ("int", ""), "shares": ("int", ""), "saves": ("int", ""),
+            "new_followers": ("int", "followers gained from this post"),
+            "profile_views": ("int", ""),
+            "avg_watch_s": ("num", "average watch time in seconds"),
+            "completion_rate": ("num", "0-1: share of viewers who watched to the end"),
+            "hold_3s_rate": ("num", "0-1: share of viewers still watching at 3 seconds"),
+            "traffic_fyp_pct": ("num", "0-100: share of views from the recommendation feed"),
+            "retention": ("list", "retention curve as [[second, percent], ...]"),
+            "screenshot": ("str", "path of the analytics screenshot, relative to the project folder"),
+            "note": ("str", ""),
+        },
+        "enums": {"platform": PLATFORMS},
+    },
+    "comment": {
+        "desc": "A comment on one of our posts that is worth keeping (not every comment).",
+        "writers": ["seller"],
+        "key": ["post_id", "platform", "text"],
+        "required": {
+            "post_id": ("str", ""),
+            "platform": ("str", ""),
+            "text": ("str", "the comment, verbatim"),
+            "tag": ("str", "why it is worth keeping"),
+        },
+        "optional": {
+            "likes": ("int", ""),
+            "vote_for": ("str", "if the comment votes for a character or option, which one"),
+            "note": ("str", "your one-line reading of it"),
+        },
+        "enums": {"platform": PLATFORMS,
+                  "tag": ["idea", "relatable", "confusion", "app_guess", "vote", "criticism", "praise"]},
+    },
+    "incident": {
+        "desc": "Something went wrong or a platform pushed back. Always report these.",
+        "writers": ["scout", "seller", "secretary"],
+        "key": [],
+        "required": {
+            "platform": ("str", ""),
+            "kind": ("str", ""),
+            "detail": ("str", "what happened, with exact error text if any"),
+        },
+        "optional": {
+            "action_taken": ("str", "what you did about it"),
+            "new_status": ("str", "your status after this incident"),
+        },
+        "enums": {"platform": PLATFORMS,
+                  "kind": ["captcha", "login_wall", "rate_limit", "platform_warning",
+                           "publish_failed", "other"],
+                  "new_status": ["ok", "throttled", "paused"]},
+    },
+    "heartbeat": {
+        "desc": "A staff member reporting that it ran, and its current state.",
+        "writers": ["scout", "seller", "secretary", "director"],
+        "key": ["by"],
+        "required": {"status": ("str", "")},
+        "optional": {"note": ("str", "what was done in this run, one line")},
+        "enums": {"status": ["ok", "throttled", "paused"]},
+    },
+    "note": {
+        "desc": "Something the boss said or decided, passed on by the secretary.",
+        "writers": ["secretary"],
+        "key": [],
+        "required": {"text": ("str", "what the boss said, close to verbatim")},
+        "optional": {
+            "topic": ("str", "e.g. idea, feedback, decision, taste"),
+            "about": ("str", "post id, review id or idea id this refers to"),
+        },
+        "enums": {},
+    },
+    "account": {
+        "desc": "One of our accounts on a platform.",
+        "writers": ["seller"],
+        "key": ["platform", "handle"],
+        "required": {"platform": ("str", ""), "handle": ("str", "e.g. @name")},
+        "optional": {
+            "url": ("str", ""), "account_type": ("str", "personal, creator or business"),
+            "followers": ("int", ""), "staff": ("str", "staff id that operates it"),
+            "notes": ("str", ""),
+        },
+        "enums": {"platform": PLATFORMS},
+    },
+    "cost": {
+        "desc": "Money or credits spent.",
+        "writers": ["director", "accountant"],
+        "key": [],
+        "required": {
+            "provider": ("str", "e.g. higgsfield"),
+            "item": ("str", "what was bought, e.g. model name"),
+            "credits": ("num", "credits spent (negative for refunds)"),
+        },
+        "optional": {
+            "usd": ("num", "dollars, when paid in money"),
+            "ref": ("str", "post id or purpose, e.g. characters"),
+            "spent_at": ("time", ""),
+        },
+        "enums": {},
+    },
+    "balance": {
+        "desc": "Credits left at a provider.",
+        "writers": ["director", "accountant"],
+        "key": ["provider"],
+        "required": {"provider": ("str", ""), "credits": ("num", "")},
+        "optional": {"plan": ("str", ""), "renews_at": ("time", "")},
+        "enums": {},
+    },
+    "post": {
+        "desc": "One of our videos, from idea to measured result. Each post is one experiment.",
+        "writers": ["director"],
+        "key": [],
+        "required": {"title": ("str", ""), "status": ("str", "where it is in the pipeline")},
+        "optional": {
+            "series": ("str", ""), "episode": ("int", ""),
+            "hook": ("str", "the first line or on-screen text"),
+            "scene": ("str", "the real-life situation it plays out"),
+            "hypothesis": ("str", "what this post tests, in one sentence"),
+            "variables": ("dict", "what makes it different, e.g. {hook_type: cold_open, music: none}"),
+            "result": ("str", "did the data support the hypothesis"),
+            "duration_s": ("num", ""),
+            "outbox": ("str", "outbox folder name"),
+            "planned_for": ("time", ""),
+            "credits": ("num", "credits spent making it"),
+            "predicted_score": ("num", "virality predictor score, when one was run"),
+        },
+        "enums": {"status": ["idea", "script", "shots", "review", "ready", "published",
+                             "measured", "dropped"],
+                  "result": ["pending", "supported", "rejected", "unclear"]},
+    },
+    "idea": {
+        "desc": "A candidate video, built by combining signals with what we have learned.",
+        "writers": ["director"],
+        "key": [],
+        "required": {"title": ("str", ""), "hook": ("str", "")},
+        "optional": {
+            "scene": ("str", ""), "hypothesis": ("str", ""),
+            "sources": ("list", "signal ids, comment ids or note ids it came from"),
+            "score": ("num", "0-10 ranking score"),
+            "reason": ("str", "why this score"),
+            "status": ("str", ""),
+        },
+        "enums": {"status": ["new", "picked", "dropped"]},
+    },
+    "learning": {
+        "desc": "A claim about what works, with its evidence. This is the memory of the loop.",
+        "writers": ["director"],
+        "key": [],
+        "required": {"statement": ("str", ""), "status": ("str", "")},
+        "optional": {
+            "variable": ("str", "which variable it is about, e.g. hook_type"),
+            "evidence_for": ("list", "post ids or signal ids"),
+            "evidence_against": ("list", ""),
+            "confidence": ("num", "0-1"),
+            "scope": ("str", "does it hold only for this project or in general"),
+        },
+        "enums": {"status": ["hypothesis", "supported", "rejected", "rule"],
+                  "scope": ["project", "general"]},
+    },
+    "review": {
+        "desc": "A decision waiting for the boss.",
+        "writers": ["director", "secretary"],
+        "key": [],
+        "required": {"gate": ("str", "which review gate"), "title": ("str", ""),
+                     "status": ("str", "")},
+        "optional": {
+            "summary": ("str", "what the boss needs to know to decide, 1-3 sentences"),
+            "path": ("str", "file to look at, relative to the project folder"),
+            "about": ("str", "post id it concerns"),
+            "decision_note": ("str", "what the boss said"),
+        },
+        "enums": {"gate": ["weekly_strategy", "storyboard", "final_cut", "new_character",
+                           "sensitive_topic", "comment_reply", "budget"],
+                  "status": ["pending", "approved", "changes_requested"]},
+    },
+    "todo": {
+        "desc": "A task for a human (or a named staff member) that the loop cannot do itself.",
+        "writers": ["director", "secretary"],
+        "key": [],
+        "required": {"text": ("str", ""), "status": ("str", "")},
+        "optional": {
+            "cmd": ("str", "command to run or copy, if any"),
+            "why": ("str", ""),
+            "owner": ("str", "who should do it; default boss"),
+        },
+        "enums": {"status": ["open", "done"]},
+    },
+}
