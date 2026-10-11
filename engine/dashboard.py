@@ -25,6 +25,7 @@ def staff_card(pdir, cfg, member):
 
 
 def build(pdir, cfg):
+    vvl.write_prompt_files(pdir, cfg)
     cutoff = (vvl.now() - timedelta(days=RECENT_DAYS)).isoformat()
     recent = lambda rtype: [r for r in vvl.load(pdir, rtype) if r["at"] >= cutoff]
     plans = sorted((pdir / "plans").glob("*.md"))[-RECENT_DAYS:]
