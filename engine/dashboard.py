@@ -48,6 +48,7 @@ def build(pdir, cfg):
         "signals": recent("signal"),
         "notes": recent("note"),
         "incidents": recent("incident"),
+        "engagements": recent("engagement"),
         "cost": vvl.cost_summary(pdir, cfg),
         "costs": vvl.load(pdir, "cost"),
         "ready": vvl.outbox_ready(pdir),

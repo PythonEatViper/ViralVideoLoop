@@ -12,6 +12,16 @@ outbox/
     └── pinned_comment.txt      # comment to post from our account, then pin
 ```
 
+## Formats
+
+`post.json` has a `format` field. When it is missing, the post is a video.
+
+| `format` | files | goes to |
+| --- | --- | --- |
+| `video` | `video.mp4`, `cover.jpg`, `caption.txt`, `pinned_comment.txt` | TikTok, Reels, YouTube |
+| `images` | `images/01.jpg`, `02.jpg`, … (1080x1350 or 1080x1920, uploaded in file-name order), `caption.txt`, optional `pinned_comment.txt` | TikTok photo post, Reels/Facebook carousel |
+| `text` | `title.txt`, `body.md`, optional `images/`; `post.json` names the `community` (e.g. `r/nosurf`) and optional `flair` | Reddit and other text communities |
+
 ## post.json
 
 | field | meaning |

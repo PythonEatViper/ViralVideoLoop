@@ -1,6 +1,6 @@
 # STATE — EndScroll
 
-Generated 2026-10-11T19:57:37+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-11T22:47:55+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-11.md
 - Waiting for the boss: 1 review(s), 5 todo(s)
@@ -14,13 +14,13 @@ Generated 2026-10-11T19:57:37+08:00 by `./vvl build`. Do not edit; read START_HE
 
 ## Open todos
 - T1 [boss]: 把仓库推到 GitHub（私有仓库 ViralVideoLoop）
-- T2 [boss]: 新建 Grok bot「推销员 TikTok」：粘贴启动提示词（只粘贴一次），定时每小时运行。它负责这个账号的一切，第一次运行会上报账号，并在明早 07:00-09:00 发布 ep1
 - T7 [boss]: 打开总监每天 08:30 的自动运行
-- T8 [boss]: 把 TikTok 主页简介改成：parody · not affiliated with any app
-- T9 [boss]: 准备 Reels 和 YouTube Shorts 账号；有了之后把 project.toml 里 seller_reels、seller_youtube 的 enabled 改成 true
+- todo_1011201545_249c [boss]: Complete YouTube one-time channel verification for @getendscroll (Studio) so comments can be pinned
+- todo_1011224755_93bf [boss]: YouTube @getendscroll: older Short '1:13am. Still scrolling? I locked it.' (2026-10-02) has a copyright claim notice in Studio (does not affect visibility). Decide whether to check details, dispute, or ignore.
+- T10 [boss]: 把现有的 Reddit 养号 bot 接进来：粘贴启动提示词（只粘贴一次），定时每天 08:15、21:15。它第一次运行会上报账号和 karma
 
 ## Ready to publish
-- 2026-10-11_app_island_ep01 → tiktok
+- none
 
 ## Metric snapshots due
 - none
@@ -28,8 +28,9 @@ Generated 2026-10-11T19:57:37+08:00 by `./vvl build`. Do not edit; read START_HE
 ## Staff
 - boss (human): n/a
 - pm (grok): ok, last seen 2026-10-11T19:48:06+08:00
-- director (claude): ok, last seen 2026-10-11T19:15:42+08:00
-- seller_tiktok (grok): not_started
-- seller_reels (grok): off
-- seller_youtube (grok): off
+- director (claude): ok, last seen 2026-10-11T22:47:55+08:00
+- seller_tiktok (grok): ok, last seen 2026-10-11T22:13:53+08:00
+- seller_reels (grok): ok, last seen 2026-10-11T22:11:48+08:00
+- seller_youtube (grok): ok, last seen 2026-10-11T22:47:55+08:00
+- seller_reddit (grok): not_started
 - accountant (script): n/a, last seen 2026-10-11T19:15:42+08:00

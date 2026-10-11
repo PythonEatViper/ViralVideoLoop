@@ -1,0 +1,1 @@
+- 2026-10-11 20:03 (seller_reels): Platform for seller_reels is Facebook Reels on the Facebook profile Cui Ray (https://www.facebook.com/profile.php?id=61595293650286), not Instagram.

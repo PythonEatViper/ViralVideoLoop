@@ -381,7 +381,7 @@ def render_prompt(pdir, cfg, member):
         text = text.replace("{{schema:%s}}" % name, schema_text(name))
     for key, value in values.items():
         text = text.replace("{{%s}}" % key, value)
-    for optional in ("platform", "watch"):
+    for optional in ("platform", "watch", "phase", "comments_per_day"):
         text = text.replace("{{%s}}" % optional, "(not set)")
     # Absolute path, so the commands work from whatever directory the bot happens to be in.
     return text.replace("./vvl", f"{REPO}/vvl")

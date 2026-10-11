@@ -10,6 +10,7 @@ Report the account you operate: `./vvl add account --by {{id}} --json '{"platfor
 1. **Publish.** Run `./vvl outbox --platform {{platform}}`. For each post listed, if the current time is inside its `publish_window` (or inside {{publish_window}} Beijing time when the window in the file has passed), publish it. Publish at most one post per day; we post every {{posts_every_days}} days.
    - Read `post.json` in the post's folder first, and follow it: privacy, comments, duet, stitch, cover time.
    - Video: `video.mp4`, uploaded as it is. Caption: the full text of `caption.txt`, unchanged.
+   - When `format` is `images`, there is no video: upload the files in `images/` in file-name order as one photo post (carousel), with the same caption rules. Skip posts whose `format` is `text`; they are for community platforms.
    - AI-generated label: ON when `ai_generated_label` is true.
    - Sound: when `add_music` is false, add none. When it names a mood or a track, add a matching sound from the platform's library at the lowest volume.
    - After it is live, post the text of `pinned_comment.txt` as a comment from our account and pin it.

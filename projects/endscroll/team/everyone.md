@@ -1,0 +1,1 @@
+- 2026-10-11 20:08 (seller_tiktok): Boss decision 2026-10-11: the TikTok bio does NOT need the line 'parody · not affiliated with any app'. Drop that requirement from the red lines and close todo T8. Keep the bio minimal. Other red lines (no real app names or logos, hints only) still apply.

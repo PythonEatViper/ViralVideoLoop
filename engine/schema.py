@@ -11,12 +11,12 @@ the earlier one (new fields win) instead of creating a duplicate. Types with an 
 need an explicit "id" or get a new one each time.
 """
 
-PLATFORMS = ["tiktok", "reels", "youtube", "x", "news", "other"]
+PLATFORMS = ["tiktok", "reels", "youtube", "reddit", "x", "news", "other"]
 
 TYPES = {
     "signal": {
-        "desc": "Something seen in the outside world: a viral video, a trend, a sound, a news item.",
-        "writers": ["seller", "pm"],
+        "desc": "Something seen in the outside world: a viral video, a trend, a sound, a news item, a discussion.",
+        "writers": ["seller", "community", "pm"],
         "key": ["url"],
         "required": {
             "platform": ("str", "where it was seen"),
@@ -39,12 +39,12 @@ TYPES = {
             "relevance": ("int", "1-5: fit with our project's audience and theme"),
             "tags": ("list", "free keywords"),
         },
-        "enums": {"platform": PLATFORMS, "kind": ["video", "trend", "sound", "news", "account"],
+        "enums": {"platform": PLATFORMS, "kind": ["video", "trend", "sound", "news", "account", "discussion"],
                   "stage": ["rising", "peak", "fading"]},
     },
     "publish": {
         "desc": "One of our posts went live on one platform.",
-        "writers": ["seller"],
+        "writers": ["seller", "community"],
         "key": ["post_id", "platform"],
         "required": {
             "post_id": ("str", "the outbox folder name"),
@@ -63,7 +63,7 @@ TYPES = {
     },
     "metric": {
         "desc": "A snapshot of one of our posts' numbers at a given age.",
-        "writers": ["seller"],
+        "writers": ["seller", "community"],
         "key": ["post_id", "platform", "age_hours"],
         "required": {
             "post_id": ("str", ""),
@@ -87,7 +87,7 @@ TYPES = {
     },
     "comment": {
         "desc": "A comment on one of our posts that is worth keeping (not every comment).",
-        "writers": ["seller"],
+        "writers": ["seller", "community"],
         "key": ["post_id", "platform", "text"],
         "required": {
             "post_id": ("str", ""),
@@ -103,9 +103,28 @@ TYPES = {
         "enums": {"platform": PLATFORMS,
                   "tag": ["idea", "relatable", "confusion", "app_guess", "vote", "criticism", "praise"]},
     },
+    "engagement": {
+        "desc": "Something we said in someone else's space: a comment or reply posted from our account under another person's post. Every one is logged so the boss can see what was said in our name.",
+        "writers": ["community"],
+        "key": ["url"],
+        "required": {
+            "platform": ("str", ""),
+            "url": ("str", "permalink to our comment; this is the dedupe key"),
+            "text": ("str", "what we wrote, verbatim"),
+            "context": ("str", "one line: where it was posted and what it answers"),
+        },
+        "optional": {
+            "community": ("str", "e.g. r/nosurf"),
+            "score": ("int", "votes it has now; re-add with the same url to update"),
+            "replies": ("int", ""),
+            "removed": ("bool", "true when moderators or the platform removed it"),
+            "note": ("str", ""),
+        },
+        "enums": {"platform": PLATFORMS},
+    },
     "incident": {
         "desc": "Something went wrong or a platform pushed back. Always report these.",
-        "writers": ["seller", "pm"],
+        "writers": ["seller", "community", "pm"],
         "key": [],
         "required": {
             "platform": ("str", ""),
@@ -118,12 +137,12 @@ TYPES = {
         },
         "enums": {"platform": PLATFORMS,
                   "kind": ["captcha", "login_wall", "rate_limit", "platform_warning",
-                           "publish_failed", "other"],
+                           "publish_failed", "removed_by_moderator", "ban", "other"],
                   "new_status": ["ok", "throttled", "paused"]},
     },
     "heartbeat": {
         "desc": "A staff member reporting that it ran, and its current state.",
-        "writers": ["seller", "pm", "director"],
+        "writers": ["seller", "community", "pm", "director"],
         "key": ["by"],
         "required": {"status": ("str", "")},
         "optional": {"note": ("str", "what was done in this run, one line")},
@@ -142,12 +161,13 @@ TYPES = {
     },
     "account": {
         "desc": "One of our accounts on a platform.",
-        "writers": ["seller"],
+        "writers": ["seller", "community"],
         "key": ["platform", "handle"],
         "required": {"platform": ("str", ""), "handle": ("str", "e.g. @name")},
         "optional": {
             "url": ("str", ""), "account_type": ("str", "personal, creator or business"),
-            "followers": ("int", ""), "staff": ("str", "staff id that operates it"),
+            "followers": ("int", ""), "karma": ("int", "Reddit karma, or the platform's equivalent standing score"),
+            "staff": ("str", "staff id that operates it"),
             "notes": ("str", ""),
         },
         "enums": {"platform": PLATFORMS},
@@ -182,6 +202,7 @@ TYPES = {
         "key": [],
         "required": {"title": ("str", ""), "status": ("str", "where it is in the pipeline")},
         "optional": {
+            "format": ("str", "what kind of post it is (video when left out)"),
             "series": ("str", ""), "episode": ("int", ""),
             "hook": ("str", "the first line or on-screen text"),
             "scene": ("str", "the real-life situation it plays out"),
@@ -196,7 +217,8 @@ TYPES = {
         },
         "enums": {"status": ["idea", "script", "shots", "review", "ready", "published",
                              "measured", "dropped"],
-                  "result": ["pending", "supported", "rejected", "unclear"]},
+                  "result": ["pending", "supported", "rejected", "unclear"],
+                  "format": ["video", "images", "text"]},
     },
     "idea": {
         "desc": "A candidate video, built by combining signals with what we have learned.",
