@@ -1,12 +1,27 @@
 """Build projects/<project>/dashboard.html: one self-contained page, data embedded."""
 import json
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import vvl
 
 TEMPLATE = Path(__file__).with_name("dashboard_template.html")
 RECENT_DAYS = 14
+
+
+def staff_card(pdir, cfg, member):
+    """Status plus, for model-run staff, the live instructions and the files they come from."""
+    if member["runner"] not in ("grok", "claude"):
+        return member
+    files = [{"path": str(f.relative_to(vvl.REPO)), "exists": f.exists(),
+              "modified": datetime.fromtimestamp(f.stat().st_mtime).astimezone().isoformat() if f.exists() else None}
+             for f in vvl.prompt_sources(pdir, member)]
+    own = pdir / "team" / f"{member['id']}.md"
+    everyone = pdir / "team" / "everyone.md"
+    return {**member, "prompt": vvl.render_prompt(pdir, cfg, member),
+            "bootstrap": vvl.bootstrap_text(pdir, cfg, member), "files": files,
+            "notes": own.read_text() if own.exists() else "",
+            "notes_everyone": everyone.read_text() if everyone.exists() else ""}
 
 
 def build(pdir, cfg):
@@ -18,8 +33,9 @@ def build(pdir, cfg):
         "generated_at": vvl.now().isoformat(),
         "repo": str(vvl.REPO),
         "project_id": pdir.name,
+        "version": str(vvl.data_version(pdir)),
         "project": {k: cfg[k] for k in ("name", "brief", "cadence", "budget", "rules", "gates")},
-        "staff": vvl.staff_status(pdir, cfg),
+        "staff": [staff_card(pdir, cfg, m) for m in vvl.staff_status(pdir, cfg)],
         "posts": vvl.load(pdir, "post"),
         "publishes": vvl.load(pdir, "publish"),
         "metrics": vvl.load(pdir, "metric"),

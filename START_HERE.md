@@ -20,7 +20,18 @@
 | 推销员 `seller_*` | Grok，**每个账号一个 bot** | 这个账号的一切：发布；按时抓数据和截图；收集有价值的评论；侦查本平台的爆款和热门音乐，并做初步筛选和总结 |
 | 会计 `accountant` | 脚本 | 汇总积分和花费 |
 
-每个 Grok 员工是一个独立的 bot，各有一个定时任务。它的完整提示词由 `./vvl prompt <员工 id>` 生成（提示词模板在 `engine/roles/`，项目信息来自 `project.toml`）。员工名单、作息和状态在看板的「团队」页。
+每个 Grok 员工是一个独立的 bot，各有一个定时任务。
+
+**提示词是共享文件，不是粘贴进 bot 的死文本。** 每个 bot 只粘贴一次很短的「启动提示词」（`./vvl bootstrap <员工 id>`），内容是「每次运行先执行 `vvl prompt <员工 id>`，按输出的最新指令做」。完整指令由这几个文件拼成，任何人（你、任何 bot、总监）都可以改，下一次运行就生效：
+
+| 文件 | 内容 |
+| --- | --- |
+| `engine/roles/_common.md` | 所有人共用的规则 |
+| `engine/roles/<角色>.md` | 这个角色的职责，跨项目通用 |
+| `projects/<项目>/team/everyone.md` | 本项目对所有人的追加指令 |
+| `projects/<项目>/team/<员工 id>.md` | 本项目对这个员工的追加指令 |
+
+最省事的改法是加一条追加指令：`./vvl instruct <员工 id 或 everyone> "……" --by <谁>`，或在看板「团队」页点进某个员工直接输入。看板上能看到每个员工当前读到的完整指令，文件一改页面自动刷新。
 
 ## 闭环的 9 步
 
@@ -56,6 +67,7 @@ ViralVideoLoop/
         ├── db/            # 数据库：每种记录一个 .jsonl 文件，只追加
         ├── inbox/         # 不能运行命令的 agent 把 JSON 文件放这里
         ├── outbox/        # 审核通过、等待发布的视频
+        ├── team/          # 对每个员工的追加指令，共享、可随时改
         ├── plans/         # 总监的每日计划和周复盘
         ├── production/    # 角色图、分镜、镜头、成片
         └── dashboard.html # 自动生成的看板
@@ -82,7 +94,9 @@ ViralVideoLoop/
 | `./vvl list <类型> [--where k=v] [--sort 字段] [--days N] [--json]` | 查询 |
 | `./vvl due` / `./vvl outbox` | 到期该抓的数据快照 / 等待发布的视频 |
 | `./vvl cost` | 成本汇总 |
-| `./vvl prompt <员工 id>` | 生成某个员工的完整提示词 |
+| `./vvl bootstrap <员工 id>` | 新建 bot 时粘贴一次的启动提示词 |
+| `./vvl prompt <员工 id>` | 某个员工当前的完整指令（bot 每次运行都会执行它） |
+| `./vvl instruct <员工 id 或 everyone> "……" --by <谁>` | 给某个员工或所有人加一条追加指令 |
 | `./vvl schema [类型]` | 记录格式 |
 | `./vvl schedule install --time 08:30` | 打开总监的每日自动运行 |
 

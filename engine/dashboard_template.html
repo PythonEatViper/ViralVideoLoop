@@ -101,6 +101,11 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .empty { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: 12px; }
 select { font: inherit; padding: 3px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
 svg text { fill: var(--muted); font-size: 11px; }
+.btn { font: inherit; font-size: 13px; font-weight: 600; color: #fff; border: 0; border-radius: 999px; padding: 6px 14px; cursor: pointer; background: linear-gradient(135deg, #f76707, #e64980); }
+.btn.ghost { background: none; color: var(--ink); border: 1px solid var(--line); }
+.pre { font-family: var(--mono); font-size: 12.5px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0 0 10px; max-height: 520px; overflow-y: auto;
+       background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.field { width: 100%; min-height: 70px; resize: vertical; font: inherit; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); margin: 10px 0; }
 #chat-btn { position: fixed; right: 22px; bottom: 22px; z-index: 9; width: 58px; height: 58px; border-radius: 50%; border: 0; cursor: pointer; font-size: 26px;
             color: #fff; background: linear-gradient(135deg, #f76707, #e64980 60%, #7048e8); box-shadow: 0 8px 24px rgba(230, 73, 128, .45); transition: transform .15s; }
 #chat-btn:hover { transform: scale(1.08); }
@@ -386,7 +391,9 @@ const views = {
       <div class="small">${esc(s.duty)}</div>
       ${s.schedule ? `<div class="small muted">🕐 ${esc(s.schedule)}</div>` : ""}
       ${s.last_seen ? `<div class="small muted">上次活动：${ago(s.last_seen)}${s.last_note ? " · " + esc(s.last_note) : ""}</div>` : ""}
-      ${s.runner === "grok" ? cmd(`./vvl prompt ${s.id} | pbcopy`) + `<div class="small muted">↑ 点击复制命令；运行后提示词就在剪贴板里，粘贴到这个 bot 的定时任务</div>` : ""}</div>`; };
+      ${s.prompt ? `<div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap">
+        ${s.runner === "grok" ? `<button class="btn" onclick="copyText(this, D.staff.find(x => x.id === '${esc(s.id)}').bootstrap)">复制启动提示词</button>` : ""}
+        <a class="small" style="color:var(--accent)" href="#/staff/${esc(s.id)}">查看和修改它的指令 →</a></div>` : ""}</div>`; };
     const reports = id => D.staff.filter(s => s.reports_to === id);
     const acct = D.accounts.length ? `<h2>账号</h2><div class="card"><table><tr><th>平台</th><th>账号</th><th>类型</th><th class="num">粉丝</th><th>负责</th></tr>
       ${D.accounts.map(a => `<tr><td>${PLAT[a.platform]}</td><td>${esc(a.handle)} ${link(a.url)}</td><td>${esc(a.account_type || "")}</td><td class="num">${num(a.followers)}</td><td>${esc(a.staff || a.by)}</td></tr>`).join("")}</table></div>` : "";
@@ -394,6 +401,31 @@ const views = {
       <div class="org"><div class="row">${D.staff.filter(s => !s.reports_to).map(card).join("")}</div>
       <div class="conn">│ 向老板汇报</div><div class="row">${reports("boss").map(card).join("")}</div>
       <div class="conn">│ 向总监汇报</div><div class="row">${reports("director").map(card).join("")}</div></div>${acct}`;
+  },
+
+  staff(id) {
+    const m = D.staff.find(x => x.id === id);
+    if (!m || !m.prompt) return empty("这个成员没有提示词。");
+    const [label, color] = RUNNER[m.runner], lines = text => text.split("\n").filter(l => l.trim()).map(l => `<li>${esc(l.replace(/^- /, ""))}</li>`).join("");
+    return `<div class="crumb"><a href="#/team">团队</a> / ${esc(m.id)}</div>
+      <div class="person"><span class="avatar" style="--c:${color}">${AVATAR[m.role] || AVATAR[m.platform] || "🤖"}</span><div><h1 style="margin:0">${esc(m.name)}</h1>
+        <div class="small"><span class="runner" style="--c:${color}">${label}</span> <span class="muted">${esc(m.duty)}</span></div></div></div>
+      <p class="sub">它的指令是共享文件拼出来的，每次运行开始时重新读取。谁改了文件，下一次运行就生效，这个页面也会自动刷新。</p>
+      ${m.runner === "grok" ? `<h2>① 启动提示词（只粘贴一次，以后不用再动）</h2><div class="card">
+        <p class="small muted" style="margin-top:0">新建这个 bot 时粘贴下面这段，并按作息设定时任务：${esc(m.schedule || "")}。它只告诉 bot「每次先去读最新的指令」。</p>
+        <pre class="pre" style="max-height:none">${esc(m.bootstrap)}</pre><button class="btn" onclick="copyText(this, D.staff.find(x => x.id === '${esc(m.id)}').bootstrap)">复制</button></div>` : ""}
+      <h2>② 追加指令（想到什么就加一条）</h2><div class="card">
+        ${m.notes.trim() ? `<div class="small muted">只对${esc(m.name)}：</div><ul class="small">${lines(m.notes)}</ul>` : ""}
+        ${m.notes_everyone.trim() ? `<div class="small muted">对所有人：</div><ul class="small">${lines(m.notes_everyone)}</ul>` : ""}
+        ${!m.notes.trim() && !m.notes_everyone.trim() ? `<div class="small muted">还没有追加指令。</div>` : ""}
+        <textarea id="ins-text" class="field" placeholder="例如：侦查时多看 #studytok 这个标签；发布后 10 分钟再发置顶评论"></textarea>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn" onclick="instruct('${esc(m.id)}')">加给${esc(m.name)}</button>
+          <button class="btn ghost" onclick="instruct('everyone')">加给所有人</button><span id="ins-note" class="small muted"></span></div>
+        <p class="small muted" style="margin-bottom:0">也可以让任何一个 bot 代你加：<code>vvl instruct ${esc(m.id)} "…" --by pm</code>；或直接编辑文件 <code>${esc(m.files[3].path)}</code>。</p></div>
+      <h2>③ 它现在读到的完整指令</h2><div class="card"><pre class="pre">${esc(m.prompt)}</pre></div>
+      <h2>来源文件（都可以直接改）</h2><div class="card"><table><tr><th>文件</th><th>内容</th><th>上次修改</th></tr>
+        ${m.files.map((f, i) => `<tr><td><code>${esc(f.path)}</code></td><td class="small">${["所有人共用的规则", "这个角色的职责（跨项目通用）", "本项目对所有人的追加指令", "本项目对它的追加指令"][i]}</td>
+          <td class="small muted">${f.exists ? ago(f.modified) : "还没有"}</td></tr>`).join("")}</table></div>`;
   },
 
   flow() {
@@ -438,6 +470,30 @@ function retentionChart(points) {
     <polyline fill="none" stroke="var(--accent)" stroke-width="2.5" points="${points.map(p => `${x(p[0])},${y(p[1])}`).join(" ")}"/></svg>`;
 }
 
+async function copyText(button, text) {
+  await navigator.clipboard.writeText(text);
+  const old = button.textContent; button.textContent = "已复制 ✓"; setTimeout(() => button.textContent = old, 1500);
+}
+async function instruct(staff) {
+  const text = document.getElementById("ins-text").value.trim(), note = document.getElementById("ins-note");
+  if (!text) return;
+  try {
+    if (!location.protocol.startsWith("http")) throw 0;
+    const r = await fetch(`/api/instruct?project=${D.project_id}`, {method: "POST", headers: {"X-VVL": "1"}, body: JSON.stringify({staff, text})});
+    if (!r.ok) throw 0;
+    location.reload();
+  } catch (e) {
+    await navigator.clipboard.writeText(`${D.repo}/vvl --project ${D.project_id} instruct ${staff} ${JSON.stringify(text)}`).catch(() => {});
+    note.textContent = "这个页面是直接打开的文件，不能写入。命令已复制，粘贴到终端运行即可。";
+  }
+}
+// Reload when anything on disk changes, unless the boss is in the middle of typing.
+if (location.protocol.startsWith("http")) setInterval(async () => {
+  const typing = ["TEXTAREA", "INPUT"].includes(document.activeElement.tagName) || [...document.querySelectorAll("textarea")].some(t => t.value);
+  const v = await fetch(`/api/version?project=${D.project_id}`).then(r => r.text()).catch(() => D.version);
+  if (v !== D.version && !typing) location.reload();
+}, 4000);
+
 function chatFill(text) { const box = document.getElementById("chat-msg"); box.value = text; box.focus(); }
 async function chatSend() {
   const message = document.getElementById("chat-msg").value.trim(), note = document.getElementById("chat-note");
@@ -459,7 +515,7 @@ function render() {
   const [page, ...rest] = decodeURIComponent(location.hash.replace(/^#\/?/, "")).split("/");
   const view = views[page] || views[""];
   document.getElementById("app").innerHTML = view(rest.join("/"));
-  const top = {post: "posts", inbox: "", need: ""}[page] ?? page;
+  const top = {post: "posts", inbox: "", need: "", staff: "team"}[page] ?? page;
   document.getElementById("nav").innerHTML = PAGES.map(([k, label, icon]) => `<a href="#/${k}" class="${k === top ? "on" : ""}"><i>${icon}</i>${label}</a>`).join("");
   document.getElementById("proj").textContent = D.project.name;
   window.scrollTo(0, 0);
