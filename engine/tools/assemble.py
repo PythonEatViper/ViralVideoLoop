@@ -18,7 +18,9 @@ episode.json:
 Paths are relative to the episode folder; a path starting with "assets/" is relative to
 the repo root (shared sound and music library). "voice_gain" scales the clips' own audio;
 A clip given as an object is cut to "start".."end" seconds (both optional); "crop":
-[x, y, w, h] (fractions of the frame) keeps only that region, to hide something at an edge. A caption may
+[x, y, w, h] (fractions of the frame) keeps only that region, to hide something at an edge;
+"audio_from" replaces the clip's sound with another file's, starting at "audio_start" seconds
+(to borrow a better line reading from another take). A caption may
 give "y" (pixels from the top) instead of "pos", and a "color". "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
 under dialogue and fades out at the end. The mix is normalised to -14 LUFS (TikTok's loudness).
 Output: <episode>/final.mp4
@@ -56,7 +58,7 @@ def has_audio(path):
     return bool(out)
 
 
-def normalize(src, dst, start=None, end=None, crop=None):
+def normalize(src, dst, start=None, end=None, crop=None, audio=None, audio_start=0):
     """Scale/crop to 9:16, fixed fps, always one stereo audio track."""
     vf = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},setsar=1"
     if crop:
@@ -64,7 +66,9 @@ def normalize(src, dst, start=None, end=None, crop=None):
         vf = f"crop=iw*{w}:ih*{h}:iw*{x}:ih*{y}," + vf
     cut = (["-ss", str(start)] if start else []) + (["-to", str(end)] if end else [])
     cmd = ["ffmpeg", "-y", *cut, "-i", str(src)]
-    if has_audio(src):
+    if audio:
+        cmd += ["-ss", str(audio_start), "-i", str(audio), "-map", "0:v:0", "-map", "1:a:0", "-shortest"]
+    elif has_audio(src):
         cmd += ["-map", "0:v:0", "-map", "0:a:0"]
     else:
         cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
@@ -98,9 +102,12 @@ def caption_png(cap, dst):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     y = cap["y"] if "y" in cap else POS_Y[cap.get("pos", "top")]
+    # TikTok's buttons sit on the right of the lower half only; text above them is
+    # centred on the full width, text beside them on the area to their left.
+    margin = 150 if y >= 900 else 0
     for line in wrap(cap["text"], font, draw):
         width = draw.textlength(line, font=font)
-        x = (W - 150 - width) / 2  # centre inside the area left of the right-side UI
+        x = (W - margin - width) / 2
         draw.text((x, y), line, font=font, fill=cap.get("color", "white"),
                   stroke_width=max(4, size // 12), stroke_fill="black")
         y += int(size * 1.2)
@@ -119,7 +126,9 @@ def main():
             part = tmp / f"part{i:02d}.mp4"
             if isinstance(clip, str):
                 clip = {"file": clip}
-            normalize(root / clip["file"], part, clip.get("start"), clip.get("end"), clip.get("crop"))
+            normalize(root / clip["file"], part, clip.get("start"), clip.get("end"), clip.get("crop"),
+                      root / clip["audio_from"] if "audio_from" in clip else None,
+                      clip.get("audio_start", 0))
             parts.append(part)
 
         concat_list = tmp / "list.txt"
