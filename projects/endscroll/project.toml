@@ -9,7 +9,7 @@ product = "EndScroll — an iOS app that helps people stop doomscrolling (screen
 goal = "Viral short videos for the US market that make people recognise their own phone habits; the app is barely mentioned."
 audience = "US, 16-28, heavy short-video users who half-know they scroll too much."
 language = "English (dialogue, on-screen text, captions)"
-tone = "Funny and relatable first. Blame the design, never the viewer. No lecturing."
+tone = "Upbeat, funny and relatable. Self-mockery is welcome; never gloomy, sad or guilt-inducing (boss, 2026-10-11). Blame the design, never the viewer. No lecturing."
 main_format = "App Island — a Pixar-style 3D micro-drama: apps are contestants on a dating show, all fighting for YOU."
 red_lines = [
   "No real app names or logos; hints only (colour, props).",   # bio line dropped by the boss, 2026-10-11
@@ -38,7 +38,7 @@ commit_until = "2026-11-10"             # decided 2026-10-11: use Plus for one m
 
 [rules]
 ai_label = "Fully AI-made videos (App Island): label ON. Videos where AI plays a small part: no label. After the first platform warning: label everything."
-music = "Score follows the story beats (see knowledge/music_moods.md); never one loud track under the whole video. Sellers may add a platform trending sound at minimum volume."
+music = "Light and cheerful by default, in the manner of Calmlings (boss, 2026-10-11). Score follows the story beats (see knowledge/music_moods.md); never one loud track under the whole video. Sellers may add a platform trending sound at minimum volume."
 exploration = "One account for now. Explore widely: each episode changes scene and hook; one deliberate variable per post. No duplicate-video hook tests. When two cuts exist, the boss picks before publishing."
 formats = "Video is the main format. Photo carousels (images) and text posts are cheap side experiments; each still has one hypothesis and passes the final_cut review."
 community = "On text communities (Reddit): take part as a useful member. No product mention, link or hint in any comment. No invented personal stories. Promotion only through approved posts, in communities whose rules allow it, saying plainly that we make the app."
