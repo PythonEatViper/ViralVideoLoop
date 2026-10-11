@@ -1,6 +1,6 @@
 # STATE — EndScroll
 
-Generated 2026-10-11T23:50:54+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-11T23:54:40+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-11.md
 - Waiting for the boss: 1 review(s), 5 todo(s)
@@ -11,7 +11,7 @@ Generated 2026-10-11T23:50:54+08:00 by `./vvl build`. Do not edit; read START_HE
 - [review] app_island_ep02 — App Island · Ep 2 — Screen Time Party
 
 ## Pending reviews
-- R4 (final_cut): Ep 2「刷屏时长庆功派对」成片 v4，15.9 秒
+- R4 (final_cut): Ep 2「刷屏时长庆功派对」成片 v5，16.5 秒
 
 ## Open todos
 - T1 [boss]: 把仓库推到 GitHub（私有仓库 ViralVideoLoop）
@@ -29,7 +29,7 @@ Generated 2026-10-11T23:50:54+08:00 by `./vvl build`. Do not edit; read START_HE
 ## Staff
 - boss (human): n/a, last seen 2026-10-11T23:14:22+08:00
 - pm (grok): ok, last seen 2026-10-11T19:48:06+08:00
-- director (claude): ok, last seen 2026-10-11T23:50:54+08:00
+- director (claude): ok, last seen 2026-10-11T23:54:40+08:00
 - seller_tiktok (grok): ok, last seen 2026-10-11T23:09:54+08:00
 - seller_reels (grok): ok, last seen 2026-10-11T22:11:48+08:00
 - seller_youtube (grok): ok, last seen 2026-10-11T22:47:55+08:00

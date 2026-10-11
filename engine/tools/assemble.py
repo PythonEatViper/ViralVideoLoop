@@ -20,7 +20,8 @@ the repo root (shared sound and music library). "voice_gain" scales the clips' o
 A clip given as an object is cut to "start".."end" seconds (both optional); "crop":
 [x, y, w, h] (fractions of the frame) keeps only that region, to hide something at an edge;
 "audio_from" replaces the clip's sound with another file's, starting at "audio_start" seconds
-(to borrow a better line reading from another take). A caption may
+(to borrow a better line reading from another take); "mute_after" silences the clip's own
+sound from that second on (in the clip's own time), keeping the picture. A caption may
 give "y" (pixels from the top) instead of "pos", and a "color". "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
 under dialogue and fades out at the end. The mix is normalised to -14 LUFS (TikTok's loudness).
 Output: <episode>/final.mp4
@@ -58,7 +59,8 @@ def has_audio(path):
     return bool(out)
 
 
-def normalize(src, dst, start=None, end=None, crop=None, audio=None, audio_start=0):
+def normalize(src, dst, start=None, end=None, crop=None, audio=None, audio_start=0,
+              mute_after=None):
     """Scale/crop to 9:16, fixed fps, always one stereo audio track."""
     vf = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},setsar=1"
     if crop:
@@ -73,6 +75,9 @@ def normalize(src, dst, start=None, end=None, crop=None, audio=None, audio_start
     else:
         cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
                 "-map", "0:v:0", "-map", "1:a:0", "-shortest"]
+    if mute_after is not None:
+        # Times here count from the cut point, because -ss is applied before the input.
+        cmd += ["-af", f"afade=t=out:st={max(0, mute_after - (start or 0) - 0.06)}:d=0.06"]
     cmd += ["-vf", vf, "-c:v", "libx264", "-preset", "medium", "-crf", "18",
             "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "44100", "-ac", "2", str(dst)]
     run(cmd)
@@ -128,7 +133,7 @@ def main():
                 clip = {"file": clip}
             normalize(root / clip["file"], part, clip.get("start"), clip.get("end"), clip.get("crop"),
                       root / clip["audio_from"] if "audio_from" in clip else None,
-                      clip.get("audio_start", 0))
+                      clip.get("audio_start", 0), clip.get("mute_after"))
             parts.append(part)
 
         concat_list = tmp / "list.txt"

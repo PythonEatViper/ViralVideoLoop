@@ -18,7 +18,8 @@
     "shots/03_alarm.mp4",
     {
       "file": "shots/04_selfie.mp4",
-      "end": 2.78
+      "end": 3.5,
+      "mute_after": 2.88
     }
   ],
   "captions": [
@@ -47,7 +48,7 @@
     {
       "text": "what's YOUR daily average?\nbe honest",
       "start": 13.05,
-      "end": 15.76,
+      "end": 16.48,
       "y": 200,
       "size": 50
     }
@@ -61,7 +62,7 @@
   "sfx": [
     {
       "file": "assets/sfx/shutter.mp3",
-      "start": 15.25,
+      "start": 16.0,
       "gain": 0.8
     }
   ]
