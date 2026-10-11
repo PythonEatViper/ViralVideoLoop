@@ -1,0 +1,19 @@
+{
+  "clips": [
+    {"file": "shots/01_surprise.mp4", "start": 0.4},
+    {"file": "shots/02_trophy.mp4", "start": 0.25},
+    "shots/03_alarm.mp4",
+    "shots/04_selfie.mp4"
+  ],
+  "captions": [
+    {"text": "my apps celebrating my\nweekly screen time report", "start": 0, "end": 3.7, "y": 170, "size": 58},
+    {"text": "9h 14m A DAY", "start": 0, "end": 3.7, "y": 420, "size": 92, "color": "#FFD23F"},
+    {"text": "NEW RECORD", "start": 0, "end": 3.7, "y": 540, "size": 64},
+    {"text": "what's YOUR daily average?\nbe honest", "start": 13.2, "end": 16.6, "pos": "top", "size": 60}
+  ],
+  "voice_gain": 1.0,
+  "music": {"file": "assets/music/feeling_happy.mp3", "offset": 0, "gain": 0.3},
+  "sfx": [
+    {"file": "assets/sfx/shutter.mp3", "start": 16.0, "gain": 0.8}
+  ]
+}
