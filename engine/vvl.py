@@ -480,7 +480,7 @@ def main():
     p.add_argument("--width", type=int, default=1280)
     p.add_argument("--height", type=int, default=1700)
 
-    p = command("add", cmd_add, "add or update a record: vvl add signal --by scout_x --json '{...}'")
+    p = command("add", cmd_add, "add or update a record: vvl add signal --by seller_tiktok --json '{...}'")
     p.add_argument("type", choices=TYPES)
     p.add_argument("fields", nargs="*", help="key=value pairs (values are parsed as JSON when possible)")
     p.add_argument("--by", help="staff id of the writer")
@@ -516,7 +516,7 @@ def main():
     command("cost", cmd_cost, "credits left, spent this week, spend by episode and by model")
 
     command("staff", cmd_staff, "who is on the team and whether each is running")
-    p = command("checkin", cmd_checkin, "a staff member reports it ran: vvl checkin scout_x --note ...")
+    p = command("checkin", cmd_checkin, "a staff member reports it ran: vvl checkin seller_tiktok --note ...")
     p.add_argument("staff")
     p.add_argument("--status", default="ok", choices=["ok", "throttled", "paused"])
     p.add_argument("--note")

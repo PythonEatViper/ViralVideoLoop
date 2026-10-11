@@ -7,36 +7,63 @@
 <style>
 :root {
   --bg: #f5f4f0; --card: #ffffff; --ink: #1c1b19; --muted: #6f6b63; --line: #e4e1d9;
-  --accent: #d9480f; --accent-soft: #fff1e8; --ok: #2b8a3e; --warn: #e67700; --bad: #c92a2a; --off: #adb5bd;
+  --accent: #e8590c; --accent-soft: #fff4ec; --ok: #2b8a3e; --warn: #e67700; --bad: #c92a2a; --off: #adb5bd;
+  --pink: #e64980; --violet: #7048e8; --blue: #1c7ed6; --teal: #0ca678; --amber: #f08c00;
+  --shadow: 0 1px 2px rgba(30, 20, 10, .05), 0 6px 20px rgba(30, 20, 10, .05);
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root { --bg: #151413; --card: #201f1d; --ink: #eceae4; --muted: #9a958b; --line: #34322e;
-          --accent: #ff8a4c; --accent-soft: #33221a; --ok: #51cf66; --warn: #ffa94d; --bad: #ff6b6b; --off: #5c5f66; }
+          --accent: #ff8a4c; --accent-soft: #2e211a; --ok: #51cf66; --warn: #ffa94d; --bad: #ff6b6b; --off: #5c5f66;
+          --pink: #f783ac; --violet: #9775fa; --blue: #4dabf7; --teal: #38d9a9; --amber: #fcc419;
+          --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25); }
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink);
+body { margin: 0; color: var(--ink); min-height: 100vh;
+       background: radial-gradient(900px 420px at 12% -8%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%),
+                   radial-gradient(800px 420px at 95% 0%, color-mix(in srgb, var(--violet) 11%, transparent), transparent 70%), var(--bg);
+       background-attachment: fixed;
        font: 15px/1.55 -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; }
 a { color: inherit; text-decoration: none; }
-header { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+header { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 82%, transparent);
+         backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
 .bar { max-width: 1180px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-.brand { font-weight: 700; letter-spacing: -0.01em; }
+.brand { font-weight: 700; letter-spacing: -0.01em; display: flex; align-items: center; gap: 9px; }
+.brand svg { width: 30px; height: 30px; flex: none; }
 .brand small { color: var(--muted); font-weight: 400; margin-left: 6px; }
 nav { display: flex; gap: 4px; flex-wrap: wrap; }
 nav a { padding: 4px 10px; border-radius: 999px; color: var(--muted); font-size: 14px; }
-nav a.on, nav a:hover { background: var(--card); color: var(--ink); }
+nav a.on, nav a:hover { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+nav a i { font-style: normal; margin-right: 5px; }
 main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 60px; }
 h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
 h2 { font-size: 15px; margin: 26px 0 10px; color: var(--muted); font-weight: 600; }
 .sub { color: var(--muted); margin: 0 0 18px; }
 .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: block; min-width: 0; }
-a.card:hover { border-color: var(--accent); }
-.card h3 { margin: 0 0 8px; font-size: 13px; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: block; min-width: 0; box-shadow: var(--shadow); }
+a.card { transition: transform .15s, border-color .15s; }
+a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card h3 { margin: 0 0 10px; font-size: 13px; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.card h3 > span:first-child { display: flex; align-items: center; gap: 8px; color: var(--ink); }
+.ico { width: 30px; height: 30px; border-radius: 10px; display: inline-grid; place-items: center; font-size: 16px; flex: none;
+       background: color-mix(in srgb, var(--c, var(--accent)) 16%, transparent); }
+.hero { border-radius: 20px; padding: 22px 24px; color: #fff; margin-bottom: 16px; box-shadow: var(--shadow);
+        background: linear-gradient(120deg, #f76707, #e64980 55%, #7048e8); }
+.hero h1 { font-size: 26px; margin: 0; } .hero p { margin: 4px 0 16px; opacity: .9; max-width: 720px; }
+.steps { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.steps a { display: flex; align-items: center; gap: 6px; padding: 5px 11px 5px 7px; border-radius: 999px; font-size: 13px;
+           background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .22); white-space: nowrap; }
+.steps a.live { background: #fff; color: #c2255c; font-weight: 600; }
+.steps a b { font-weight: 700; } .steps .arr { opacity: .6; font-size: 12px; }
+.avatar { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; font-size: 22px; flex: none;
+          background: linear-gradient(135deg, color-mix(in srgb, var(--c) 28%, transparent), color-mix(in srgb, var(--c) 10%, transparent)); }
+.person { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+.person b { font-size: 16px; } .runner { font-size: 11.5px; padding: 1px 8px; border-radius: 999px; color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); }
+.conn { text-align: center; color: var(--muted); font-size: 12.5px; margin: -4px 0; }
 .big { font-size: 30px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
 .big small { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 4px; }
 .muted { color: var(--muted); } .small { font-size: 13px; }
-.need { border-left: 4px solid var(--accent); background: var(--accent-soft); }
+.need { border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); background: var(--accent-soft); }
 .need li { margin: 6px 0; }
 ul.plain { list-style: none; margin: 0; padding: 0; }
 .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); margin-right: 4px; white-space: nowrap; }
@@ -56,15 +83,16 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .meter { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; margin: 8px 0 4px; }
 .meter i { display: block; height: 100%; background: var(--accent); }
 .pipe { display: flex; gap: 6px; flex-wrap: wrap; }
-.pipe div { flex: 1; min-width: 74px; text-align: center; padding: 8px 4px; border-radius: 8px; background: var(--bg); }
-.pipe b { display: block; font-size: 20px; }
+.pipe div { flex: 1; min-width: 78px; text-align: center; padding: 10px 4px; border-radius: 12px; background: var(--bg); color: var(--muted); }
+.pipe b { display: block; font-size: 22px; } .pipe i { font-style: normal; display: block; font-size: 18px; }
+.pipe div.has { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--ink); }
 .flow { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); counter-reset: step; }
-.flow .card { position: relative; }
+.flow .card { position: relative; border-top: 3px solid var(--c, var(--line)); }
+.flow .card .ico { margin-bottom: 8px; }
 .flow .card::before { counter-increment: step; content: counter(step); position: absolute; top: 12px; right: 14px; color: var(--line); font-size: 26px; font-weight: 700; }
-.flow .who { font-size: 12.5px; color: var(--accent); padding-right: 30px; }
+.flow .who { font-size: 12.5px; color: var(--c, var(--accent)); padding-right: 30px; }
 .org { display: flex; flex-direction: column; gap: 14px; }
 .org .row { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-.org .lvl { font-size: 12.5px; color: var(--muted); margin-bottom: -6px; }
 .md h1, .md h2, .md h3 { color: var(--ink); font-size: 16px; margin: 18px 0 6px; }
 .md h1 { font-size: 19px; } .md ul { padding-left: 20px; margin: 6px 0; } .md p { margin: 8px 0; }
 .kv { display: grid; grid-template-columns: 150px 1fr; gap: 6px 14px; font-size: 14px; }
@@ -78,14 +106,21 @@ svg text { fill: var(--muted); font-size: 11px; }
 </head>
 <body>
 <header><div class="bar">
-  <a class="brand" href="#/">ViralVideoLoop<small id="proj"></small></a>
+  <a class="brand" href="#/"><svg viewBox="0 0 32 32"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f76707"/><stop offset=".55" stop-color="#e64980"/><stop offset="1" stop-color="#7048e8"/></linearGradient></defs>
+    <rect width="32" height="32" rx="9" fill="url(#lg)"/><path d="M22.5 13.2A7 7 0 0 0 9.6 12M9.5 18.8A7 7 0 0 0 22.4 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M9.2 8.6v3.8h3.8M22.8 23.4v-3.8H19" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.3 13.2v5.6l4.6-2.8z" fill="#fff"/></svg>
+    <span>ViralVideoLoop<small id="proj"></small></span></a>
   <nav id="nav"></nav>
 </div></header>
 <main id="app"></main>
 <script>
 const D = /*DATA*/null;
-const PAGES = [["", "总览"], ["plan", "计划"], ["posts", "视频"], ["signals", "热点"], ["ideas", "点子"],
-  ["learnings", "规律"], ["cost", "成本"], ["team", "团队"], ["flow", "工作流"], ["config", "配置"]];
+const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "视频", "🎬"], ["signals", "热点", "🔥"], ["ideas", "点子", "💡"],
+  ["learnings", "规律", "🧪"], ["cost", "成本", "💰"], ["team", "团队", "👥"], ["flow", "工作流", "🔁"], ["config", "配置", "⚙️"]];
+const STAGE_ICON = {idea: "💡", script: "📝", shots: "🎥", review: "👀", ready: "📦", published: "🚀", measured: "📊"};
+const RUNNER = {human: ["人类", "var(--teal)"], grok: ["Grok", "var(--accent)"], claude: ["Claude", "var(--violet)"], script: ["脚本", "var(--muted)"]};
+const AVATAR = {boss: "👑", pm: "📋", director: "🧠", accountant: "🧮", tiktok: "🎵", reels: "📸", youtube: "▶️", x: "✖️"};
+const ico = (emoji, color) => `<span class="ico" style="--c:${color || "var(--accent)"}">${emoji}</span>`;
 const STAGES = [["idea", "点子"], ["script", "分镜"], ["shots", "镜头"], ["review", "待审"], ["ready", "待发"], ["published", "已发"], ["measured", "已出数据"]];
 const STATE = {ok: "正常", throttled: "降频", paused: "暂停", silent: "失联", not_started: "未启动", off: "未启用", "n/a": ""};
 const GATE = {weekly_strategy: "周策略", storyboard: "分镜", final_cut: "成片", new_character: "新角色", sensitive_topic: "敏感话题", comment_reply: "评论回复", budget: "预算"};
@@ -137,7 +172,7 @@ function needList(maxTodos) {
   const items = [
     ...pendingReviews().map(r => `<li><span class="tag hot">审核 · ${GATE[r.gate] || esc(r.gate)}</span><b>${esc(r.title)}</b>
       <div class="small muted">${esc(r.summary || "")}${r.path ? ` · 文件：<code>${esc(r.path)}</code>` : ""}</div>
-      <div class="small muted">回复秘书，或运行：<code>./vvl review approve ${esc(r.id)}</code></div></li>`),
+      <div class="small muted">回复产品经理，或运行：<code>./vvl review approve ${esc(r.id)}</code></div></li>`),
     ...openTodos().slice(0, maxTodos).map(t => `<li><span class="tag">待办 · ${esc(t.owner || "boss")}</span>${esc(t.text)}
       ${t.why ? `<div class="small muted">${esc(t.why)}</div>` : ""}${t.cmd ? cmd(t.cmd) : ""}
       <div class="small muted">做完后：<code>./vvl todo done ${esc(t.id)}</code></div></li>`),
@@ -145,6 +180,25 @@ function needList(maxTodos) {
   const more = openTodos().length - maxTodos;
   return (items.length ? `<ul class="plain">${items.join("")}</ul>` : `<span class="muted">现在没有需要你处理的事。</span>`)
     + (more > 0 ? `<a href="#/need" class="small" style="color:var(--accent)">还有 ${more} 个待办 →</a>` : "");
+}
+
+function flowSteps() {
+  const n7 = D.signals.filter(s => Date.parse(D.generated_at) - Date.parse(s.at) < 7 * 864e5).length;
+  const st = k => D.posts.filter(p => p.status === k).length;
+  const gate = (...g) => pendingReviews().filter(r => g.includes(r.gate)).length;
+  const G = RUNNER.grok[1], C = RUNNER.claude[1], H = RUNNER.human[1], S = RUNNER.script[1];
+  // [icon, title, who, description, count, unit, page, colour, waiting-for-action]
+  return [
+    ["🔭", "侦查", "推销员 + 产品经理 · 每天", "外面什么在火：爆款、热点、音乐。", n7, "条 / 近 7 天", "signals", G, false],
+    ["📥", "入库和校验", "脚本 · 不用模型", "格式不对的被拒收，同一条链接只记一次。", D.rejected_files, "个文件被拒", "inbox", S, D.rejected_files > 0],
+    ["🧠", "决策", "总监 · 每天 08:30", "把热点、评论、老板的话和规律组合成点子，写今日计划。", D.ideas.filter(i => (i.status || "new") === "new").length, "个点子待选", "plan", C, false],
+    ["✅", "审核：方向和分镜", "老板 · 花积分之前", "系统停在这里等你。", gate("storyboard", "weekly_strategy", "new_character", "sensitive_topic", "budget"), "个待审", "need", H, gate("storyboard", "weekly_strategy", "new_character", "sensitive_topic", "budget") > 0],
+    ["🎬", "制作", "总监", "出镜头、配乐、剪辑。", st("script") + st("shots"), "条在做", "posts", C, st("script") + st("shots") > 0],
+    ["👀", "审核：成片", "老板 · 发布之前", "系统停在这里等你。", gate("final_cut"), "个待审", "need", H, gate("final_cut") > 0],
+    ["🚀", "发布", "推销员 · 07:00-09:00", "每个账号一个推销员。", D.ready.length, "条待发", "posts", G, D.ready.length > 0],
+    ["📊", "回收数据", "推销员 · 发布后 1/6/24/72/168 小时", "数据、留存曲线、有价值的评论。", D.due.length, "个快照到期", "posts", G, D.due.length > 0],
+    ["🧪", "更新规律", "总监 · 每天 + 周日复盘", "假设成立吗？下一条测什么？然后回到「决策」。", D.learnings.length, "条规律", "learnings", C, false],
+  ];
 }
 
 const views = {
@@ -155,40 +209,41 @@ const views = {
     const bad = D.staff.filter(s => ["throttled", "paused", "silent"].includes(s.state));
     const bots = D.staff.filter(s => !["human", "script"].includes(s.runner));
     const counts = Object.fromEntries(STAGES.map(([k]) => [k, D.posts.filter(p => p.status === k).length]));
-    return `<h1>${esc(D.project.name)} · 总览</h1>
-    <p class="sub">生成于 ${when(D.generated_at)} · 每块都能点进去看详情</p>
-    <div class="card need"><h3>需要你 <a href="#/need">${pendingReviews().length} 个审核 · ${openTodos().length} 个待办 →</a></h3>${needList(2)}</div>
+    return `<div class="hero"><h1>${esc(D.project.name)}</h1><p>${esc(D.project.brief.main_format || D.project.brief.goal || "")}</p>
+      <div class="steps">${flowSteps().map((f, i) => `${i ? `<span class="arr">→</span>` : ""}<a href="#/${f[6]}" class="${f[8] ? "live" : ""}" title="${esc(f[2])}">${f[0]} ${f[1]}${f[8] ? ` <b>${f[4]}</b>` : ""}</a>`).join("")}<span class="arr">↺</span></div></div>
+    <p class="sub">生成于 ${when(D.generated_at)} · 白色的步骤现在有事要做 · 每块都能点进去</p>
+    <div class="card need"><h3><span>${ico("🙋")}需要你</span> <a href="#/need">${pendingReviews().length} 个审核 · ${openTodos().length} 个待办 →</a></h3>${needList(2)}</div>
     <h2>今天</h2>
     <div class="grid">
-      <a class="card" href="#/plan"><h3>今日计划 <span>${plan ? esc(plan.name) : ""}</span></h3>
+      <a class="card" href="#/plan"><h3><span>${ico("📅", "var(--blue)")}今日计划</span> <span>${plan ? esc(plan.name) : ""}</span></h3>
         ${plan ? `<div class="md small">${md(plan.text.split("\n").filter(l => l.trim()).slice(0, 7).join("\n"))}</div>` : `<span class="muted">总监还没写今天的计划（每天 08:30）。</span>`}</a>
-      <a class="card" href="#/posts"><h3>最近一条视频 <span>${last ? esc(last.id) : ""}</span></h3>
+      <a class="card" href="#/posts"><h3><span>${ico("🎬", "var(--pink)")}最近一条视频</span> <span>${last ? esc(last.id) : ""}</span></h3>
         ${lm ? `<div class="big">${num(lm.views)}<small>播放 · ${lm.age_hours}h</small></div>
           <div class="small muted">完播 ${pct(lm.completion_rate)} · 每千次播放 ${per1k(lm.shares, lm.views)} 分享 · ${per1k(lm.new_followers, lm.views)} 关注</div>`
           : `<span class="muted">还没有数据。${D.ready.length ? `有 ${D.ready.length} 条等待发布。` : ""}</span>`}
         ${D.due.length ? `<div class="small" style="color:var(--warn)">${D.due.length} 个数据快照到期未抓</div>` : ""}</a>
-      <a class="card" href="#/cost"><h3>成本 <span>${esc(c.budget.plan || "")}</span></h3>
+      <a class="card" href="#/cost"><h3><span>${ico("💰", "var(--teal)")}成本</span> <span>${esc(c.budget.plan || "")}</span></h3>
         <div class="big">${c.balance ? num(c.balance.credits) : "?"}<small>积分剩余</small></div>
         <div class="meter"><i style="width:${cap ? Math.min(100, c.spent_week / cap * 100) : 0}%"></i></div>
         <div class="small muted">近 7 天用了 ${c.spent_week} / 上限 ${cap}</div></a>
-      <a class="card" href="#/team"><h3>团队 <span>${bots.filter(s => s.state === "ok").length}/${bots.filter(s => s.state !== "off").length} 在岗</span></h3>
+      <a class="card" href="#/team"><h3><span>${ico("👥", "var(--violet)")}团队</span> <span>${bots.filter(s => s.state === "ok").length}/${bots.filter(s => s.state !== "off").length} 在岗</span></h3>
         ${bots.map(s => `<div class="small"><span class="dot ${s.state}"></span>${esc(s.name)} <span class="muted">${STATE[s.state]}</span></div>`).join("")}
         ${bad.length ? `<div class="small" style="color:var(--bad)">${bad.length} 个需要关注</div>` : ""}</a>
     </div>
     <h2>流水线</h2>
-    <a class="card" href="#/posts"><div class="pipe">${STAGES.map(([k, label]) => `<div><b>${counts[k]}</b><span class="small muted">${label}</span></div>`).join("")}</div></a>
+    <a class="card" href="#/posts"><div class="pipe">${STAGES.map(([k, label]) => `<div class="${counts[k] ? "has" : ""}"><i>${STAGE_ICON[k]}</i><b>${counts[k]}</b><span class="small">${label}</span></div>`).join("")}</div></a>
     <h2>进来的信息（近 14 天）</h2>
     <div class="grid">
-      <a class="card" href="#/signals"><h3>外部热点</h3><div class="big">${D.signals.length}<small>条 · ${D.signals.filter(s => s.stage === "rising").length} 条在起势</small></div></a>
-      <a class="card" href="#/ideas"><h3>点子池</h3><div class="big">${D.ideas.filter(i => (i.status || "new") === "new").length}<small>个待选</small></div></a>
-      <a class="card" href="#/learnings"><h3>规律库</h3><div class="big">${D.learnings.length}<small>条 · ${D.learnings.filter(l => l.status === "rule").length} 条已成规则</small></div></a>
-      <a class="card" href="#/inbox"><h3>老板的话 / 异常</h3><div class="big">${D.notes.length}<small>条留言 · ${D.incidents.length} 次异常${D.rejected_files ? ` · ${D.rejected_files} 个文件被拒` : ""}</small></div></a>
+      <a class="card" href="#/signals"><h3><span>${ico("🔥")}外部热点</span></h3><div class="big">${D.signals.length}<small>条 · ${D.signals.filter(s => s.stage === "rising").length} 条在起势</small></div></a>
+      <a class="card" href="#/ideas"><h3><span>${ico("💡", "var(--amber)")}点子池</span></h3><div class="big">${D.ideas.filter(i => (i.status || "new") === "new").length}<small>个待选</small></div></a>
+      <a class="card" href="#/learnings"><h3><span>${ico("🧪", "var(--violet)")}规律库</span></h3><div class="big">${D.learnings.length}<small>条 · ${D.learnings.filter(l => l.status === "rule").length} 条已成规则</small></div></a>
+      <a class="card" href="#/inbox"><h3><span>${ico("💬", "var(--blue)")}老板的话 / 异常</span></h3><div class="big">${D.notes.length}<small>条留言 · ${D.incidents.length} 次异常${D.rejected_files ? ` · ${D.rejected_files} 个文件被拒` : ""}</small></div></a>
     </div>`;
   },
 
   need() {
     const done = D.todos.filter(t => t.status === "done"), decided = D.reviews.filter(r => r.status !== "pending");
-    return `<h1>需要你</h1><p class="sub">系统只在这些地方停下等你。可以直接回复秘书，也可以自己运行命令。点命令可以复制。</p>
+    return `<h1>需要你</h1><p class="sub">系统只在这些地方停下等你。可以直接回复产品经理，也可以自己运行命令。点命令可以复制。</p>
       <div class="card need">${needList(999)}</div>
       ${decided.length ? `<h2>已决定</h2><div class="card"><ul class="plain">${decided.slice().reverse().map(r => `<li><span class="tag">${r.status === "approved" ? "通过" : "要改"}</span>${esc(r.title)} <span class="small muted">${esc(r.decision_note || "")} · ${when(r.at)}</span></li>`).join("")}</ul></div>` : ""}
       ${done.length ? `<h2>已完成的待办</h2><div class="card"><ul class="plain">${done.slice().reverse().map(t => `<li class="muted">✓ ${esc(t.text)}</li>`).join("")}</ul></div>` : ""}`;
@@ -248,12 +303,12 @@ const views = {
   },
 
   signals(filter) {
-    if (!D.signals.length) return `<h1>热点</h1>${empty("侦查员还没有上报。在「团队」页复制提示词，配好 Grok 定时任务后这里会有数据。")}`;
+    if (!D.signals.length) return `<h1>热点</h1>${empty("还没有上报。推销员侦查各自的平台，产品经理盯 X。在「团队」页复制提示词，配好 Grok 定时任务后这里会有数据。")}`;
     const [plat, stage] = (filter || "all,all").split(",");
     const rows = D.signals.filter(s => (plat === "all" || s.platform === plat) && (stage === "all" || s.stage === stage))
       .sort((a, b) => (b.relevance || 0) - (a.relevance || 0) || (b.velocity_per_hour || 0) - (a.velocity_per_hour || 0));
     const opt = (list, cur, labels) => list.map(v => `<option value="${v}" ${v === cur ? "selected" : ""}>${labels[v] || v}</option>`).join("");
-    return `<h1>热点</h1><p class="sub">近 14 天侦查员上报的外部爆款和趋势，按相关度排序。点一行展开。
+    return `<h1>热点</h1><p class="sub">近 14 天推销员和产品经理上报的外部爆款和趋势，按相关度排序。点一行展开。
       <select onchange="location.hash='#/signals/'+this.value+',${esc(stage)}'">${opt(["all", ...new Set(D.signals.map(s => s.platform))], plat, {all: "全部平台", ...PLAT})}</select>
       <select onchange="location.hash='#/signals/${esc(plat)},'+this.value">${opt(["all", "rising", "peak", "fading"], stage, {all: "全部阶段", rising: "起势", peak: "高峰", fading: "退潮"})}</select></p>
       <div class="card scroll"><table><tr><th>相关</th><th>内容</th><th>平台</th><th>阶段</th><th class="num">播放</th><th class="num">每小时</th><th>看到</th></tr>
@@ -306,49 +361,39 @@ const views = {
   },
 
   team() {
-    const card = s => `<div class="card"><h3>${esc(s.id)} <span>${{human: "人类", grok: "Grok", claude: "Claude", script: "脚本"}[s.runner]}</span></h3>
-      <div>${STATE[s.state] ? `<span class="dot ${s.state}"></span>` : ""}<b>${esc(s.name)}</b> <span class="muted small">${STATE[s.state]}</span></div>
+    const card = s => { const [label, color] = RUNNER[s.runner], face = AVATAR[s.role] || AVATAR[s.platform] || "🤖";
+      return `<div class="card" style="${s.state === "off" ? "opacity:.6" : ""}">
+      <div class="person"><span class="avatar" style="--c:${color}">${face}</span><div><b>${esc(s.name)}</b>
+        <div class="small"><span class="runner" style="--c:${color}">${label}</span> ${STATE[s.state] ? `<span class="dot ${s.state}" style="margin-left:6px"></span><span class="muted">${STATE[s.state]}</span>` : ""}</div></div></div>
       <div class="small">${esc(s.duty)}</div>
-      ${s.schedule ? `<div class="small muted">作息：${esc(s.schedule)}</div>` : ""}
+      ${s.schedule ? `<div class="small muted">🕐 ${esc(s.schedule)}</div>` : ""}
       ${s.last_seen ? `<div class="small muted">上次活动：${ago(s.last_seen)}${s.last_note ? " · " + esc(s.last_note) : ""}</div>` : ""}
-      ${s.runner === "grok" ? cmd(`./vvl prompt ${s.id} | pbcopy`) + `<div class="small muted">↑ 复制提示词，粘贴到这个 bot 的定时任务里</div>` : ""}</div>`;
+      ${s.runner === "grok" ? cmd(`./vvl prompt ${s.id} | pbcopy`) + `<div class="small muted">↑ 点击复制命令；运行后提示词就在剪贴板里，粘贴到这个 bot 的定时任务</div>` : ""}</div>`; };
     const reports = id => D.staff.filter(s => s.reports_to === id);
     const acct = D.accounts.length ? `<h2>账号</h2><div class="card"><table><tr><th>平台</th><th>账号</th><th>类型</th><th class="num">粉丝</th><th>负责</th></tr>
       ${D.accounts.map(a => `<tr><td>${PLAT[a.platform]}</td><td>${esc(a.handle)} ${link(a.url)}</td><td>${esc(a.account_type || "")}</td><td class="num">${num(a.followers)}</td><td>${esc(a.staff || a.by)}</td></tr>`).join("")}</table></div>` : "";
-    return `<h1>团队</h1><p class="sub">一家虚拟公司：你是老板，秘书帮你传话和催进度，总监是唯一做决策的，侦查员和推销员在一线。</p>
+    return `<h1>团队</h1><p class="sub">一家虚拟公司：你是老板；产品经理帮你传话、催进度；总监是唯一做决策的；每个账号一个推销员，负责那个平台的一切。</p>
       <div class="org"><div class="row">${D.staff.filter(s => !s.reports_to).map(card).join("")}</div>
-      <div class="lvl">↓ 向老板汇报</div><div class="row">${reports("boss").map(card).join("")}</div>
-      <div class="lvl">↓ 向总监汇报</div><div class="row">${reports("director").map(card).join("")}</div></div>${acct}`;
+      <div class="conn">│ 向老板汇报</div><div class="row">${reports("boss").map(card).join("")}</div>
+      <div class="conn">│ 向总监汇报</div><div class="row">${reports("director").map(card).join("")}</div></div>${acct}`;
   },
 
   flow() {
-    const n7 = D.signals.filter(s => Date.parse(D.generated_at) - Date.parse(s.at) < 7 * 864e5).length;
-    const st = k => D.posts.filter(p => p.status === k).length;
-    const gate = g => pendingReviews().filter(r => r.gate === g).length;
-    const steps = [
-      ["侦查", "侦查员 ×3 · 全天", `外面什么在火：爆款、热点、音乐。<br><b>${n7}</b> 条 / 近 7 天`, "signals"],
-      ["入库和校验", "脚本 · 不用模型", `格式不对的文件被拒收，同一条链接只记一次。<br><b>${D.rejected_files}</b> 个文件被拒`, "inbox"],
-      ["决策", "总监 · 每天 08:30", `把热点、评论、老板的话和规律组合成点子，写今日计划。<br><b>${D.ideas.length}</b> 个点子`, "plan"],
-      ["老板审核：分镜", "你 · 花积分之前", `<b>${gate("storyboard") + gate("weekly_strategy") + gate("new_character")}</b> 个待审`, ""],
-      ["制作", "总监", `出镜头、配乐、剪辑。<br><b>${st("script") + st("shots")}</b> 条在做`, "posts"],
-      ["老板审核：成片", "你 · 发布之前", `<b>${gate("final_cut")}</b> 个待审`, ""],
-      ["发布", "推销员 · 07:00-09:00", `每个平台一个推销员。<br><b>${D.ready.length}</b> 条待发`, "posts"],
-      ["回收数据", "推销员 · 发布后 1/6/24/72/168 小时", `数据、留存曲线截图、有价值的评论。<br><b>${D.due.length}</b> 个快照到期`, "posts"],
-      ["更新规律", "总监 · 每天 + 周日复盘", `假设成立还是不成立？下一条测什么？<br><b>${D.learnings.length}</b> 条规律 → 回到第 3 步`, "learnings"],
-    ];
-    return `<h1>工作流</h1><p class="sub">一个闭环：每条视频是一次实验，结果回到规律库，再决定下一条。数字是当前状态，点卡片看对应数据。</p>
-      <div class="flow">${steps.map(([t, who, body, href]) => `<a class="card" href="#/${href}"><div class="who">${who}</div><b>${t}</b><div class="small muted">${body}</div></a>`).join("")}</div>
+    return `<h1>工作流</h1><p class="sub">一个闭环：每条视频是一次实验，结果回到规律库，再决定下一条。数字是当前状态，点卡片看对应数据。
+      ${Object.values(RUNNER).map(([label, color]) => `<span class="runner" style="--c:${color};margin-left:6px">${label}</span>`).join("")}</p>
+      <div class="flow">${flowSteps().map(f => `<a class="card" href="#/${f[6]}" style="--c:${f[7]}">${ico(f[0], f[7])}<div class="who">${f[2]}</div><b>${f[1]}</b>
+        <div class="small muted">${f[3]}</div><div class="small"><b style="font-size:18px">${f[4]}</b> ${f[5]}</div></a>`).join("")}</div>
       <h2>数据怎么流</h2><div class="card small"><dl class="kv">
         <dt>外部 agent 写</dt><dd><code>./vvl add &lt;类型&gt; --by &lt;员工 id&gt; --json '{...}'</code>，或把 JSON 文件放进 <code>inbox/&lt;员工 id&gt;/</code></dd>
         <dt>数据库</dt><dd><code>db/*.jsonl</code>，一行一条记录，只追加不修改</dd>
         <dt>总监写</dt><dd><code>plans/</code>（每日计划）、<code>production/</code>（分镜和成片）、<code>outbox/</code>（待发布）</dd>
-        <dt>你看</dt><dd>这个看板（<code>./vvl start</code>），或让秘书发截图（<code>./vvl shot</code>）</dd></dl></div>`;
+        <dt>你看</dt><dd>这个看板（<code>./vvl start</code>），或让产品经理发截图（<code>./vvl shot</code>）</dd></dl></div>`;
   },
 
   inbox() {
     const list = (rows, f) => rows.length ? `<div class="card"><ul class="plain">${rows.slice().reverse().map(f).join("")}</ul></div>` : empty("无");
     return `<h1>老板的话 / 异常</h1>
-      <h2>老板的话（秘书记录）</h2>${list(D.notes, n => `<li style="margin:8px 0">${esc(n.text)} <span class="small muted">${when(n.at)}${n.topic ? " · " + esc(n.topic) : ""}</span></li>`)}
+      <h2>老板的话（产品经理记录）</h2>${list(D.notes, n => `<li style="margin:8px 0">${esc(n.text)} <span class="small muted">${when(n.at)}${n.topic ? " · " + esc(n.topic) : ""}</span></li>`)}
       <h2>异常</h2>${list(D.incidents, i => `<li style="margin:8px 0"><span class="tag hot">${esc(i.kind)}</span>${esc(i.by)} · ${PLAT[i.platform] || ""}：${esc(i.detail)}
         <span class="small muted">${when(i.at)}${i.action_taken ? " · 处理：" + esc(i.action_taken) : ""}</span></li>`)}
       ${D.rejected_files ? `<p class="small muted">${D.rejected_files} 个文件格式不对，被放进了 <code>inbox/_rejected/</code>，旁边的 .error.txt 写了原因。</p>` : ""}`;
@@ -380,7 +425,7 @@ function render() {
   const view = views[page] || views[""];
   document.getElementById("app").innerHTML = view(rest.join("/"));
   const top = {post: "posts", inbox: "", need: ""}[page] ?? page;
-  document.getElementById("nav").innerHTML = PAGES.map(([k, label]) => `<a href="#/${k}" class="${k === top ? "on" : ""}">${label}</a>`).join("");
+  document.getElementById("nav").innerHTML = PAGES.map(([k, label, icon]) => `<a href="#/${k}" class="${k === top ? "on" : ""}"><i>${icon}</i>${label}</a>`).join("");
   document.getElementById("proj").textContent = D.project.name;
   window.scrollTo(0, 0);
 }

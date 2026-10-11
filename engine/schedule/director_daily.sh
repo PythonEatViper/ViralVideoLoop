@@ -1,6 +1,6 @@
 #!/bin/sh
 # The director's unattended daily run. Started by launchd (see `./vvl schedule install`),
-# or by hand / by the secretary: sh engine/schedule/director_daily.sh
+# or by hand / by the product manager: sh engine/schedule/director_daily.sh
 # It may read and write files in this repo and run ./vvl. It cannot spend credits or publish.
 export PATH="/usr/local/bin:/opt/homebrew/bin:/opt/miniconda3/bin:/usr/bin:/bin"
 cd "$(dirname "$0")/../.." || exit 1

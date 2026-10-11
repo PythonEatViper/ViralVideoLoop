@@ -16,7 +16,7 @@ PLATFORMS = ["tiktok", "reels", "youtube", "x", "news", "other"]
 TYPES = {
     "signal": {
         "desc": "Something seen in the outside world: a viral video, a trend, a sound, a news item.",
-        "writers": ["scout"],
+        "writers": ["seller", "pm"],
         "key": ["url"],
         "required": {
             "platform": ("str", "where it was seen"),
@@ -105,7 +105,7 @@ TYPES = {
     },
     "incident": {
         "desc": "Something went wrong or a platform pushed back. Always report these.",
-        "writers": ["scout", "seller", "secretary"],
+        "writers": ["seller", "pm"],
         "key": [],
         "required": {
             "platform": ("str", ""),
@@ -123,15 +123,15 @@ TYPES = {
     },
     "heartbeat": {
         "desc": "A staff member reporting that it ran, and its current state.",
-        "writers": ["scout", "seller", "secretary", "director"],
+        "writers": ["seller", "pm", "director"],
         "key": ["by"],
         "required": {"status": ("str", "")},
         "optional": {"note": ("str", "what was done in this run, one line")},
         "enums": {"status": ["ok", "throttled", "paused"]},
     },
     "note": {
-        "desc": "Something the boss said or decided, passed on by the secretary.",
-        "writers": ["secretary"],
+        "desc": "Something the boss said or decided, passed on by the product manager.",
+        "writers": ["pm"],
         "key": [],
         "required": {"text": ("str", "what the boss said, close to verbatim")},
         "optional": {
@@ -229,7 +229,7 @@ TYPES = {
     },
     "review": {
         "desc": "A decision waiting for the boss.",
-        "writers": ["director", "secretary"],
+        "writers": ["director", "pm"],
         "key": [],
         "required": {"gate": ("str", "which review gate"), "title": ("str", ""),
                      "status": ("str", "")},
@@ -245,7 +245,7 @@ TYPES = {
     },
     "todo": {
         "desc": "A task for a human (or a named staff member) that the loop cannot do itself.",
-        "writers": ["director", "secretary"],
+        "writers": ["director", "pm"],
         "key": [],
         "required": {"text": ("str", ""), "status": ("str", "")},
         "optional": {
