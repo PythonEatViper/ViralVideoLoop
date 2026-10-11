@@ -109,7 +109,7 @@ runner = "grok"
 reports_to = "director"
 platform = "tiktok"
 duty = "这个账号的一切：发布、抓数据和截图、收集评论、侦查 TikTok 上的爆款和热门音乐"
-schedule = "每小时一次（每天发布一条，窗口 07:00-09:00；侦查早晚各一次）"
+schedule = "每小时一次，整点后 5 分（每天发布一条，窗口 07:00-09:00；侦查早晚各一次）"
 max_silence_hours = 6
 watch = "TikTok Creative Center (US: trending videos, hashtags, songs); hashtags #screentime #doomscrolling #phoneaddiction #relatable #3danimation #brainrot; AI-animated series and object-character skits; accounts doing 'apps as people' or 'POV your phone' formats"
 
@@ -121,8 +121,8 @@ runner = "grok"
 reports_to = "director"
 platform = "reels"
 duty = "同上，Facebook Reels（Cui Ray）"
-schedule = "每天 09:30、21:30"
-max_silence_hours = 50
+schedule = "每小时一次，整点后 5 分（每天发布一条，窗口 07:00-09:00；侦查早晚各一次）"
+max_silence_hours = 6
 enabled = true
 watch = "Instagram Reels explore (US); the same topics as on TikTok; formats that work here but not on TikTok"
 
@@ -134,8 +134,8 @@ runner = "grok"
 reports_to = "director"
 platform = "youtube"
 duty = "同上，YouTube Shorts"
-schedule = "每天 09:45、21:45"
-max_silence_hours = 50
+schedule = "每小时一次，整点后 5 分（每天发布一条，窗口 07:00-09:00；侦查早晚各一次）"
+max_silence_hours = 6
 enabled = true
 watch = "YouTube Shorts trending (US); the same topics as on TikTok; formats that work here but not on TikTok"
 
