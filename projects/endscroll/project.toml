@@ -23,7 +23,7 @@ docs = [
 ]
 
 [cadence]
-posts_every_days = 2
+posts_every_days = 1                     # boss, 2026-10-11: one video a day
 publish_window = "07:00-09:00"          # = US Eastern 7-9 PM the evening before (08:00-10:00 after US clocks change on Nov 1)
 metric_snapshots_hours = [1, 6, 24, 72, 168]
 weekly_review = "Sunday"
@@ -108,7 +108,7 @@ runner = "grok"
 reports_to = "director"
 platform = "tiktok"
 duty = "这个账号的一切：发布、抓数据和截图、收集评论、侦查 TikTok 上的爆款和热门音乐"
-schedule = "每小时一次（发布窗口 07:00-09:00；侦查早晚各一次）"
+schedule = "每小时一次（每天发布一条，窗口 07:00-09:00；侦查早晚各一次）"
 max_silence_hours = 6
 watch = "TikTok Creative Center (US: trending videos, hashtags, songs); hashtags #screentime #doomscrolling #phoneaddiction #relatable #3danimation #brainrot; AI-animated series and object-character skits; accounts doing 'apps as people' or 'POV your phone' formats"
 
