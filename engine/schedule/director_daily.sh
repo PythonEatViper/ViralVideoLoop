@@ -7,6 +7,6 @@ cd "$(dirname "$0")/../.." || exit 1
 echo "=== director run $(date '+%Y-%m-%d %H:%M') ==="
 ./vvl ingest
 ./vvl prompt director | claude -p "Do your daily run now, following the role description on stdin. Today is $(date '+%A %Y-%m-%d')." \
-  --allowedTools "Read" "Write" "Edit" "Glob" "Grep" "Bash(./vvl:*)" "Bash($PWD/vvl:*)" "Bash(ls:*)" "Bash(cat:*)" "Bash(date:*)" \
+  --allowedTools "Read" "Write" "Edit" "Glob" "Grep" "Bash(./vvl:*)" "Bash($PWD/vvl:*)" "Bash(ls:*)" "Bash(cat:*)" "Bash(date:*)" "Bash(git status:*)" "Bash(git diff:*)" \
   --max-turns 60
 ./vvl build
