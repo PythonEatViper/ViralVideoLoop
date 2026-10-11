@@ -12,3 +12,4 @@ __pycache__/
 projects/*/dashboard.html
 projects/*/inbox/_done/
 engine/schedule/director.log
+chat.command

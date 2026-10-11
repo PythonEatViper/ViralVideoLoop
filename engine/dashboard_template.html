@@ -101,6 +101,14 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .empty { color: var(--muted); padding: 18px; text-align: center; border: 1px dashed var(--line); border-radius: 12px; }
 select { font: inherit; padding: 3px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
 svg text { fill: var(--muted); font-size: 11px; }
+#chat-btn { position: fixed; right: 22px; bottom: 22px; z-index: 9; width: 58px; height: 58px; border-radius: 50%; border: 0; cursor: pointer; font-size: 26px;
+            color: #fff; background: linear-gradient(135deg, #f76707, #e64980 60%, #7048e8); box-shadow: 0 8px 24px rgba(230, 73, 128, .45); transition: transform .15s; }
+#chat-btn:hover { transform: scale(1.08); }
+#chat { position: fixed; right: 22px; bottom: 92px; z-index: 9; width: min(360px, calc(100vw - 44px)); background: var(--card); border: 1px solid var(--line);
+        border-radius: 18px; box-shadow: 0 16px 48px rgba(0, 0, 0, .28); padding: 16px; }
+#chat textarea { width: 100%; min-height: 84px; resize: vertical; font: inherit; padding: 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); margin: 10px 0; }
+#chat button { font: inherit; font-weight: 600; color: #fff; border: 0; border-radius: 999px; padding: 8px 18px; cursor: pointer; background: linear-gradient(135deg, #f76707, #e64980); }
+#chat .quick { display: flex; gap: 6px; flex-wrap: wrap; } #chat .quick a { cursor: pointer; }
 @media (max-width: 600px) { .kv { grid-template-columns: 1fr; } .big { font-size: 26px; } }
 </style>
 </head>
@@ -113,6 +121,14 @@ svg text { fill: var(--muted); font-size: 11px; }
   <nav id="nav"></nav>
 </div></header>
 <main id="app"></main>
+<button id="chat-btn" title="和总监（Claude）聊这个项目" onclick="document.getElementById('chat').hidden^=1">💬</button>
+<div id="chat" hidden>
+  <div class="person" style="margin:0"><span class="avatar" style="--c:var(--violet)">🧠</span><div><b>产品技术总监</b>
+    <div class="small muted">Claude · 这个项目唯一的一场对话，每次都接着上次聊</div></div></div>
+  <textarea id="chat-msg" placeholder="想说什么？留空就是「汇报一下现在的情况」"></textarea>
+  <div class="quick small"><a class="tag" onclick="chatFill('第一周策略我同意，开始写下一集的分镜')">同意策略</a><a class="tag" onclick="chatFill('昨天那条视频的数据怎么样？下一条该改什么？')">看数据</a><a class="tag" onclick="chatFill('我有个新点子：')">新点子</a></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span id="chat-note" class="small muted">会在「终端」里打开</span><button onclick="chatSend()">发给总监 →</button></div>
+</div>
 <script>
 const D = /*DATA*/null;
 const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "视频", "🎬"], ["signals", "热点", "🔥"], ["ideas", "点子", "💡"],
@@ -136,7 +152,9 @@ const ago = t => { if (!t) return "从未"; const h = (Date.parse(D.generated_at
   return h < 1 ? Math.round(h * 60) + " 分钟前" : h < 48 ? Math.round(h) + " 小时前" : Math.round(h / 24) + " 天前"; };
 const link = u => /^https?:\/\//.test(u || "") ? `<a href="${esc(u)}" target="_blank" rel="noopener" style="color:var(--accent)">打开 ↗</a>` : "";
 const empty = text => `<div class="empty">${text}</div>`;
-const cmd = c => `<span class="cmd" title="点击复制" onclick="navigator.clipboard.writeText(this.textContent);this.style.borderColor='var(--ok)'">${esc(c)}</span>`;
+// Commands are shown short and copied with the absolute path, so they run from any directory.
+const full = c => c.replace(/\.\/vvl/g, D.repo + "/vvl");
+const cmd = c => `<span class="cmd" title="点击复制（复制的是带完整路径的命令）" data-c="${esc(full(c))}" onclick="navigator.clipboard.writeText(this.dataset.c);this.style.borderColor='var(--ok)'">${esc(c)}</span>`;
 
 function md(text) {
   const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`(.+?)`/g, "<code>$1</code>");
@@ -418,6 +436,23 @@ function retentionChart(points) {
   const ticks = points.filter((_, i) => i % Math.ceil(points.length / 8) === 0).map(p => `<text x="${x(p[0]) - 6}" y="${H - 8}">${p[0]}s</text>`).join("");
   return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px">${grid}${ticks}
     <polyline fill="none" stroke="var(--accent)" stroke-width="2.5" points="${points.map(p => `${x(p[0])},${y(p[1])}`).join(" ")}"/></svg>`;
+}
+
+function chatFill(text) { const box = document.getElementById("chat-msg"); box.value = text; box.focus(); }
+async function chatSend() {
+  const message = document.getElementById("chat-msg").value.trim(), note = document.getElementById("chat-note");
+  const fallback = `${D.repo}/vvl --project ${D.project_id} chat ${message ? JSON.stringify(message) : ""}`.trim();
+  try {
+    if (!location.protocol.startsWith("http")) throw 0;
+    const r = await fetch(`/api/chat?project=${D.project_id}`, {method: "POST", headers: {"X-VVL": "1"}, body: JSON.stringify({message})});
+    if (!r.ok) throw 0;
+    note.textContent = "已在「终端」里打开 ✓";
+    document.getElementById("chat-msg").value = "";
+  } catch (e) {
+    // Opened as a plain file (no local server): hand over the command instead.
+    await navigator.clipboard.writeText(fallback).catch(() => {});
+    note.innerHTML = `这个页面是直接打开的文件，不能启动终端。命令已复制，粘贴到终端运行即可；或用 <code>vvl start</code> 打开看板。`;
+  }
 }
 
 function render() {

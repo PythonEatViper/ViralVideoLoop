@@ -7,10 +7,14 @@ import argparse
 import hashlib
 import json
 import os
+import shlex
 import shutil
+import socket
 import subprocess
 import sys
+import time
 import tomllib
+import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -18,6 +22,7 @@ from schema import TYPES
 
 REPO = Path(__file__).resolve().parents[1]
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+PORT = 8765  # local dashboard server
 KINDS = {"str": str, "int": int, "num": (int, float), "bool": bool, "list": list, "dict": dict,
          "time": str}
 
@@ -361,7 +366,8 @@ def cmd_prompt(args, pdir, cfg):
         text = text.replace("{{%s}}" % key, value)
     for optional in ("platform", "watch"):
         text = text.replace("{{%s}}" % optional, "(not set)")
-    print(text)
+    # Absolute path, so the commands work from whatever directory the bot happens to be in.
+    print(text.replace("./vvl", f"{REPO}/vvl"))
 
 
 def cmd_staff(args, pdir, cfg):
@@ -425,8 +431,100 @@ def cmd_build(args, pdir, cfg):
     return out
 
 
+def server_running():
+    with socket.socket() as sock:
+        sock.settimeout(0.3)
+        return sock.connect_ex(("127.0.0.1", PORT)) == 0
+
+
 def cmd_start(args, pdir, cfg):
-    subprocess.run(["open", str(cmd_build(args, pdir, cfg))], check=True)
+    """Open the live dashboard; start the local server first if it is not running."""
+    if not server_running():
+        subprocess.Popen([sys.executable, __file__, "serve"], start_new_session=True,
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        for _ in range(30):
+            if server_running():
+                break
+            time.sleep(0.1)
+    subprocess.run(["open", f"http://localhost:{PORT}/?project={pdir.name}"], check=True)
+    print(f"http://localhost:{PORT}/?project={pdir.name}")
+
+
+def cmd_stop(args, pdir, cfg):
+    subprocess.run(["pkill", "-f", f"{__file__} serve"])
+    print("stopped")
+
+
+def cmd_serve(args, pdir, cfg):
+    """Serve the dashboard on localhost: rebuilt on every load, and able to open the chat."""
+    import dashboard
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+    from urllib.parse import parse_qs, urlparse
+
+    class Handler(BaseHTTPRequestHandler):
+        def project(self):
+            name = parse_qs(urlparse(self.path).query).get("project", [pdir.name])[0]
+            return project_dir(name if name.replace("_", "").isalnum() else pdir.name)
+
+        def do_GET(self):
+            if urlparse(self.path).path != "/":
+                return self.send_error(404)
+            target = self.project()
+            body = dashboard.build(target, config(target)).read_bytes()
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(body)
+
+        def do_POST(self):
+            # The custom header keeps other web pages from triggering this.
+            if urlparse(self.path).path != "/api/chat" or self.headers.get("X-VVL") != "1":
+                return self.send_error(403)
+            length = int(self.headers.get("Content-Length", 0))
+            message = json.loads(self.rfile.read(length) or "{}").get("message", "")
+            open_chat(self.project(), message[:4000])
+            self.send_response(204)
+            self.end_headers()
+
+        def log_message(self, *a):
+            pass
+
+    ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+
+
+def chat_command(pdir, message):
+    """Shell line that opens this project's one conversation with the director (Claude).
+
+    The session id is derived from the project path, so every click lands in the same
+    conversation; the first time, the session is created and briefed.
+    """
+    cfg = config(pdir)
+    session = str(uuid.uuid5(uuid.NAMESPACE_URL, str(pdir)))
+    ask = message or "汇报一下现在的情况，以及需要我做什么。"
+    intro = (f"You are the director (产品技术总监) of ViralVideoLoop, project {cfg['name']}. "
+             f"This is the boss's standing conversation with you about this project. "
+             f"Read START_HERE.md, run `./vvl --project {pdir.name} prompt director` for your role and "
+             f"`./vvl --project {pdir.name} status` for the current state, then answer the boss in Chinese. "
+             f"The boss says: {ask}")
+    name = f"VVL · {cfg['name']}"
+    resume = f"claude --resume {session}" + (f" {shlex.quote(message)}" if message else "")
+    create = f"claude --session-id {session} -n {shlex.quote(name)} {shlex.quote(intro)}"
+    return f"cd {shlex.quote(str(REPO))} && ({resume} || {create})"
+
+
+def open_chat(pdir, message=""):
+    script = pdir / "chat.command"
+    script.write_text("#!/bin/sh\n" + chat_command(pdir, message) + "\n")
+    script.chmod(0o755)
+    subprocess.run(["open", str(script)], check=True)  # opens Terminal and runs it
+
+
+def cmd_chat(args, pdir, cfg):
+    message = " ".join(args.message)
+    if args.here:
+        os.execvp("sh", ["sh", "-c", chat_command(pdir, message)])
+    open_chat(pdir, message)
+    print("opened in Terminal")
 
 
 def cmd_shot(args, pdir, cfg):
@@ -473,7 +571,12 @@ def main():
     sub.add_parser("help", help="show this list")
     command("status", cmd_status, "where everything stands, as text")
     command("build", cmd_build, "regenerate dashboard.html and STATE.md")
-    command("start", cmd_start, "build the dashboard and open it in the browser")
+    command("start", cmd_start, "open the live dashboard (starts a small local server)")
+    command("stop", cmd_stop, "stop the local dashboard server")
+    command("serve", cmd_serve, "run the dashboard server in the foreground")
+    p = command("chat", cmd_chat, "open this project's conversation with the director (Claude)")
+    p.add_argument("message", nargs="*", help="optional first message")
+    p.add_argument("--here", action="store_true", help="run in this terminal instead of a new window")
     p = command("shot", cmd_shot, "screenshot the dashboard to a PNG")
     p.add_argument("--page", default="", help="page to capture, e.g. cost, posts, team (default: home)")
     p.add_argument("--out")

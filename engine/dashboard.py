@@ -16,6 +16,8 @@ def build(pdir, cfg):
     rejected = len(list((pdir / "inbox").glob("_rejected/*/*.error.txt")))
     data = {
         "generated_at": vvl.now().isoformat(),
+        "repo": str(vvl.REPO),
+        "project_id": pdir.name,
         "project": {k: cfg[k] for k in ("name", "brief", "cadence", "budget", "rules", "gates")},
         "staff": vvl.staff_status(pdir, cfg),
         "posts": vvl.load(pdir, "post"),
