@@ -1,0 +1,24 @@
+{
+  "id": "2026-10-13_app_island_ep03",
+  "format": "video",
+  "platforms": ["tiktok", "reels", "youtube"],
+  "status": "ready",
+  "video": "video.mp4",
+  "cover": "cover.jpg",
+  "cover_time_seconds": 4.0,
+  "caption_file": "caption.txt",
+  "pinned_comment_file": "pinned_comment.txt",
+  "ai_generated_label": true,
+  "add_music": false,
+  "privacy": "public",
+  "allow_comments": true,
+  "allow_duet": true,
+  "allow_stitch": true,
+  "publish_window": {
+    "start": "2026-10-12T19:00:00-04:00",
+    "end": "2026-10-12T21:00:00-04:00",
+    "note": "US Eastern prime time 7-9 PM on Oct 12 = Beijing 07:00-09:00 on 2026-10-13"
+  },
+  "duration_seconds": 10.0,
+  "resolution": "1080x1920"
+}
