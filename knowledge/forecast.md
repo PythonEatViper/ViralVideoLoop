@@ -1,0 +1,46 @@
+# 推流预测：用早期数据判断平台会不会继续推
+
+2026-10-12 建立。代码在 `engine/predict.py`，命令 `./vvl predict`，看板在每条视频的详情页。
+
+## 依据
+
+- 推荐流先把新视频给一小批人看，这批人看得久、重看、分享，才扩大分发。推销员从后台抄回来的早期数据，量的就是这批人的反应。
+- 平台不公布阈值。TikTok 从未公布过信号的排序清单；Instagram 负责人公开说过 Reels 最看重观看时长、每次触达的转发数、每次触达的点赞数；YouTube 在后台直接给「观看 vs 划走」。
+- 学术研究（YouTube 数据）：视频早期的相对互动水平很稳定，早期表现能预测后续热度，但两条早期数据相近的视频之后也可能走向不同。所以这是概率判断，不是保证。
+- 网上流传的具体数字（例如「完播 70% 才会爆」「3 秒留存差会少 60–80% 曝光」）来自创作者工具和营销博客，没有平台背书，只当起点。
+
+## 模型
+
+每个信号按两条线分成弱 / 一般 / 强，换算成 0–100 分后按权重加权平均。没有数据的信号不参与，权重重新归一；播放不到 100 或有数据的权重不到 40% 时不下结论。
+
+| 信号 | 权重 | 弱（低于） | 强（达到） | 分界的依据 |
+| --- | --- | --- | --- | --- |
+| 3 秒留存（YouTube 用「观看」占比） | 30 | 55% | 70% | 第三方指南 |
+| 平均观看 / 时长 | 20 | 40% | 80% | 我们的估计 |
+| 完播率 | 15 | 30% | 60% | 第三方指南 |
+| 分享 / 播放 | 12 | 0.2% | 1% | 我们的估计 |
+| 收藏 / 播放 | 8 | 0.2% | 1% | 我们的估计 |
+| 点赞 / 播放 | 6 | 3% | 8% | 我们的估计 |
+| 评论 / 播放 | 5 | 0.1% | 0.5% | 我们的估计 |
+| 新关注 / 播放 | 4 | 0.1% | 0.5% | 我们的估计 |
+
+总分 70 以上判「大概率继续推」，45–70「一般」，45 以下「大概率停推」。
+
+## 已知的局限
+
+- 重看率很重要，但后台不直接给。平均观看时长超过视频时长时，「平均观看 / 时长」会超过 100%，间接反映重看。
+- 评论数包含我们自己发的置顶评论，播放少的时候会把评论率抬高。
+- 完播率的分界应该随视频长度变化，现在是一个固定值。
+- 所有分界都还没用我们自己的数据验证过。
+
+## 怎么校准
+
+预测在快照入库时写入 `db/forecast.jsonl` 并冻结。每周复盘运行 `./vvl predict --check`，把 1 小时、6 小时的预测和 72 小时的实际播放对照；判「停推」的还在涨，或判「继续推」的停了，就按我们自己的数据改 `engine/predict.py` 里的分界。
+
+来源：
+- https://www.socialync.io/blog/tiktok-algorithm-2026-what-works-now
+- https://posteverywhere.ai/blog/how-the-tiktok-algorithm-works
+- https://posteverywhere.ai/blog/how-the-instagram-algorithm-works
+- https://www.creatoressentials.com/glossary/viewed-vs-swiped-away/
+- https://arxiv.org/pdf/1709.02541 （Beyond Views: Measuring and Predicting Engagement in Online Videos）
+- https://www.researchgate.net/publication/266653405_Using_early_view_patterns_to_predict_the_popularity_of_YouTube_videos

@@ -1,0 +1,80 @@
+"""Push forecast: will the platform keep distributing this post?
+
+Recommendation feeds show a new post to a small test audience and widen distribution when
+that audience watches, rewatches and shares. The early numbers a seller copies from the
+analytics page are the same signals, so a snapshot can be scored.
+
+The thresholds below are STARTING POINTS. "guide" ones come from third-party creator guides
+(no platform publishes its real thresholds); "guess" ones are the director's first estimates.
+knowledge/forecast.md lists the sources. Once a project has enough measured posts, compare
+each forecast with what happened (`vvl predict --check`) and adjust the numbers here.
+"""
+
+# name: (label, weight, weak below, strong from, basis)
+SIGNALS = {
+    "hold": ("3 秒留存", 30, 0.55, 0.70, "guide"),
+    "watch": ("平均观看 / 时长", 20, 0.40, 0.80, "guess"),
+    "completion": ("完播率", 15, 0.30, 0.60, "guide"),
+    "shares": ("分享 / 播放", 12, 0.002, 0.010, "guess"),
+    "saves": ("收藏 / 播放", 8, 0.002, 0.010, "guess"),
+    "likes": ("点赞 / 播放", 6, 0.03, 0.08, "guess"),
+    "comments": ("评论 / 播放", 5, 0.001, 0.005, "guess"),
+    "follows": ("新关注 / 播放", 4, 0.001, 0.005, "guess"),
+}
+MIN_VIEWS = 100       # below this, rates are noise
+MIN_COVERAGE = 0.4    # share of the total weight that must have data
+
+
+def values(metric, duration_s):
+    """The signal values a snapshot contains. Missing ones are left out, never guessed."""
+    views = metric.get("views") or 0
+    out = {}
+    # YouTube reports "viewed vs swiped away"; it measures the same decision as a 3-second hold.
+    hold = metric.get("hold_3s_rate", metric.get("viewed_rate"))
+    if hold is not None:
+        out["hold"] = hold
+    if metric.get("avg_watch_s") is not None and duration_s:
+        out["watch"] = metric["avg_watch_s"] / duration_s
+    if metric.get("completion_rate") is not None:
+        out["completion"] = metric["completion_rate"]
+    if views:
+        for name, field in (("shares", "shares"), ("saves", "saves"), ("likes", "likes"),
+                            ("comments", "comments"), ("follows", "new_followers")):
+            if metric.get(field) is not None:
+                out[name] = metric[field] / views
+    return out
+
+
+def points(value, weak, strong):
+    """0-100: 40 at the weak line, 70 at the strong line, 100 at 1.5x the strong line."""
+    if value < weak:
+        return 40 * value / weak
+    if value < strong:
+        return 40 + 30 * (value - weak) / (strong - weak)
+    return min(100, 70 + 30 * (value - strong) / (0.5 * strong))
+
+
+def forecast(metric, duration_s):
+    """Score one snapshot. Returns the record fields of a `forecast`."""
+    signals, total, weight_sum = [], 0, 0
+    for name, value in values(metric, duration_s).items():
+        label, weight, weak, strong, basis = SIGNALS[name]
+        score = points(value, weak, strong)
+        level = "weak" if value < weak else "strong" if value >= strong else "ok"
+        signals.append({"name": name, "label": label, "value": round(value, 4), "level": level,
+                        "points": round(score),
+                        "weak": weak, "strong": strong, "weight": weight, "basis": basis})
+        total += score * weight
+        weight_sum += weight
+    coverage = weight_sum / sum(s[1] for s in SIGNALS.values())
+    views = metric.get("views") or 0
+    if views < MIN_VIEWS or coverage < MIN_COVERAGE:
+        verdict, score = "unknown", None
+    else:
+        score = round(total / weight_sum)
+        verdict = "push" if score >= 70 else "hold" if score >= 45 else "stall"
+    worst = sorted((s for s in signals if s["level"] == "weak"), key=lambda s: -s["weight"])
+    return {"post_id": metric["post_id"], "platform": metric["platform"],
+            "age_hours": metric["age_hours"], "views": views, "score": score, "verdict": verdict,
+            "coverage": round(coverage, 2), "signals": signals,
+            "weakest": worst[0]["name"] if worst else ""}

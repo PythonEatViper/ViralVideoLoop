@@ -95,6 +95,7 @@ ViralVideoLoop/
 | `./vvl list <类型> [--where k=v] [--sort 字段] [--days N] [--json]` | 查询 |
 | `./vvl due` / `./vvl outbox` | 到期该抓的数据快照 / 等待发布的视频 |
 | `./vvl cost` | 成本汇总 |
+| `./vvl predict [--check]` | 每个数据快照的推流预测；`--check` 同时显示现在的播放，用来检验预测 |
 | `./vvl bootstrap <员工 id>` | 新建 bot 时粘贴一次的启动提示词 |
 | `./vvl prompt <员工 id>` | 某个员工当前的完整指令（bot 每次运行都会执行它） |
 | `./vvl instruct <员工 id 或 everyone> "……" --by <谁>` | 给某个员工或所有人加一条追加指令 |
@@ -103,7 +104,7 @@ ViralVideoLoop/
 
 ## 数据接口
 
-- 所有数据都是「记录」：一个 JSON 对象，有 `type`。一共 16 种，定义在 `engine/schema.py`，`./vvl schema` 可以看。
+- 所有数据都是「记录」：一个 JSON 对象，有 `type`。一共 17 种，定义在 `engine/schema.py`，`./vvl schema` 可以看。
 - 写入只有两条路：`./vvl add`（推荐，当场告诉你哪里错），或把 JSON 文件放进 `inbox/<员工 id>/` 等 `./vvl ingest`。
 - 数据库是 `db/<类型>.jsonl`，只追加。同一个 id 的最后一行是当前版本。
 - 去重靠「键」：比如热点的键是链接，同一条链接再报一次只会更新数字。

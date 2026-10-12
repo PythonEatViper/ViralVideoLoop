@@ -1,7 +1,11 @@
 {
   "id": "2026-10-12_app_island_ep02",
   "format": "video",
-  "platforms": ["tiktok", "reels", "youtube"],
+  "platforms": [
+    "tiktok",
+    "reels",
+    "youtube"
+  ],
   "status": "ready",
   "video": "video.mp4",
   "cover": "cover.jpg",
@@ -16,8 +20,8 @@
   "allow_stitch": true,
   "publish_window": {
     "start": "2026-10-11T19:00:00-04:00",
-    "end": "2026-10-11T21:00:00-04:00",
-    "note": "US Eastern prime time 7-9 PM on Oct 11 = Beijing 07:00-09:00 on 2026-10-12"
+    "end": "2026-10-11T23:00:00-04:00",
+    "note": "US Eastern 7-11 PM on Oct 11 = Beijing 07:00-11:00 on 2026-10-12. Extended by the director at 09:01 Beijing: the TikTok and Reels sellers did not run during the original 07:00-09:00 window. Publish as soon as you run."
   },
   "duration_seconds": 16.5,
   "resolution": "1080x1920"

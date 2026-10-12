@@ -67,6 +67,15 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .need li { margin: 6px 0; }
 ul.plain { list-style: none; margin: 0; padding: 0; }
 .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); margin-right: 4px; white-space: nowrap; }
+.verdict { display: inline-flex; gap: 5px; align-items: center; font-size: 12.5px; font-weight: 600; padding: 1px 10px; border-radius: 999px; white-space: nowrap;
+  color: var(--ink); border: 1px solid color-mix(in srgb, var(--c) 55%, var(--line)); background: color-mix(in srgb, var(--c) 14%, transparent); }
+.verdict i { font-style: normal; color: var(--c); }
+.sig { display: grid; grid-template-columns: 118px 1fr 132px; gap: 10px; align-items: center; font-size: 13px; margin: 8px 0; }
+.sig .track { position: relative; height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--c) 18%, transparent); }
+.sig .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--c); min-width: 3px; }
+.sig .tick { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: var(--card); outline: 1px solid var(--muted); opacity: .75; }
+.sig .val { text-align: right; white-space: nowrap; }
+@media (max-width: 560px) { .sig { grid-template-columns: 96px 1fr 104px; gap: 6px; } }
 .tag.hot { border-color: var(--accent); color: var(--accent); }
 .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; background: var(--off); }
 .dot.ok { background: var(--ok); } .dot.throttled { background: var(--warn); }
@@ -183,6 +192,26 @@ function md(text) {
 }
 
 // Latest snapshot per post + platform, and per post overall (highest age).
+const LEVEL = {weak: ["▼", "弱", "var(--bad)"], ok: ["●", "一般", "var(--warn)"], strong: ["▲", "强", "var(--ok)"]};
+const VERDICT = {push: ["▲", "大概率继续推", "var(--ok)"], hold: ["●", "一般，慢慢涨或停", "var(--warn)"], stall: ["▼", "大概率停推", "var(--bad)"], unknown: ["…", "数据不足", "var(--off)"]};
+const rate = v => v >= 0.1 ? (v * 100).toFixed(0) + "%" : v >= 0.01 ? (v * 100).toFixed(1) + "%" : (v * 100).toFixed(2) + "%";
+const verdictChip = f => { const [icon, text, c] = VERDICT[f.verdict]; return `<span class="verdict" style="--c:${c}"><i>${icon}</i>${text}${f.score != null ? " · " + f.score : ""}</span>`; };
+// Newest forecast per platform for a post; the one with the most data first.
+function forecastsFor(postId) {
+  const best = {};
+  D.forecasts.filter(f => f.post_id === postId).forEach(f => { if (!best[f.platform] || f.age_hours > best[f.platform].age_hours) best[f.platform] = f; });
+  return Object.values(best).sort((a, b) => (b.coverage || 0) - (a.coverage || 0));
+}
+function forecastCard(f, earlier) {
+  const meters = (f.signals || []).slice().sort((a, b) => b.weight - a.weight).map(s => { const [icon, word, c] = LEVEL[s.level];
+    return `<div class="sig" style="--c:${c}" title="弱：低于 ${rate(s.weak)} · 强：${rate(s.strong)} 以上 · 权重 ${s.weight} · 依据：${s.basis === "guide" ? "第三方指南" : "我们的初始估计"}">
+      <span>${esc(s.label)}</span><span class="track"><span class="fill" style="width:${s.points}%"></span><span class="tick" style="left:40%"></span><span class="tick" style="left:70%"></span></span>
+      <span class="val"><b>${rate(s.value)}</b> <span class="muted">${icon} ${word}</span></span></div>`; }).join("");
+  return `<div class="card"><h3><span>${PLAT[f.platform]} · 发布后 ${f.age_hours}h · ${num(f.views)} 播放</span>${verdictChip(f)}</h3>
+    ${f.score != null ? `<div class="big">${f.score}<small>/ 100 · 用上了模型 ${pct(f.coverage)} 的信号</small></div>` : `<div class="small muted">播放不到 100，或后台给的指标太少（只覆盖模型的 ${pct(f.coverage)}），不下结论。</div>`}
+    ${meters || `<div class="small muted">这个快照里没有可用的指标。</div>`}
+    ${earlier.length ? `<div class="small muted" style="margin-top:8px">更早的预测：${earlier.map(e => `${e.age_hours}h ${VERDICT[e.verdict][1]}${e.score != null ? " " + e.score : ""}`).join(" · ")}</div>` : ""}</div>`;
+}
 function latestMetric(postId, platform) {
   return D.metrics.filter(m => m.post_id === postId && (!platform || m.platform === platform))
     .sort((a, b) => b.age_hours - a.age_hours)[0];
@@ -242,7 +271,8 @@ const views = {
         ${plan ? `<div class="md small">${md(plan.text.split("\n").filter(l => l.trim()).slice(0, 7).join("\n"))}</div>` : `<span class="muted">总监还没写今天的计划（每天 08:30）。</span>`}</a>
       <a class="card" href="#/posts"><h3><span>${ico("🎬", "var(--pink)")}最近一条视频</span> <span>${last ? esc(last.id) : ""}</span></h3>
         ${lm ? `<div class="big">${num(lm.views)}<small>播放 · ${lm.age_hours}h</small></div>
-          <div class="small muted">完播 ${pct(lm.completion_rate)} · 每千次播放 ${per1k(lm.shares, lm.views)} 分享 · ${per1k(lm.new_followers, lm.views)} 关注</div>`
+          <div class="small muted">完播 ${pct(lm.completion_rate)} · 每千次播放 ${per1k(lm.shares, lm.views)} 分享 · ${per1k(lm.new_followers, lm.views)} 关注</div>
+          ${forecastsFor(outboxId(last)).slice(0, 1).map(f => `<div style="margin-top:8px">${verdictChip(f)} <span class="small muted">${PLAT[f.platform]} ${f.age_hours}h 预测</span></div>`).join("")}`
           : `<span class="muted">还没有数据。${D.ready.length ? `有 ${D.ready.length} 条等待发布。` : ""}</span>`}
         ${D.due.length ? `<div class="small" style="color:var(--warn)">${D.due.length} 个数据快照到期未抓</div>` : ""}</a>
       <a class="card" href="#/cost"><h3><span>${ico("💰", "var(--teal)")}成本</span> <span>${esc(c.budget.plan || "")}</span></h3>
@@ -285,11 +315,12 @@ const views = {
     const rows = D.posts.slice().reverse().map(p => { const m = latestMetric(outboxId(p)) || {};
       return `<tr class="click" onclick="location.hash='#/post/${esc(p.id)}'"><td><b>${esc(p.title)}</b><div class="small muted">${esc(p.hypothesis || "")}</div></td>
         <td><span class="tag ${p.status === "review" ? "hot" : ""}">${(STAGES.find(s => s[0] === p.status) || [0, p.status])[1]}</span></td>
+        <td>${forecastsFor(outboxId(p)).slice(0, 1).map(verdictChip).join("") || `<span class="muted">–</span>`}</td>
         <td class="num">${num(m.views)}</td><td class="num">${pct(m.hold_3s_rate)}</td><td class="num">${pct(m.completion_rate)}</td>
         <td class="num">${per1k(m.shares, m.views)}</td><td class="num">${per1k(m.comments, m.views)}</td><td class="num">${per1k(m.new_followers, m.views)}</td>
         <td class="small muted">${m.age_hours != null ? m.age_hours + "h" : ""}</td></tr>`; }).join("");
     return `<h1>视频</h1><p class="sub">每条视频是一次实验。分享、评论、关注按每千次播放算，才能跨视频比较。点一行看详情。</p>
-      <div class="card scroll"><table><tr><th>视频 / 在测什么</th><th>状态</th><th class="num">播放</th><th class="num">3 秒留存</th><th class="num">完播</th>
+      <div class="card scroll"><table><tr><th>视频 / 在测什么</th><th>状态</th><th>推流预测</th><th class="num">播放</th><th class="num">3 秒留存</th><th class="num">完播</th>
         <th class="num">分享/千</th><th class="num">评论/千</th><th class="num">关注/千</th><th>数据时点</th></tr>${rows}</table></div>`;
   },
 
@@ -302,6 +333,7 @@ const views = {
     const curve = snaps.filter(m => m.retention && m.retention.length > 1).at(-1);
     const votes = {}; comments.forEach(c => { if (c.vote_for) votes[c.vote_for] = (votes[c.vote_for] || 0) + 1 + (c.likes || 0); });
     const spent = D.costs.filter(c => c.ref === p.id || c.ref === oid).reduce((s, c) => s + c.credits, 0);
+    const fcs = forecastsFor(oid);
     return `<div class="crumb"><a href="#/posts">视频</a> / ${esc(p.id)}</div><h1>${esc(p.title)}</h1>
       <p class="sub"><span class="tag">${esc(p.status)}</span>${p.result ? `<span class="tag hot">假设：${esc(p.result)}</span>` : ""}</p>
       <div class="grid">
@@ -314,6 +346,8 @@ const views = {
           <div class="small muted">AI 标识 ${x.ai_label_on ? "开" : "未确认"} · 置顶评论 ${x.pinned_comment_posted ? "已发" : "未确认"}${x.sound_added ? " · 音乐：" + esc(x.sound_added) : ""}</div></div>`).join("")
           : `<span class="muted">还没发布。</span>`}</div>
       </div>
+      ${fcs.length ? `<h2>推流预测：平台会不会继续推这条</h2><div class="grid">${fcs.map(f => forecastCard(f, D.forecasts.filter(e => e.post_id === oid && e.platform === f.platform && e.age_hours < f.age_hours).sort((a, b) => a.age_hours - b.age_hours))).join("")}</div>
+        <p class="small muted">每条横线上的两个刻度是「弱」和「强」的分界，鼠标停在一行上能看到具体数值。平台不公布真实阈值，这些分界是起点：有第三方指南的用指南，没有的是我们的估计，攒够几条视频后用自己的数据校准。预测在快照入库时写下并冻结，之后用实际结果检验。</p>` : ""}
       <h2>数据快照</h2>${snaps.length ? `<div class="card scroll"><table><tr><th>平台</th><th>时点</th><th class="num">播放</th><th class="num">赞</th><th class="num">评论</th><th class="num">分享</th><th class="num">收藏</th>
         <th class="num">新关注</th><th class="num">平均观看</th><th class="num">完播</th><th class="num">推荐页占比</th></tr>
         ${snaps.map(m => `<tr><td>${PLAT[m.platform]}</td><td>${m.age_hours}h</td><td class="num">${num(m.views)}</td><td class="num">${num(m.likes)}</td><td class="num">${num(m.comments)}</td>

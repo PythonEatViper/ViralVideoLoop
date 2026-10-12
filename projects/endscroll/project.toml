@@ -156,6 +156,15 @@ comments_per_day = 5
 watch = "r/nosurf, r/digitalminimalism, r/getdisciplined, r/productivity, r/GenZ, r/college, r/sleep (read each community's rules first); topics: doomscrolling, screen time, 'just 5 minutes', bedtime scrolling, deleting and reinstalling apps, app blockers that did not work"
 
 [[staff]]
+id = "analyst"
+name = "分析员"
+role = "analyst"
+runner = "script"
+reports_to = "director"
+duty = "每个数据快照入库时算一次推流预测（./vvl predict），不用模型"
+schedule = "每次生成看板时"
+
+[[staff]]
 id = "accountant"
 name = "会计"
 role = "accountant"

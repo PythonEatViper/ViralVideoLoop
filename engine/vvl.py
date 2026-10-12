@@ -516,6 +516,40 @@ def cmd_status(args, pdir, cfg):
     print(state_text(pdir, cfg))
 
 
+def post_durations(pdir):
+    """Outbox id -> video length in seconds."""
+    return {p.get("outbox") or p["id"]: p.get("duration_s") for p in load(pdir, "post")}
+
+
+def write_forecasts(pdir):
+    """Score every metric snapshot once. A forecast is frozen when first written, so it can
+    later be compared with what happened; a corrected snapshot gets a fresh one."""
+    import predict
+    done = {(f["post_id"], f["platform"], float(f["age_hours"])): f["at"] for f in load(pdir, "forecast")}
+    durations = post_durations(pdir)
+    for m in load(pdir, "metric"):
+        key = (m["post_id"], m["platform"], float(m["age_hours"]))
+        if key not in done or done[key] < m["at"]:
+            fields = predict.forecast(m, durations.get(m["post_id"]))
+            add_record(pdir, "forecast", {k: v for k, v in fields.items() if v is not None}, "analyst")
+
+
+def cmd_predict(args, pdir, cfg):
+    write_forecasts(pdir)
+    rows = sorted(load(pdir, "forecast"), key=lambda f: (f["post_id"], f["platform"], f["age_hours"]))
+    if args.json:
+        return print(json.dumps(rows, ensure_ascii=False, indent=1))
+    latest = {(m["post_id"], m["platform"]): m for m in
+              sorted(load(pdir, "metric"), key=lambda m: m["age_hours"])}
+    for f in rows:
+        now_views = latest[(f["post_id"], f["platform"])]["views"]
+        weak = ", ".join(s["label"] for s in f.get("signals", []) if s["level"] == "weak")
+        score = "--" if f.get("score") is None else f"{f['score']:.0f}"
+        grew = f"; views {f.get('views', 0)} -> {now_views} now" if args.check else ""
+        print(f"{f['post_id']}  {f['platform']:8} {f['age_hours']:>5}h  {f['verdict']:8} score {score:>3}  "
+              f"coverage {f.get('coverage', 0):.0%}{grew}" + (f"  weak: {weak}" if weak else ""))
+
+
 def cmd_build(args, pdir, cfg):
     import dashboard
     out = dashboard.build(pdir, cfg)
@@ -735,6 +769,9 @@ def main():
     p.add_argument("--by", help="who is passing it on (default: boss)")
     p = command("schema", cmd_schema, "print the record formats")
     p.add_argument("type", nargs="?", choices=TYPES)
+    p = command("predict", cmd_predict, "push forecast for every snapshot (--check: compare with views now)")
+    p.add_argument("--check", action="store_true")
+    p.add_argument("--json", action="store_true")
     p = command("schedule", cmd_schedule, "install/remove the daily director run")
     p.add_argument("action", choices=["install", "remove", "status"])
     p.add_argument("--time", default="08:30")
