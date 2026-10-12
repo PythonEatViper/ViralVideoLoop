@@ -1,10 +1,43 @@
 {
-  "clips": [{"file": "shots/01_lullaby.mp4", "end": 10.8}],
+  "clips": [
+    {
+      "file": "shots/01_lullaby.mp4",
+      "end": 10.8,
+      "audio_from": "shots/takes/01_lullaby_a_softened.wav",
+      "audio_start": 0
+    }
+  ],
   "captions": [
-    {"text": "my phone's lullaby at 2 AM", "start": 0, "end": 2.5, "y": 250, "size": 58},
-    {"text": "STAY WITH ME", "start": 2.66, "end": 4.4, "y": 1340, "size": 82, "color": "#FFD23F"},
-    {"text": "SLEEP CAN WAIT", "start": 4.5, "end": 10.0, "y": 1320, "size": 82, "color": "#FFD23F"},
-    {"text": "till half past three", "start": 7.36, "end": 10.0, "y": 1425, "size": 54}
+    {
+      "text": "my phone's lullaby at 2 AM",
+      "start": 0,
+      "end": 2.5,
+      "y": 250,
+      "size": 58
+    },
+    {
+      "text": "STAY WITH ME",
+      "start": 2.66,
+      "end": 4.4,
+      "y": 1340,
+      "size": 82,
+      "color": "#FFD23F"
+    },
+    {
+      "text": "SLEEP CAN WAIT",
+      "start": 4.5,
+      "end": 10.0,
+      "y": 1320,
+      "size": 82,
+      "color": "#FFD23F"
+    },
+    {
+      "text": "till half past three",
+      "start": 7.36,
+      "end": 10.0,
+      "y": 1425,
+      "size": 54
+    }
   ],
   "voice_gain": 1.0,
   "sfx": []
