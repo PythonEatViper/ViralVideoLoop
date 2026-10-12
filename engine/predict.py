@@ -5,7 +5,8 @@ that audience watches, rewatches and shares. The early numbers a seller copies f
 analytics page are the same signals, so a snapshot can be scored.
 
 The thresholds below are STARTING POINTS. "guide" ones come from third-party creator guides
-(no platform publishes its real thresholds); "guess" ones are the director's first estimates.
+(no platform publishes its real thresholds); "guess" ones are the director's first estimates;
+"benchmark" ones were set from the public numbers of outside hits (`vvl predict --benchmarks`).
 knowledge/forecast.md lists the sources. Once a project has enough measured posts, compare
 each forecast with what happened (`vvl predict --check`) and adjust the numbers here.
 """
@@ -17,8 +18,10 @@ SIGNALS = {
     "completion": ("完播率", 15, 0.30, 0.60, "guide"),
     "shares": ("分享 / 播放", 12, 0.002, 0.010, "guess"),
     "saves": ("收藏 / 播放", 8, 0.002, 0.010, "guess"),
-    "likes": ("点赞 / 播放", 6, 0.03, 0.08, "guess"),
-    "comments": ("评论 / 播放", 5, 0.001, 0.005, "guess"),
+    # Lowered 2026-10-12: nine Calmlings reels with 0.1M-74M views had likes 1.4-6.8% and
+    # comments 0.02-0.13%; the old lines (3% / 0.1%) graded every one of those hits weak.
+    "likes": ("点赞 / 播放", 6, 0.015, 0.05, "benchmark"),
+    "comments": ("评论 / 播放", 5, 0.0003, 0.001, "benchmark"),
     "follows": ("新关注 / 播放", 4, 0.001, 0.005, "guess"),
 }
 MIN_VIEWS = 100       # below this, rates are noise

@@ -552,6 +552,20 @@ def cmd_predict(args, pdir, cfg):
         weak = ", ".join(s["label"] for s in fields["predicted_signals"] if s["level"] == "weak")
         return print(f"{args.idea}: predicted {fields['predicted_score']} ({fields['predicted_verdict']})"
                      + (f"; weak: {weak}" if weak else ""))
+    if args.benchmarks:
+        # Other people's videos: only the public counts exist, so only the engagement signals
+        # can be graded. Retention (65% of the model) is private to the owner.
+        rows = [s for s in load(pdir, "signal") if s.get("views") and
+                any(s.get(k) is not None for k in ("likes", "shares", "saves", "comments"))]
+        if args.where:
+            rows = [s for s in rows if args.where.lower() in json.dumps(s, ensure_ascii=False).lower()]
+        for s in sorted(rows, key=lambda s: -s["views"]):
+            _, coverage, signals = predict.score(predict.values(s, s.get("duration_s")))
+            graded = "  ".join(f"{g['label'].split(' /')[0]} {g['value']:.2%} {g['level']}" for g in signals
+                               if g["name"] in ("likes", "shares", "saves", "comments"))
+            print(f"{s['views']:>11,}  {s['platform']:7} {graded}  | {s['title'][:70]}")
+        return print(f"({len(rows)} outside videos with public counts; engagement signals only, "
+                     f"about a third of the model)")
     if args.ideas:
         ranked = sorted((i for i in load(pdir, "idea") if i.get("status", "new") != "dropped"),
                         key=lambda i: -(i.get("predicted_score") or -1))
@@ -800,6 +814,8 @@ def main():
     p.add_argument("--expected", help="JSON: your estimate of every signal for that idea, 0-1")
     p.add_argument("--why", help="what the estimates are anchored on")
     p.add_argument("--ideas", action="store_true", help="list ideas ranked by predicted score")
+    p.add_argument("--benchmarks", action="store_true", help="grade the public engagement of outside videos in the signal pool")
+    p.add_argument("--where", help="with --benchmarks: only signals containing this text, e.g. calmlings")
     p.add_argument("--by")
     p = command("schedule", cmd_schedule, "install/remove the daily director run")
     p.add_argument("action", choices=["install", "remove", "status"])

@@ -33,6 +33,7 @@ TYPES = {
             "sound": ("str", "song or sound name, and how the edit uses it"),
             "duration_s": ("num", "length in seconds"),
             "views": ("int", ""), "likes": ("int", ""), "shares": ("int", ""), "comments": ("int", ""),
+            "saves": ("int", "saves / favourites, when the platform shows them"),
             "posted_at": ("time", "when it was posted"),
             "velocity_per_hour": ("num", "views divided by hours since posting"),
             "stage": ("str", "trend life stage"),

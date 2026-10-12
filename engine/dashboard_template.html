@@ -204,7 +204,7 @@ function forecastsFor(postId) {
 }
 function forecastCard(f, earlier) {
   const meters = (f.signals || []).slice().sort((a, b) => b.weight - a.weight).map(s => { const [icon, word, c] = LEVEL[s.level];
-    return `<div class="sig" style="--c:${c}" title="弱：低于 ${rate(s.weak)} · 强：${rate(s.strong)} 以上 · 权重 ${s.weight} · 依据：${s.basis === "guide" ? "第三方指南" : "我们的初始估计"}">
+    return `<div class="sig" style="--c:${c}" title="弱：低于 ${rate(s.weak)} · 强：${rate(s.strong)} 以上 · 权重 ${s.weight} · 依据：${{guide: "第三方指南", benchmark: "别人爆款的公开数据"}[s.basis] || "我们的初始估计"}">
       <span>${esc(s.label)}</span><span class="track"><span class="fill" style="width:${s.points}%"></span><span class="tick" style="left:40%"></span><span class="tick" style="left:70%"></span></span>
       <span class="val"><b>${rate(s.value)}</b> <span class="muted">${icon} ${word}</span></span></div>`; }).join("");
   return `<div class="card"><h3><span>${PLAT[f.platform]} · 发布后 ${f.age_hours}h · ${num(f.views)} 播放</span>${verdictChip(f)}</h3>
