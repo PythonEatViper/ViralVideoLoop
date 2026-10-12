@@ -1,17 +1,18 @@
 # STATE — EndScroll
 
-Generated 2026-10-12T09:32:03+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-12T21:16:08+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
-- Latest plan: projects/endscroll/plans/2026-10-11.md
-- Waiting for the boss: 0 review(s), 7 todo(s)
+- Latest plan: projects/endscroll/plans/2026-10-12.md
+- Waiting for the boss: 1 review(s), 7 todo(s)
 - Credits: 47 left; 57.0 spent in the last 7 days (cap 250)
 
 ## Posts
 - [published] app_island_ep01 — App Island · Ep 1 — Arrivals
 - [published] app_island_ep02 — App Island · Ep 2 — Screen Time Party
+- [script] app_island_ep03 — App Island · Ep 3 — Miss me?
 
 ## Pending reviews
-- none
+- R5 (storyboard): Ep 3「Miss me?」分镜：一个角色、一句话、5 秒循环
 
 ## Open todos
 - T1 [boss]: 把仓库推到 GitHub（私有仓库 ViralVideoLoop）
@@ -26,16 +27,15 @@ Generated 2026-10-12T09:32:03+08:00 by `./vvl build`. Do not edit; read START_HE
 - none
 
 ## Metric snapshots due
-- 2026-10-11_app_island_ep01 on youtube: 24h snapshot
-- 2026-10-12_app_island_ep02 on youtube: 1h snapshot
+- none
 
 ## Staff
 - boss (human): n/a, last seen 2026-10-11T23:57:16+08:00
-- pm (grok): ok, last seen 2026-10-12T09:15:29+08:00
-- director (claude): ok, last seen 2026-10-12T09:28:27+08:00
-- seller_tiktok (grok): ok, last seen 2026-10-12T09:30:50+08:00
-- seller_reels (grok): ok, last seen 2026-10-12T09:20:34+08:00
-- seller_youtube (grok): ok, last seen 2026-10-12T08:23:49+08:00
+- pm (grok): ok, last seen 2026-10-12T20:22:39+08:00
+- director (claude): ok, last seen 2026-10-12T21:16:08+08:00
+- seller_tiktok (grok): ok, last seen 2026-10-12T20:42:12+08:00
+- seller_reels (grok): ok, last seen 2026-10-12T20:36:32+08:00
+- seller_youtube (grok): ok, last seen 2026-10-12T20:25:38+08:00
 - seller_reddit (grok): not_started
-- analyst (script): n/a, last seen 2026-10-12T09:28:00+08:00
+- analyst (script): n/a, last seen 2026-10-12T21:14:15+08:00
 - accountant (script): n/a, last seen 2026-10-11T19:15:42+08:00

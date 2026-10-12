@@ -1,0 +1,1 @@
+- 2026-10-12 13:46 (pm): Boss decision (2026-10-12): publish TikTok posts from the cloud computer's browser (US IP) by default; consistency matters, so keep using the same cloud setup every time rather than switching between Ray's Mac and the cloud.
