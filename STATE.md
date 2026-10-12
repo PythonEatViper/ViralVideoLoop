@@ -1,10 +1,10 @@
 # STATE — EndScroll
 
-Generated 2026-10-12T23:02:56+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-12T23:09:44+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-12.md
 - Waiting for the boss: 1 review(s), 7 todo(s)
-- Credits: 47 left; 63.0 spent in the last 7 days (cap 250)
+- Credits: 29 left; 75.0 spent in the last 7 days (cap 250)
 
 ## Posts
 - [published] app_island_ep01 — App Island · Ep 1 — Arrivals
@@ -12,7 +12,7 @@ Generated 2026-10-12T23:02:56+08:00 by `./vvl build`. Do not edit; read START_HE
 - [review] app_island_ep03 — App Island · Ep 3 — Lullaby
 
 ## Pending reviews
-- R6 (final_cut): Ep 3「Lullaby」成片，两个版本请你听着选
+- R6 (final_cut): Ep 3「Lullaby」成片 v2：重拍的原生版，无后期拼接
 
 ## Open todos
 - T1 [boss]: 把仓库推到 GitHub（私有仓库 ViralVideoLoop）
@@ -32,7 +32,7 @@ Generated 2026-10-12T23:02:56+08:00 by `./vvl build`. Do not edit; read START_HE
 ## Staff
 - boss (human): n/a, last seen 2026-10-12T22:46:06+08:00
 - pm (grok): ok, last seen 2026-10-12T21:29:29+08:00
-- director (claude): ok, last seen 2026-10-12T23:02:56+08:00
+- director (claude): ok, last seen 2026-10-12T23:09:44+08:00
 - seller_tiktok (grok): ok, last seen 2026-10-12T22:37:58+08:00
 - seller_reels (grok): ok, last seen 2026-10-12T22:46:03+08:00
 - seller_youtube (grok): ok, last seen 2026-10-12T22:35:12+08:00
