@@ -535,6 +535,30 @@ def write_forecasts(pdir):
 
 
 def cmd_predict(args, pdir, cfg):
+    import predict
+    if args.idea:
+        if not args.expected:
+            sys.exit("give your estimates: --expected '{\"hold\": 0.5, \"watch\": 0.4, ...}' (signals: "
+                     + ", ".join(predict.SIGNALS) + ")")
+        try:
+            fields = predict.estimate(json.loads(args.expected))
+        except ValueError as err:
+            sys.exit(f"REJECTED: {err}")
+        if args.why:
+            fields["expected_why"] = args.why
+        if not any(i["id"] == args.idea for i in load(pdir, "idea")):
+            sys.exit(f"no idea '{args.idea}'")
+        add_record(pdir, "idea", {"id": args.idea, **fields}, args.by or "director")
+        weak = ", ".join(s["label"] for s in fields["predicted_signals"] if s["level"] == "weak")
+        return print(f"{args.idea}: predicted {fields['predicted_score']} ({fields['predicted_verdict']})"
+                     + (f"; weak: {weak}" if weak else ""))
+    if args.ideas:
+        ranked = sorted((i for i in load(pdir, "idea") if i.get("status", "new") != "dropped"),
+                        key=lambda i: -(i.get("predicted_score") or -1))
+        for i in ranked:
+            pred = f"{i['predicted_score']:>3.0f} {i['predicted_verdict']:5}" if i.get("predicted_score") is not None else " --      "
+            print(f"{i['id']:5} {pred}  judgement {i.get('score', '-'):>4}  [{i.get('status', 'new')}]  {i['title']}")
+        return
     write_forecasts(pdir)
     rows = sorted(load(pdir, "forecast"), key=lambda f: (f["post_id"], f["platform"], f["age_hours"]))
     if args.json:
@@ -772,6 +796,11 @@ def main():
     p = command("predict", cmd_predict, "push forecast for every snapshot (--check: compare with views now)")
     p.add_argument("--check", action="store_true")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--idea", help="score an idea before it is made: its id")
+    p.add_argument("--expected", help="JSON: your estimate of every signal for that idea, 0-1")
+    p.add_argument("--why", help="what the estimates are anchored on")
+    p.add_argument("--ideas", action="store_true", help="list ideas ranked by predicted score")
+    p.add_argument("--by")
     p = command("schedule", cmd_schedule, "install/remove the daily director run")
     p.add_argument("action", choices=["install", "remove", "status"])
     p.add_argument("--time", default="08:30")

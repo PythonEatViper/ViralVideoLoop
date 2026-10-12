@@ -96,6 +96,7 @@ ViralVideoLoop/
 | `./vvl due` / `./vvl outbox` | 到期该抓的数据快照 / 等待发布的视频 |
 | `./vvl cost` | 成本汇总 |
 | `./vvl predict [--check]` | 每个数据快照的推流预测；`--check` 同时显示现在的播放，用来检验预测 |
+| `./vvl predict --idea <id> --expected '{…}'` / `--ideas` | 制作前给点子打预测分（信号由总监估计，工具算分）；按预测分列出点子池 |
 | `./vvl bootstrap <员工 id>` | 新建 bot 时粘贴一次的启动提示词 |
 | `./vvl prompt <员工 id>` | 某个员工当前的完整指令（bot 每次运行都会执行它） |
 | `./vvl instruct <员工 id 或 everyone> "……" --by <谁>` | 给某个员工或所有人加一条追加指令 |

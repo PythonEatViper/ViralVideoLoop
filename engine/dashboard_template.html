@@ -381,11 +381,15 @@ const views = {
 
   ideas() {
     if (!D.ideas.length) return `<h1>点子</h1>${empty("点子池是空的。总监每天把热点、评论、老板的话和规律组合成点子，排好序放这里。")}`;
-    const rows = D.ideas.slice().sort((a, b) => (b.score || 0) - (a.score || 0));
-    return `<h1>点子</h1><p class="sub">总监组合出来的候选视频，按评分排序。</p><div class="card scroll"><table>
-      <tr><th class="num">评分</th><th>点子</th><th>在测什么</th><th>状态</th></tr>
-      ${rows.map(i => `<tr><td class="num"><b>${i.score ?? "–"}</b></td><td><b>${esc(i.title)}</b><div class="small">钩子：${esc(i.hook)}</div>
-        <div class="small muted">${esc(i.scene || "")}${i.reason ? " · " + esc(i.reason) : ""}</div></td>
+    const rows = D.ideas.slice().sort((a, b) => (b.predicted_score ?? -1) - (a.predicted_score ?? -1) || (b.score || 0) - (a.score || 0));
+    const weakOf = i => (i.predicted_signals || []).filter(s => s.level === "weak").map(s => s.label).join("、");
+    return `<h1>点子</h1><p class="sub">总监组合出来的候选视频。「预测分」是制作前的推流预测：总监估计每个信号，再用和实测视频同一套算法算出来；「判断」是总监自己的综合评分。先按预测分排。</p><div class="card scroll"><table>
+      <tr><th>预测分</th><th class="num">判断</th><th>点子</th><th>在测什么</th><th>状态</th></tr>
+      ${rows.map(i => `<tr><td>${i.predicted_score != null ? verdictChip({verdict: i.predicted_verdict, score: i.predicted_score}) : `<span class="muted">未估</span>`}
+          ${weakOf(i) ? `<div class="small muted" style="margin-top:4px">估计偏弱：${esc(weakOf(i))}</div>` : ""}</td>
+        <td class="num"><b>${i.score ?? "–"}</b></td><td><b>${esc(i.title)}</b><div class="small">钩子：${esc(i.hook)}</div>
+        <div class="small muted">${esc(i.scene || "")}${i.reason ? " · " + esc(i.reason) : ""}</div>
+        ${i.expected_why ? `<div class="small muted">估计的依据：${esc(i.expected_why)}</div>` : ""}</td>
         <td class="small">${esc(i.hypothesis || "")}</td><td><span class="tag ${i.status === "picked" ? "hot" : ""}">${{new: "待选", picked: "已选", dropped: "放弃"}[i.status || "new"]}</span></td></tr>`).join("")}</table></div>`;
   },
 

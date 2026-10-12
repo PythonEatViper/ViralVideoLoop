@@ -54,27 +54,48 @@ def points(value, weak, strong):
     return min(100, 70 + 30 * (value - strong) / (0.5 * strong))
 
 
-def forecast(metric, duration_s):
-    """Score one snapshot. Returns the record fields of a `forecast`."""
+def score(signal_values):
+    """Grade a set of signal values (measured or estimated): (score 0-100, coverage, signals)."""
     signals, total, weight_sum = [], 0, 0
-    for name, value in values(metric, duration_s).items():
+    for name, value in signal_values.items():
         label, weight, weak, strong, basis = SIGNALS[name]
-        score = points(value, weak, strong)
+        pts = points(value, weak, strong)
         level = "weak" if value < weak else "strong" if value >= strong else "ok"
         signals.append({"name": name, "label": label, "value": round(value, 4), "level": level,
-                        "points": round(score),
+                        "points": round(pts),
                         "weak": weak, "strong": strong, "weight": weight, "basis": basis})
-        total += score * weight
+        total += pts * weight
         weight_sum += weight
     coverage = weight_sum / sum(s[1] for s in SIGNALS.values())
+    return (round(total / weight_sum) if weight_sum else None), round(coverage, 2), signals
+
+
+def verdict(points_total):
+    return "push" if points_total >= 70 else "hold" if points_total >= 45 else "stall"
+
+
+def forecast(metric, duration_s):
+    """Score one measured snapshot. Returns the record fields of a `forecast`."""
+    total, coverage, signals = score(values(metric, duration_s))
     views = metric.get("views") or 0
-    if views < MIN_VIEWS or coverage < MIN_COVERAGE:
-        verdict, score = "unknown", None
-    else:
-        score = round(total / weight_sum)
-        verdict = "push" if score >= 70 else "hold" if score >= 45 else "stall"
+    enough = views >= MIN_VIEWS and coverage >= MIN_COVERAGE
     worst = sorted((s for s in signals if s["level"] == "weak"), key=lambda s: -s["weight"])
     return {"post_id": metric["post_id"], "platform": metric["platform"],
-            "age_hours": metric["age_hours"], "views": views, "score": score, "verdict": verdict,
-            "coverage": round(coverage, 2), "signals": signals,
-            "weakest": worst[0]["name"] if worst else ""}
+            "age_hours": metric["age_hours"], "views": views, "score": total if enough else None,
+            "verdict": verdict(total) if enough else "unknown", "coverage": coverage,
+            "signals": signals, "weakest": worst[0]["name"] if worst else ""}
+
+
+def estimate(expected):
+    """Score an idea before it is made, from the director's estimate of each signal.
+    The estimates are a judgement; the arithmetic is the same as for measured posts, so an
+    idea's score and the finished post's score can be compared."""
+    unknown = sorted(set(expected) - set(SIGNALS))
+    if unknown:
+        raise ValueError(f"unknown signal(s) {unknown}; use: {', '.join(SIGNALS)}")
+    missing = sorted(set(SIGNALS) - set(expected))
+    if missing:
+        raise ValueError(f"estimate every signal; missing: {', '.join(missing)}")
+    total, _, signals = score({name: expected[name] for name in SIGNALS})
+    return {"expected": expected, "predicted_score": total, "predicted_verdict": verdict(total),
+            "predicted_signals": signals}
