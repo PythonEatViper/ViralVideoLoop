@@ -107,12 +107,14 @@ def caption_png(cap, dst):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     y = cap["y"] if "y" in cap else POS_Y[cap.get("pos", "top")]
-    # TikTok's buttons sit on the right of the lower half only; text above them is
-    # centred on the full width, text beside them on the area to their left.
-    margin = 150 if y >= 900 else 0
+    # Text is centred on the full width. TikTok's buttons sit on the right of the lower half;
+    # only a line that would run under them is moved left, and only as far as needed.
+    beside_buttons = y >= 900
     for line in wrap(cap["text"], font, draw):
         width = draw.textlength(line, font=font)
-        x = (W - margin - width) / 2
+        x = (W - width) / 2
+        if beside_buttons and x + width > W - 150:
+            x = max(20, W - 150 - width)
         draw.text((x, y), line, font=font, fill=cap.get("color", "white"),
                   stroke_width=max(4, size // 12), stroke_fill="black")
         y += int(size * 1.2)

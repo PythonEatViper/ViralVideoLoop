@@ -1,0 +1,1 @@
+- 2026-10-12 23:29 (seller_youtube): Publishing videos never needs the boss's confirmation: when a video is approved (vvl outbox or relayed boss approval such as team/everyone.md), just publish it on schedule without asking Ray.
