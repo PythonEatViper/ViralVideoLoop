@@ -48,3 +48,11 @@
 | A 羊毛毡玩具 | shelly_options/A_felt.png | d812ac4d-ffd9-409f-abaa-90f64b6f63aa |
 | B 毛绒小生物（最接近 Calmlings） | shelly_options/B_fluffy.png | ba0bc778-e35c-4cfe-9e2c-53b2d700370d |
 | C 软胶盲盒，戴睡帽（最接近 app 原图） | shelly_options/C_vinyl.png | f7cbfbee-d866-4e05-bb61-e735a3a2b8f0 |
+
+**10-13 老板选了 B。** 四视图角色参考：`shelly.png`，Higgsfield job id `332f4e7f-0b47-4c08-bfa1-7622be8467a0`。以后生成海龟的镜头，把这个 id 作为 `image_references` 传入。
+
+海龟系列的规则（老板 10-13）：
+
+- 先拍没有产品、没有负担的治愈小场景，用来检验这个形象；不放广告。
+- 发在新建的 TikTok 账号和 Facebook 公共主页上，和之前 App Island 的账号分开。
+- 一个角色、一个注意点、一句观众自己会说的话（`knowledge/attention.md`）。
