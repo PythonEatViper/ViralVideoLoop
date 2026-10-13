@@ -38,3 +38,13 @@
 - 主持人：Phoebe；配角：Alarm、Weekly Report
 - 炸弹嘉宾：ep4 Shelly，中期 Streak（Snapchat 火花，黏人女友），后半季 AI 伴侣（不碰自伤），黑五购物狂客串
 - 不做：约会 app（观众 18+、性暗示限流）、体育博彩、学习 app
+
+## 海龟主角候选（10-13，待老板选）
+
+老板 10-13 同意试海龟当主角，要求比 app 里的扁平版更可爱，参考毛绒盲盒玩具和 Calmlings 的质感。三个方向都保留了 app 海龟的脸（大白眼、小鼻孔、弯嘴）和亮绿色。对比图：`shelly_options/options.jpg`。
+
+| 方向 | 文件 | Higgsfield job id |
+| --- | --- | --- |
+| A 羊毛毡玩具 | shelly_options/A_felt.png | d812ac4d-ffd9-409f-abaa-90f64b6f63aa |
+| B 毛绒小生物（最接近 Calmlings） | shelly_options/B_fluffy.png | ba0bc778-e35c-4cfe-9e2c-53b2d700370d |
+| C 软胶盲盒，戴睡帽（最接近 app 原图） | shelly_options/C_vinyl.png | f7cbfbee-d866-4e05-bb61-e735a3a2b8f0 |
