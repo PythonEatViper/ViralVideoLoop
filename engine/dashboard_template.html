@@ -145,6 +145,8 @@ svg text { fill: var(--muted); font-size: 11px; }
 </div>
 <script>
 const D = /*DATA*/null;
+// A page built by an older engine may lack newer lists; an empty list keeps the page working.
+for (const k of ["forecasts", "engagements", "comments", "incidents", "notes", "signals", "accounts", "ideas", "learnings", "reviews", "todos", "costs", "metrics", "publishes", "posts", "plans", "ready", "due", "staff"]) D[k] = D[k] || [];
 const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "视频", "🎬"], ["signals", "热点", "🔥"], ["ideas", "点子", "💡"],
   ["learnings", "规律", "🧪"], ["cost", "成本", "💰"], ["team", "团队", "👥"], ["flow", "工作流", "🔁"], ["config", "配置", "⚙️"]];
 const STAGE_ICON = {idea: "💡", script: "📝", shots: "🎥", review: "👀", ready: "📦", published: "🚀", measured: "📊"};

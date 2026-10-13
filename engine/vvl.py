@@ -627,12 +627,24 @@ def cmd_serve(args, pdir, cfg):
     from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
     from urllib.parse import parse_qs, urlparse
 
+    started = time.time()
+
     class Handler(BaseHTTPRequestHandler):
         def project(self):
             name = parse_qs(urlparse(self.path).query).get("project", [pdir.name])[0]
             return project_dir(name if name.replace("_", "").isalnum() else pdir.name)
 
         def do_GET(self):
+            # The server runs for days; restart it in place when the engine code has changed,
+            # so the page is never built by code older than its own template.
+            if max(f.stat().st_mtime for f in (REPO / "engine").glob("*.py")) > started:
+                self.send_response(503)
+                self.send_header("Retry-After", "1")
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.end_headers()
+                self.wfile.write("<meta http-equiv='refresh' content='1'>看板正在更新，1 秒后自动刷新…".encode())
+                self.wfile.flush()
+                os.execv(sys.executable, [sys.executable, *sys.argv])
             route, target = urlparse(self.path).path, self.project()
             if route == "/api/version":
                 body, ctype = str(data_version(target)).encode(), "text/plain"
