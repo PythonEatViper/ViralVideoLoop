@@ -1,10 +1,57 @@
 {
-  "clips": ["shots/01.mp4"],
+  "clips": [
+    {
+      "file": "shots/01_solo.mp4",
+      "end": 7.0
+    },
+    {
+      "file": "shots/02_couple.mp4",
+      "speed": 0.857
+    }
+  ],
   "captions": [
-    {"text": "how to put your\nphone down:", "start": 0, "end": 2.8, "y": 330, "size": 72},
-    {"text": "step 2: coming soon", "start": 6.1, "end": 7.1, "y": 360, "size": 64}
+    {
+      "text": "my eyes are heavy",
+      "start": 0.0,
+      "end": 3.7,
+      "y": 215,
+      "size": 76,
+      "font": "rounded",
+      "stroke": 5
+    },
+    {
+      "text": "my pillow's ready",
+      "start": 4.0,
+      "end": 6.9,
+      "y": 215,
+      "size": 76,
+      "font": "rounded",
+      "stroke": 5
+    },
+    {
+      "text": "I'll sleep right after this one…",
+      "start": 7.3,
+      "end": 11.2,
+      "y": 215,
+      "size": 64,
+      "font": "rounded",
+      "stroke": 5
+    },
+    {
+      "text": "the next one says goodnight",
+      "start": 11.6,
+      "end": 15.1,
+      "y": 215,
+      "size": 64,
+      "font": "rounded",
+      "stroke": 5
+    }
   ],
   "voice_gain": 1.0,
-  "music": {"file": "assets/music/feeling_happy.mp3", "offset": 0, "gain": 0.25},
+  "music": {
+    "file": "song_v5_cut.mp3",
+    "offset": 0,
+    "gain": 1.0
+  },
   "sfx": []
 }

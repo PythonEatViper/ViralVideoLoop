@@ -20,9 +20,11 @@ the repo root (shared sound and music library). "voice_gain" scales the clips' o
 A clip given as an object is cut to "start".."end" seconds (both optional); "crop":
 [x, y, w, h] (fractions of the frame) keeps only that region, to hide something at an edge;
 "audio_from" replaces the clip's sound with another file's, starting at "audio_start" seconds
-(to borrow a better line reading from another take); "mute_after" silences the clip's own
+(to borrow a better line reading from another take); "speed" plays the picture faster (above 1) or slower (below 1) and drops the clip's own
+sound, for silent clips cut to a song; "mute_after" silences the clip's own
 sound from that second on (in the clip's own time), keeping the picture. A caption may
-give "y" (pixels from the top) instead of "pos", and a "color". "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
+give "y" (pixels from the top) instead of "pos", a "color", "font": "rounded" for a softer
+rounded face instead of the heavy default, and "stroke" (outline width in pixels). "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
 under dialogue and fades out at the end. The mix is normalised to -14 LUFS (TikTok's loudness).
 Output: <episode>/final.mp4
 """
@@ -37,6 +39,7 @@ from PIL import Image, ImageDraw, ImageFont
 REPO = Path(__file__).resolve().parents[2]
 W, H, FPS = 1080, 1920, 30
 FONT = "/System/Library/Fonts/Supplemental/Arial Black.ttf"
+FONTS = {"rounded": "/System/Library/Fonts/Supplemental/Arial Rounded Bold.ttf"}
 # TikTok's UI covers the bottom ~420px and the right ~150px; keep text clear of both.
 TEXT_MAX_WIDTH = 860
 POS_Y = {"top": 300, "center": 820, "bottom": 1250}
@@ -60,17 +63,19 @@ def has_audio(path):
 
 
 def normalize(src, dst, start=None, end=None, crop=None, audio=None, audio_start=0,
-              mute_after=None):
+              mute_after=None, speed=None):
     """Scale/crop to 9:16, fixed fps, always one stereo audio track."""
     vf = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},setsar=1"
     if crop:
         x, y, w, h = crop
         vf = f"crop=iw*{w}:ih*{h}:iw*{x}:ih*{y}," + vf
+    if speed:
+        vf = f"setpts=PTS/{speed}," + vf
     cut = (["-ss", str(start)] if start else []) + (["-to", str(end)] if end else [])
     cmd = ["ffmpeg", "-y", *cut, "-i", str(src)]
     if audio:
         cmd += ["-ss", str(audio_start), "-i", str(audio), "-map", "0:v:0", "-map", "1:a:0", "-shortest"]
-    elif has_audio(src):
+    elif has_audio(src) and not speed:
         cmd += ["-map", "0:v:0", "-map", "0:a:0"]
     else:
         cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
@@ -103,7 +108,7 @@ def wrap(text, font, draw):
 
 def caption_png(cap, dst):
     size = cap.get("size", 72)
-    font = ImageFont.truetype(FONT, size)
+    font = ImageFont.truetype(FONTS.get(cap.get("font"), FONT), size)
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     y = cap["y"] if "y" in cap else POS_Y[cap.get("pos", "top")]
@@ -116,7 +121,7 @@ def caption_png(cap, dst):
         if beside_buttons and x + width > W - 150:
             x = max(20, W - 150 - width)
         draw.text((x, y), line, font=font, fill=cap.get("color", "white"),
-                  stroke_width=max(4, size // 12), stroke_fill="black")
+                  stroke_width=cap.get("stroke", max(4, size // 12)), stroke_fill="black")
         y += int(size * 1.2)
     img.save(dst)
 
@@ -135,7 +140,7 @@ def main():
                 clip = {"file": clip}
             normalize(root / clip["file"], part, clip.get("start"), clip.get("end"), clip.get("crop"),
                       root / clip["audio_from"] if "audio_from" in clip else None,
-                      clip.get("audio_start", 0), clip.get("mute_after"))
+                      clip.get("audio_start", 0), clip.get("mute_after"), clip.get("speed"))
             parts.append(part)
 
         concat_list = tmp / "list.txt"

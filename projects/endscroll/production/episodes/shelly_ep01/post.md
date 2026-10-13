@@ -1,14 +1,14 @@
-# Shelly · Ep 1 — How to put your phone down — 发布单
+# 海龟情侣 · Ep 1 — The next one says goodnight — 发布单
 
-**视频**：`final.mp4`（7.2 秒，没有台词，轻音乐）
-**封面**：`cover.jpg`（第一帧：海龟认真地捧着手机 + `how to put your phone down:`）
-**发在哪**：新建的 TikTok 账号和 Facebook 公共主页（老板 10-13 的决定），不发之前 App Island 的账号。
+**视频**：`final.mp4`（15.3 秒；歌是老板在 Suno 做的 `shelly_song_v5`，角色不开口）
+**封面**：`cover.jpg`（第 2 秒：紫色海龟戴着睡帽看手机 + `my eyes are heavy`）
+**发在哪**：新建的 TikTok 账号和 Facebook 公共主页，不发 App Island 的旧账号。
 **AI 标识**：开。文案和视频里都不提 EndScroll。
 
-## 文案
+## 文案（草稿）
 
 ```
-step 1 is the hard part 🐢 who else? 👇
+"just one more" 🥺 tag the one who takes your phone away 💜💚
 
-#relatable #cute #3danimation #phoneaddiction #doomscrolling
+#relatable #cute #3danimation #couple #doomscrolling
 ```

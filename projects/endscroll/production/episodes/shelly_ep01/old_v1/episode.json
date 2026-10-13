@@ -1,0 +1,10 @@
+{
+  "clips": ["shots/01.mp4"],
+  "captions": [
+    {"text": "how to put your\nphone down:", "start": 0, "end": 2.8, "y": 330, "size": 72},
+    {"text": "step 2: coming soon", "start": 6.1, "end": 7.1, "y": 360, "size": 64}
+  ],
+  "voice_gain": 1.0,
+  "music": {"file": "assets/music/feeling_happy.mp3", "offset": 0, "gain": 0.25},
+  "sfx": []
+}
