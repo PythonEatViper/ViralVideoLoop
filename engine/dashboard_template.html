@@ -149,12 +149,12 @@ const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "�
   ["learnings", "规律", "🧪"], ["cost", "成本", "💰"], ["team", "团队", "👥"], ["flow", "工作流", "🔁"], ["config", "配置", "⚙️"]];
 const STAGE_ICON = {idea: "💡", script: "📝", shots: "🎥", review: "👀", ready: "📦", published: "🚀", measured: "📊"};
 const RUNNER = {human: ["人类", "var(--teal)"], grok: ["Grok", "var(--accent)"], claude: ["Claude", "var(--violet)"], script: ["脚本", "var(--muted)"]};
-const AVATAR = {boss: "👑", pm: "📋", director: "🧠", accountant: "🧮", tiktok: "🎵", reels: "📸", youtube: "▶️", reddit: "👽", x: "✖️"};
+const AVATAR = {boss: "👑", pm: "📋", director: "🧠", accountant: "🧮", tiktok: "🎵", reels: "📘", instagram: "📸", youtube: "▶️", reddit: "👽", x: "✖️"};
 const ico = (emoji, color) => `<span class="ico" style="--c:${color || "var(--accent)"}">${emoji}</span>`;
 const STAGES = [["idea", "点子"], ["script", "分镜"], ["shots", "镜头"], ["review", "待审"], ["ready", "待发"], ["published", "已发"], ["measured", "已出数据"]];
 const STATE = {ok: "正常", throttled: "降频", paused: "暂停", silent: "失联", not_started: "未启动", off: "未启用", "n/a": ""};
 const GATE = {weekly_strategy: "周策略", storyboard: "分镜", final_cut: "成片", new_character: "新角色", sensitive_topic: "敏感话题", comment_reply: "评论回复", budget: "预算"};
-const PLAT = {tiktok: "TikTok", reels: "Reels", youtube: "YouTube", reddit: "Reddit", x: "X", news: "新闻", other: "其他"};
+const PLAT = {tiktok: "TikTok", reels: "Facebook Reels", instagram: "Instagram", youtube: "YouTube", reddit: "Reddit", x: "X", news: "新闻", other: "其他"};
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
 const num = n => n == null ? "–" : n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : n >= 1e4 ? (n / 1e3).toFixed(0) + "K" : n >= 1e3 ? (n / 1e3).toFixed(1) + "K" : String(n);

@@ -11,7 +11,7 @@ the earlier one (new fields win) instead of creating a duplicate. Types with an 
 need an explicit "id" or get a new one each time.
 """
 
-PLATFORMS = ["tiktok", "reels", "youtube", "reddit", "x", "news", "other"]
+PLATFORMS = ["tiktok", "reels", "instagram", "youtube", "reddit", "x", "news", "other"]
 
 TYPES = {
     "signal": {

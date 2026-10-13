@@ -127,6 +127,19 @@ enabled = true
 watch = "Instagram Reels explore (US); the same topics as on TikTok; formats that work here but not on TikTok"
 
 [[staff]]
+id = "seller_instagram"
+name = "推销员 Instagram"
+role = "seller"
+runner = "grok"
+reports_to = "director"
+platform = "instagram"
+duty = "同上，Instagram Reels（海龟情侣的新账号）"
+schedule = "每小时一次，整点后 5 分（每天发布一条，窗口 07:00-09:00；侦查早晚各一次）"
+max_silence_hours = 6
+enabled = false                         # 账号建好、bot 配好之后改成 true
+watch = "Instagram Reels (US): cute 3D character accounts (Calmlings, Baboo & Biboo, MeetQuack, Milk & Mocha), bedtime and phone-habit reels, sounds that many reels reuse"
+
+[[staff]]
 id = "seller_youtube"
 name = "推销员 YouTube"
 role = "seller"
