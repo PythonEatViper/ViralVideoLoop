@@ -1,18 +1,19 @@
 # STATE — EndScroll
 
-Generated 2026-10-13T21:38:46+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-13T21:50:58+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-13.md
-- Waiting for the boss: 0 review(s), 9 todo(s)
-- Credits: 25 left; 79.0 spent in the last 7 days (cap 250)
+- Waiting for the boss: 1 review(s), 9 todo(s)
+- Credits: 21 left; 83.0 spent in the last 7 days (cap 250)
 
 ## Posts
 - [published] app_island_ep01 — App Island · Ep 1 — Arrivals
 - [published] app_island_ep02 — App Island · Ep 2 — Screen Time Party
 - [published] app_island_ep03 — App Island · Ep 3 — Lullaby
+- [review] shelly_ep01 — Shelly · Ep 1 — How to put your phone down
 
 ## Pending reviews
-- none
+- R8 (final_cut): Shelly Ep 1「How to put your phone down」成片，7.2 秒
 
 ## Open todos
 - T1 [boss]: 把仓库推到 GitHub（私有仓库 ViralVideoLoop）
@@ -34,7 +35,7 @@ Generated 2026-10-13T21:38:46+08:00 by `./vvl build`. Do not edit; read START_HE
 ## Staff
 - boss (human): n/a, last seen 2026-10-13T21:38:13+08:00
 - pm (grok): ok, last seen 2026-10-13T21:03:36+08:00
-- director (claude): ok, last seen 2026-10-13T21:38:46+08:00
+- director (claude): ok, last seen 2026-10-13T21:50:58+08:00
 - seller_tiktok (grok): ok, last seen 2026-10-13T21:28:58+08:00
 - seller_reels (grok): ok, last seen 2026-10-13T21:25:12+08:00
 - seller_youtube (grok): silent, last seen 2026-10-13T10:04:05+08:00
