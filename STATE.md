@@ -1,10 +1,10 @@
 # STATE — EndScroll
 
-Generated 2026-10-13T22:22:32+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-13T22:51:12+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-13.md
 - Waiting for the boss: 0 review(s), 9 todo(s)
-- Credits: 21 left; 83.0 spent in the last 7 days (cap 250)
+- Credits: 20 left; 84.0 spent in the last 7 days (cap 250)
 
 ## Posts
 - [published] app_island_ep01 — App Island · Ep 1 — Arrivals
@@ -35,9 +35,9 @@ Generated 2026-10-13T22:22:32+08:00 by `./vvl build`. Do not edit; read START_HE
 ## Staff
 - boss (human): n/a, last seen 2026-10-13T21:38:13+08:00
 - pm (grok): ok, last seen 2026-10-13T22:19:10+08:00
-- director (claude): ok, last seen 2026-10-13T22:22:32+08:00
-- seller_tiktok (grok): ok, last seen 2026-10-13T21:28:58+08:00
-- seller_reels (grok): ok, last seen 2026-10-13T21:25:12+08:00
+- director (claude): ok, last seen 2026-10-13T22:51:11+08:00
+- seller_tiktok (grok): ok, last seen 2026-10-13T22:44:35+08:00
+- seller_reels (grok): throttled, last seen 2026-10-13T22:28:46+08:00
 - seller_youtube (grok): ok, last seen 2026-10-13T22:16:46+08:00
 - seller_reddit (grok): not_started
 - analyst (script): n/a, last seen 2026-10-13T22:22:32+08:00
