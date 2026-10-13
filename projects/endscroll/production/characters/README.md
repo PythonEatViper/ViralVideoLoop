@@ -84,3 +84,37 @@
 - **睡帽**：老板嫌厚针织帽太大、显老。改成一顶很小的淡黄色尖顶睡帽，只有头的三分之一宽，搭在头顶一侧，额头露出来。定妆图 `coral_nightcap.png`，job id `938611a0-e099-4c5f-9970-a905bbdcd9f2`。紫色那只戴睡帽的镜头用这张当参考。
 - **两只一样大**：提示词里写明「同样大小，头一样大，离镜头一样远」。
 - **手机**：薄荷绿的软壳，背面只有一颗黄色小星星贴纸。只写「没有标志」不管用，模型还是会画出苹果标志（三条里出了两条）；给它一颗星星画，标志就不出现了。
+
+## 海龟情侣的账号和简介（10-14）
+
+三个平台用同一个名字、同一个头像（两只海龟的合照），和 App Island 的旧账号分开。名字暂按 Endy & Shelly 写，老板还没最终确认。
+
+| 平台 | 账号 | 显示名 | 用户名（三个平台尽量一致） |
+| --- | --- | --- | --- |
+| TikTok | 新建个人号 | Endy & Shelly | endyandshelly |
+| Instagram | 新建，类别选 Digital creator 或 Art | Endy & Shelly | endyandshelly |
+| Facebook | 公共主页，类别选 Fictional character 或 Art | Endy & Shelly | endyandshelly |
+
+**TikTok 简介**（上限 80 字符，这段 76）
+
+```
+two sleepy turtles vs. one phone 🐢📱
+from the makers of EndScroll (App Store)
+```
+
+**Instagram 简介**（上限 150 字符，这段 114）；链接栏填落地页 https://pythoneatviper.github.io/endscroll-legal/en/
+
+```
+Endy 💚 & Shelly 💜
+two sleepy turtles vs. one phone 📱
+a new bedtime story every day
+from the makers of EndScroll ⬇️
+```
+
+**Facebook 主页简介**（上限 101 字符，这段 96）；网站栏填同一个落地页
+
+```
+Two sleepy turtles vs. one phone 🐢📱 A new bedtime story every day. From the makers of EndScroll.
+```
+
+规则：视频和文案里不提 EndScroll，产品只出现在简介这一行（老板 10-12 的决定）。每条视频发布时打开 AI 标签。
