@@ -1,9 +1,9 @@
 # STATE — EndScroll
 
-Generated 2026-10-13T21:55:23+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-13T22:22:32+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-13.md
-- Waiting for the boss: 0 review(s), 10 todo(s)
+- Waiting for the boss: 0 review(s), 9 todo(s)
 - Credits: 21 left; 83.0 spent in the last 7 days (cap 250)
 
 ## Posts
@@ -25,21 +25,20 @@ Generated 2026-10-13T21:55:23+08:00 by `./vvl build`. Do not edit; read START_HE
 - todo_1012093050_0bca [boss]: Pin our own comments on TikTok from the phone app: Ep1 (7695186273765559565) "Ep 2 = the 2 AM elimination..." and Ep2 (7695568298494217486) "9h 14m. beat that"
 - T14 [pm]: Ep 3 (2026-10-13_app_island_ep03) is approved and in the outbox for TikTok, Facebook Reels and YouTube, window 07:00-09:00 Beijing on Oct 13 (US Eastern 7-9 PM). At the 08:00 and 09:10 runs check `vvl outbox`; if a platform is still listed after 09:00, first ask that seller whether it has already published and only not reported yet, then tell the boss.
 - todo_1013071634_6904 [boss]: Pin Ep3 first comment on TikTok @catch_xray (phone): half past three. you? 👇 — https://www.tiktok.com/@catch_xray/video/7695922500856843534
-- T15 [pm]: Collect 8 reference videos (files with sound, or screenshots plus audio, and notes.md each) into projects/endscroll/references/ - the list and the format are in your standing instructions and in references/README.md. Tell the boss when done.
 
 ## Ready to publish
 - none
 
 ## Metric snapshots due
-- 2026-10-13_app_island_ep03 on youtube: 6h snapshot
+- none
 
 ## Staff
 - boss (human): n/a, last seen 2026-10-13T21:38:13+08:00
-- pm (grok): ok, last seen 2026-10-13T21:03:36+08:00
-- director (claude): ok, last seen 2026-10-13T21:55:23+08:00
+- pm (grok): ok, last seen 2026-10-13T22:19:10+08:00
+- director (claude): ok, last seen 2026-10-13T22:22:32+08:00
 - seller_tiktok (grok): ok, last seen 2026-10-13T21:28:58+08:00
 - seller_reels (grok): ok, last seen 2026-10-13T21:25:12+08:00
-- seller_youtube (grok): silent, last seen 2026-10-13T10:04:05+08:00
+- seller_youtube (grok): ok, last seen 2026-10-13T22:16:46+08:00
 - seller_reddit (grok): not_started
-- analyst (script): n/a, last seen 2026-10-13T21:12:44+08:00
+- analyst (script): n/a, last seen 2026-10-13T22:22:32+08:00
 - accountant (script): n/a, last seen 2026-10-11T19:15:42+08:00

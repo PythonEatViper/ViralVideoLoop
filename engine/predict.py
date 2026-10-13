@@ -16,7 +16,8 @@ SIGNALS = {
     "hold": ("3 秒留存", 30, 0.55, 0.70, "guide"),
     "watch": ("平均观看 / 时长", 20, 0.40, 0.80, "guess"),
     "completion": ("完播率", 15, 0.30, 0.60, "guide"),
-    "shares": ("分享 / 播放", 12, 0.002, 0.010, "guess"),
+    # Raised 2026-10-13: Calmlings and Pudgy Penguins hits measured on TikTok share at 3.3-3.9%.
+    "shares": ("分享 / 播放", 12, 0.005, 0.030, "benchmark"),
     "saves": ("收藏 / 播放", 8, 0.002, 0.010, "guess"),
     # Lowered 2026-10-12: nine Calmlings reels with 0.1M-74M views had likes 1.4-6.8% and
     # comments 0.02-0.13%; the old lines (3% / 0.1%) graded every one of those hits weak.
