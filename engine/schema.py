@@ -34,6 +34,7 @@ TYPES = {
             "duration_s": ("num", "length in seconds"),
             "views": ("int", ""), "likes": ("int", ""), "shares": ("int", ""), "comments": ("int", ""),
             "saves": ("int", "saves / favourites, when the platform shows them"),
+            "media": ("list", "saved copies for study: file paths relative to the project folder, e.g. references/<folder>/video.mp4"),
             "posted_at": ("time", "when it was posted"),
             "velocity_per_hour": ("num", "views divided by hours since posting"),
             "stage": ("str", "trend life stage"),
