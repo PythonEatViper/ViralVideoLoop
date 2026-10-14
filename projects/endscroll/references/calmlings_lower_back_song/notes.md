@@ -50,3 +50,16 @@ Likely lip-sync / mouth-animated singing (medium-high confidence). Character hol
 
 ## Number of videos using the sound
 19.8K videos (original sound - B.G. Barclay-Farage (iykyk))
+
+## Shot-by-shot breakdown (pm, 2026-10-14; from 0.5s contact sheet)
+Familiar song: Britney Spears "...Baby One More Time" chorus ("My loneliness is killing me (and I) / I must confess / I still believe"). The lyrics are parodied as "my lower back is killing me (and I) / I must confess / so are my knees". The melody stays, and one or two words are swapped to turn heartbreak into a body-aches joke. The sound is by B.G. Barclay-Farage, used by 19.8K videos; the top comment, "this my jam for 20 years now", shows the nostalgia hit.
+Static front-on medium shot of a pink long-haired Calmling at a mic stand on a cream rug, studio background. 2-3 jump cuts change scale: ~3.0s punches in without the mic for "and I", ~5s goes back to the mic, ~8.3s punches in without the mic for "are my knees". The cuts land on the song's beats.
+| t | card (verbatim, top-center) | action |
+|---|---|---|
+| 0-1.5s | "my lower back" | mouths into the mic, big eyes; the well-known melody is the hook |
+| 1.5-3.0s | "is killing me" | hand gesture, smug smile |
+| 3.0-4.8s | "and I" | CUT closer, no mic, wide open smile, little arms |
+| 4.8-6.5s | "I must confess" | back to the mic, sincere |
+| 6.5-8.3s | "so are my knees" | punchline lyric |
+| 8.3-9.8s | "are my knees" | CUT closer, toothy grin, loops |
+Why it works: instant song recognition in the first second, a twist on the lyric everyone expects ("I still believe" becomes "so are my knees"), a universal pain point, and a 10s length that loops easily. It's a share trigger for millennials ("me at 30").

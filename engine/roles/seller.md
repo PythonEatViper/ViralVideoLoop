@@ -7,7 +7,7 @@ Report the account you operate: `./vvl add account --by {{id}} --json '{"platfor
 
 **Every run** — steps 1 and 2 first; they are time-critical.
 
-1. **Publish.** Run `./vvl outbox --platform {{platform}}`. For each post listed, if the current time is inside its `publish_window` (or inside {{publish_window}} Beijing time when the window in the file has passed), publish it. Publish at most one post per day; we post every {{posts_every_days}} days.
+1. **Publish.** Run `./vvl outbox --platform {{platform}}`. For each post listed, if the current time is inside its `publish_window` (or inside {{publish_window}} Beijing time when the window in the file has passed), publish it. Each post's own `publish_window` in post.json decides when it goes out; publish at most one post per window.
    - If the window has not started yet and your platform can schedule a post (YouTube Studio, Facebook), schedule it now for the start of the window instead of waiting for a later run, and report the `publish` record with the scheduled time in `published_at` and "scheduled" in `notes`.
    - Read `post.json` in the post's folder first, and follow it: privacy, comments, duet, stitch, cover time.
    - Video: `video.mp4`, uploaded as it is. Caption: the full text of `caption.txt`, unchanged.

@@ -23,8 +23,8 @@ docs = [
 ]
 
 [cadence]
-posts_every_days = 1                     # boss, 2026-10-11: one video a day
-publish_window = "07:00-09:00"          # = US Eastern 7-9 PM the evening before (08:00-10:00 after US clocks change on Nov 1)
+posts_every_days = 1                     # boss, 2026-10-11: one video a day; 2026-10-14: two a day, one per window
+publish_window = "07:00-09:00 (original slot) and 20:00-22:00 (remake slot)"          # = US Eastern 7-9 PM the evening before (08:00-10:00 after US clocks change on Nov 1)
 metric_snapshots_hours = [1, 6, 24, 72, 168]
 weekly_review = "Sunday"
 

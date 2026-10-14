@@ -1,9 +1,9 @@
 # STATE — EndScroll
 
-Generated 2026-10-14T00:25:27+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-14T10:15:41+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-13.md
-- Waiting for the boss: 0 review(s), 10 todo(s)
+- Waiting for the boss: 0 review(s), 11 todo(s)
 - Credits: 943.75 left; 147.0 spent in the last 7 days (cap 250)
 
 ## Posts
@@ -26,21 +26,22 @@ Generated 2026-10-14T00:25:27+08:00 by `./vvl build`. Do not edit; read START_HE
 - T14 [pm]: Ep 3 (2026-10-13_app_island_ep03) is approved and in the outbox for TikTok, Facebook Reels and YouTube, window 07:00-09:00 Beijing on Oct 13 (US Eastern 7-9 PM). At the 08:00 and 09:10 runs check `vvl outbox`; if a platform is still listed after 09:00, first ask that seller whether it has already published and only not reported yet, then tell the boss.
 - todo_1013071634_6904 [boss]: Pin Ep3 first comment on TikTok @catch_xray (phone): half past three. you? 👇 — https://www.tiktok.com/@catch_xray/video/7695922500856843534
 - T16 [boss]: 建海龟情侣的三个账号并写好简介：新的 TikTok 账号、新的 Instagram 账号、Facebook 公共主页（已有的 EndScroll Page 改名或新建）。建好后告诉总监账号名，并说明每个账号由哪个 bot 来发
+- todo_1014090955_597b [boss]: Instagram ray162106 (Endy & Shelly): turtles_ep01 missed 2026-10-14 07:00-09:00 BJT window because box browser stayed on Instagram login wall. Decide: (1) sign in ray162106 in chat so seller_reels can publish outside the window today, or (2) roll the same Reel to the next morning window after login.
 
 ## Ready to publish
 - none
 
 ## Metric snapshots due
-- none
+- 2026-10-14_turtles_ep01 on instagram: 1h snapshot
 
 ## Staff
 - boss (human): n/a, last seen 2026-10-14T00:04:31+08:00
-- pm (grok): ok, last seen 2026-10-14T00:21:04+08:00
+- pm (grok): ok, last seen 2026-10-14T09:11:30+08:00
 - director (claude): ok, last seen 2026-10-14T00:25:27+08:00
-- seller_tiktok (grok): ok, last seen 2026-10-14T00:23:39+08:00
-- seller_reels (grok): ok, last seen 2026-10-13T23:25:35+08:00
+- seller_tiktok (grok): ok, last seen 2026-10-14T10:08:32+08:00
+- seller_reels (grok): ok, last seen 2026-10-14T09:13:36+08:00
 - seller_instagram (grok): off
-- seller_youtube (grok): ok, last seen 2026-10-13T22:16:46+08:00
+- seller_youtube (grok): ok, last seen 2026-10-14T09:58:18+08:00
 - seller_reddit (grok): not_started
-- analyst (script): n/a, last seen 2026-10-13T22:22:32+08:00
+- analyst (script): n/a, last seen 2026-10-14T09:58:52+08:00
 - accountant (script): n/a, last seen 2026-10-11T19:15:42+08:00

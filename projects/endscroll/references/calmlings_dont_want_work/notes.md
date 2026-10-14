@@ -48,3 +48,15 @@ Mixed / partly unclear from frames alone (medium-low confidence for full lip-syn
 
 ## Number of videos using the sound
 5323 videos (Im FINE - derikulous)
+
+## Shot-by-shot breakdown (pm, 2026-10-14; from 0.5s contact sheet)
+Single static locked-off medium close-up for the whole 13.4s, with no cuts and no camera move. A grumpy white Calmling with orange brows drives a car on a snowy day, hands on the wheel, droopy eyelids. Only the mouth, eyelids and a slight sway animate. Subtitle bubble sits bottom-center.
+| t | lyric / card (verbatim) | action |
+|---|---|---|
+| 0-3.0s | "I don't want go to work cause..." | mouth wide open on frame 0 (the hook), then eyes shut, deadpan |
+| 3.0-4.5s | "it makes me really sad" | sad lips, mouths the words |
+| 4.5-6.0s | "and I gotta deal with people" | half-lidded side glance |
+| 6.0-7.5s | "and I don't wanna do that" | mouth opens big at ~7s (belting moment) |
+| 7.5-10s | "I am broke even though I work 40 hours a week" | resigned, eyes closed |
+| 10-13.4s | "it's okay I'm fine" | flat "I'm fine" punchline, then loops |
+Music trick: a borrowed, already-viral 2020 TikTok sound ("Im FINE" by @derikulous, 5.3K+ videos). It's a sad, sing-song confession. The video doesn't change the song. It adds a cute character lip-syncing it in an everyday scene (the commute). The relatability comes from the lyrics, the cuteness from the visual, and "I'm fine" is the share trigger ("this is me" / tag a coworker). The deadpan end loops straight back into the start.
