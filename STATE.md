@@ -1,6 +1,6 @@
 # STATE — EndScroll
 
-Generated 2026-10-14T22:31:16+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
+Generated 2026-10-14T22:43:15+08:00 by `./vvl build`. Do not edit; read START_HERE.md first.
 
 - Latest plan: projects/endscroll/plans/2026-10-13.md
 - Waiting for the boss: 2 review(s), 11 todo(s)
@@ -38,7 +38,7 @@ Generated 2026-10-14T22:31:16+08:00 by `./vvl build`. Do not edit; read START_HE
 ## Staff
 - boss (human): n/a, last seen 2026-10-14T10:16:29+08:00
 - pm (grok): ok, last seen 2026-10-14T21:42:26+08:00
-- director (claude): ok, last seen 2026-10-14T22:31:16+08:00
+- director (claude): ok, last seen 2026-10-14T22:43:15+08:00
 - seller_tiktok (grok): ok, last seen 2026-10-14T22:11:38+08:00
 - seller_reels (grok): ok, last seen 2026-10-14T22:23:16+08:00
 - seller_instagram (grok): off
