@@ -42,6 +42,12 @@ h2 { font-size: 15px; margin: 26px 0 10px; color: var(--muted); font-weight: 600
 .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: block; min-width: 0; box-shadow: var(--shadow); }
 a.card { transition: transform .15s, border-color .15s; }
+.card.ref { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; margin-bottom: 16px; }
+.card.ref img { width: 100%; display: block; border-radius: 10px; cursor: zoom-in; }
+.card.ref h2 { color: var(--ink); font-size: 16px; }
+.card.ref dl { display: grid; grid-template-columns: 5.5em 1fr; gap: 6px 10px; margin: 10px 0 0; }
+.card.ref dt { color: var(--muted); } .card.ref dd { margin: 0; }
+@media (max-width: 760px) { .card.ref { grid-template-columns: 1fr; } }
 a.card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .card h3 { margin: 0 0 10px; font-size: 13px; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .card h3 > span:first-child { display: flex; align-items: center; gap: 8px; color: var(--ink); }
@@ -146,8 +152,8 @@ svg text { fill: var(--muted); font-size: 11px; }
 <script>
 const D = /*DATA*/null;
 // A page built by an older engine may lack newer lists; an empty list keeps the page working.
-for (const k of ["forecasts", "engagements", "comments", "incidents", "notes", "signals", "accounts", "ideas", "learnings", "reviews", "todos", "costs", "metrics", "publishes", "posts", "plans", "ready", "due", "staff"]) D[k] = D[k] || [];
-const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "视频", "🎬"], ["signals", "热点", "🔥"], ["ideas", "点子", "💡"],
+for (const k of ["forecasts", "engagements", "comments", "incidents", "notes", "signals", "refs", "accounts", "ideas", "learnings", "reviews", "todos", "costs", "metrics", "publishes", "posts", "plans", "ready", "due", "staff"]) D[k] = D[k] || [];
+const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "视频", "🎬"], ["signals", "热点", "🔥"], ["refs", "参考", "🎞️"], ["ideas", "点子", "💡"],
   ["learnings", "规律", "🧪"], ["cost", "成本", "💰"], ["team", "团队", "👥"], ["flow", "工作流", "🔁"], ["config", "配置", "⚙️"]];
 const STAGE_ICON = {idea: "💡", script: "📝", shots: "🎥", review: "👀", ready: "📦", published: "🚀", measured: "📊"};
 const RUNNER = {human: ["人类", "var(--teal)"], grok: ["Grok", "var(--accent)"], claude: ["Claude", "var(--violet)"], script: ["脚本", "var(--muted)"]};
@@ -290,7 +296,7 @@ const views = {
     <h2>进来的信息（近 14 天）</h2>
     <div class="grid">
       <a class="card" href="#/signals"><h3><span>${ico("🔥")}外部热点</span></h3><div class="big">${D.signals.length}<small>条 · ${D.signals.filter(s => s.stage === "rising").length} 条在起势</small></div></a>
-      <a class="card" href="/refs${location.search}" target="_blank"><h3><span>${ico("🎞️", "var(--pink)")}热点参考页</span></h3><div class="big">${D.signals.filter(s => (s.media || []).some(m => m.endsWith("sheet.jpg"))).length}<small>条带关键帧 · 点开做决定 →</small></div></a>
+      <a class="card" href="#/refs"><h3><span>${ico("🎞️", "var(--pink)")}参考卡片</span></h3><div class="big">${D.refs.length}<small>条带关键帧 · 点开做决定 →</small></div></a>
       <a class="card" href="#/ideas"><h3><span>${ico("💡", "var(--amber)")}点子池</span></h3><div class="big">${D.ideas.filter(i => (i.status || "new") === "new").length}<small>个待选</small></div></a>
       <a class="card" href="#/learnings"><h3><span>${ico("🧪", "var(--violet)")}规律库</span></h3><div class="big">${D.learnings.length}<small>条 · ${D.learnings.filter(l => l.status === "rule").length} 条已成规则</small></div></a>
       <a class="card" href="#/inbox"><h3><span>${ico("💬", "var(--blue)")}老板的话 / 异常</span></h3><div class="big">${D.notes.length}<small>条留言 · ${D.incidents.length} 次异常${D.rejected_files ? ` · ${D.rejected_files} 个文件被拒` : ""}</small></div></a>
@@ -380,6 +386,25 @@ const views = {
           ${s.why_it_works ? `<p><b>为什么有效：</b>${esc(s.why_it_works)}</p>` : ""}${s.use_for_us ? `<p><b>我们可以怎么用：</b>${esc(s.use_for_us)}</p>` : ""}
           ${s.sound ? `<p><b>音乐：</b>${esc(s.sound)}</p>` : ""}<p class="muted">${esc(s.by)} · ${esc(s.format || "")} ${(s.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")} ${link(s.url)}</p></td></tr>`).join("")}
       </table></div>`;
+  },
+
+  refs() {
+    if (!D.refs.length) return `<h1>参考</h1>${empty("还没有带关键帧的参考。产品经理用 ./vvl ref <链接> 收集，每条一张卡片。")}`;
+    // Saved files are served by the local server; when the page is opened as a file, paths are relative to it.
+    const file = rel => esc((location.protocol.startsWith("http") ? `/file/${D.project_id}/` : "") + rel);
+    const ordered = D.refs.slice().sort((a, b) => (a.first_at || a.at).localeCompare(b.first_at || b.at));
+    const row = (label, v) => v ? `<dt>${label}</dt><dd>${esc(v)}</dd>` : "";
+    const cards = ordered.map((s, i) => {
+      const sheet = s.media.find(m => m.endsWith("sheet.jpg")), video = s.media.find(m => m.endsWith(".mp4"));
+      return `<div class="card ref"><a href="${file(sheet)}" target="_blank"><img src="${file(sheet)}" loading="lazy" alt="关键帧"></a>
+        <div><h2 style="margin:0 0 6px"><span class="tag hot">R${i + 1}</span> ${esc(s.title)}</h2>
+        <p class="small">${link(s.url)} ${video ? `<a href="${file(video)}" target="_blank" style="color:var(--accent)">本地副本 ▶</a>` : ""}
+          <span class="muted">${PLAT[s.platform] || esc(s.platform)} · ${s.duration_s ?? "–"} 秒 · 发布 ${esc((s.posted_at || "").slice(0, 10)) || "–"}</span></p>
+        <p class="small">播放 <b>${num(s.views)}</b> · 赞 ${num(s.likes)} · 分享 ${num(s.shares)} · 评论 ${num(s.comments)} · 收藏 ${num(s.saves)}</p>
+        <dl>${row("剧情", s.summary)}${row("开头钩子", s.hook_text)}${row("音频", s.sound)}${row("爆点", s.why_it_works)}${row("我们怎么用", s.use_for_us)}
+          ${row("收集人", `${s.by} · ${ago(s.first_at || s.at)}`)}</dl></div></div>`;
+    }).reverse();
+    return `<h1>参考</h1><p class="sub">${D.refs.length} 条爆款参考，最新在上。点关键帧看大图；决定时说编号，比如「翻拍 R2」。</p>${cards.join("")}`;
   },
 
   ideas() {

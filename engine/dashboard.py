@@ -49,6 +49,8 @@ def build(pdir, cfg):
         "reviews": vvl.load(pdir, "review"),
         "todos": vvl.load(pdir, "todo"),
         "signals": recent("signal"),
+        # Reference cards stay on the page however old they are: the boss decides from them.
+        "refs": [s for s in vvl.load(pdir, "signal") if any(m.endswith("sheet.jpg") for m in s.get("media", []))],
         "notes": recent("note"),
         "incidents": recent("incident"),
         "engagements": recent("engagement"),

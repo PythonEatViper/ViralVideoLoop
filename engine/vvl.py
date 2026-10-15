@@ -603,20 +603,13 @@ def cmd_ref(args, pdir, cfg):
         rec, updated = add_record(pdir, "signal", fields, args.by)
     except ValueError as e:
         sys.exit(f"REJECTED: {e}")
-    write_refs_page(pdir)
     print(f"{'updated' if updated else 'added'} {rec['id']} · sheet {rec['media'][-1]} · "
-          f"page {pdir / 'references.html'} (live: http://localhost:{PORT}/refs?project={pdir.name})")
-
-
-def write_refs_page(pdir):
-    import refs
-    (pdir / "references.html").write_text(refs.page(pdir, load(pdir, "signal"), ""))
+          f"see it at http://localhost:{PORT}/?project={pdir.name}#/refs")
 
 
 def cmd_build(args, pdir, cfg):
     import dashboard
     out = dashboard.build(pdir, cfg)
-    write_refs_page(pdir)
     (REPO / "STATE.md").write_text(state_text(pdir, cfg))
     if args.cmd == "build":
         print(out)
@@ -676,10 +669,6 @@ def cmd_serve(args, pdir, cfg):
                 body, ctype = str(data_version(target)).encode(), "text/plain"
             elif route == "/":
                 body, ctype = dashboard.build(target, config(target)).read_bytes(), "text/html; charset=utf-8"
-            elif route == "/refs":
-                import refs
-                page = refs.page(target, load(target, "signal"), f"/file/{target.name}/")
-                body, ctype = page.encode(), "text/html; charset=utf-8"
             elif route.startswith("/file/"):
                 # Read-only access to saved references (keyframe sheets, video copies), nothing else.
                 name, _, rel = route[len("/file/"):].partition("/")
