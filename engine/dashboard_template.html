@@ -220,9 +220,15 @@ function forecastCard(f, earlier) {
     ${meters || `<div class="small muted">这个快照里没有可用的指标。</div>`}
     ${earlier.length ? `<div class="small muted" style="margin-top:8px">更早的预测：${earlier.map(e => `${e.age_hours}h ${VERDICT[e.verdict][1]}${e.score != null ? " " + e.score : ""}`).join(" · ")}</div>` : ""}</div>`;
 }
+// Latest snapshot on each platform, most views first.
+function latestPerPlatform(postId) {
+  const best = {};
+  D.metrics.filter(m => m.post_id === postId).forEach(m => { if (!best[m.platform] || m.age_hours > best[m.platform].age_hours) best[m.platform] = m; });
+  return Object.values(best).sort((a, b) => (b.views || 0) - (a.views || 0));
+}
+// Without a platform: the latest snapshot of the platform where the post has the most views.
 function latestMetric(postId, platform) {
-  return D.metrics.filter(m => m.post_id === postId && (!platform || m.platform === platform))
-    .sort((a, b) => b.age_hours - a.age_hours)[0];
+  return latestPerPlatform(postId).find(m => !platform || m.platform === platform);
 }
 const outboxId = p => p.outbox || p.id;
 const pendingReviews = () => D.reviews.filter(r => r.status === "pending");
@@ -320,15 +326,17 @@ const views = {
 
   posts() {
     if (!D.posts.length) return `<h1>视频</h1>${empty("还没有视频。")}`;
-    const rows = D.posts.slice().reverse().map(p => { const m = latestMetric(outboxId(p)) || {};
+    const rows = D.posts.slice().reverse().map(p => { const all = latestPerPlatform(outboxId(p)), m = all[0] || {};
+      const total = all.reduce((t, x) => t + (x.views || 0), 0);
+      const fc = forecastsFor(outboxId(p)).find(f => f.platform === m.platform) || forecastsFor(outboxId(p))[0];
       return `<tr class="click" onclick="location.hash='#/post/${esc(p.id)}'"><td><b>${esc(p.title)}</b><div class="small muted">${esc(p.hypothesis || "")}</div></td>
-        <td><span class="tag ${p.status === "review" ? "hot" : ""}">${(STAGES.find(s => s[0] === p.status) || [0, p.status])[1]}</span></td>
-        <td>${forecastsFor(outboxId(p)).slice(0, 1).map(verdictChip).join("") || `<span class="muted">–</span>`}</td>
-        <td class="num">${num(m.views)}</td><td class="num">${pct(m.hold_3s_rate)}</td><td class="num">${pct(m.completion_rate)}</td>
+        <td><span class="tag ${p.status === "review" ? "hot" : ""}">${(STAGES.find(s => s[0] === p.status) || [0, {dropped: "已放弃"}[p.status] || p.status])[1]}</span></td>
+        <td>${fc ? verdictChip(fc) + `<div class="small muted">${PLAT[fc.platform] || esc(fc.platform)}</div>` : `<span class="muted">–</span>`}</td>
+        <td class="num"><b>${all.length ? num(total) : "–"}</b>${all.length > 1 ? `<div class="small muted" style="white-space:nowrap">${all.map(x => `${PLAT[x.platform] || esc(x.platform)} ${num(x.views)}`).join("<br>")}</div>` : ""}</td><td class="num">${pct(m.hold_3s_rate)}</td><td class="num">${pct(m.completion_rate)}</td>
         <td class="num">${per1k(m.shares, m.views)}</td><td class="num">${per1k(m.comments, m.views)}</td><td class="num">${per1k(m.new_followers, m.views)}</td>
         <td class="small muted">${m.age_hours != null ? m.age_hours + "h" : ""}</td></tr>`; }).join("");
-    return `<h1>视频</h1><p class="sub">每条视频是一次实验。分享、评论、关注按每千次播放算，才能跨视频比较。点一行看详情。</p>
-      <div class="card scroll"><table><tr><th>视频 / 在测什么</th><th>状态</th><th>推流预测</th><th class="num">播放</th><th class="num">3 秒留存</th><th class="num">完播</th>
+    return `<h1>视频</h1><p class="sub">每条视频是一次实验。播放是各平台合计；留存、完播和每千次分享 / 评论 / 关注取播放最多的那个平台（推流预测下面标了是哪个），这样才能跨视频比较。点一行看各平台详情。</p>
+      <div class="card scroll"><table><tr><th>视频 / 在测什么</th><th>状态</th><th>推流预测</th><th class="num">播放（各平台合计）</th><th class="num">3 秒留存</th><th class="num">完播</th>
         <th class="num">分享/千</th><th class="num">评论/千</th><th class="num">关注/千</th><th>数据时点</th></tr>${rows}</table></div>`;
   },
 
