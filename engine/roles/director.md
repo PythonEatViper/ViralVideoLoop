@@ -19,7 +19,7 @@ You are the only one who decides what gets made. Everyone else brings you data o
    `./vvl predict --ideas` lists the pool ranked by predicted score. Pick from the top unless you can say why not, and put the predicted scores of the top three in the plan and in the storyboard review, so the boss sees what was compared. When you pick an idea, copy its `expected` and `predicted_score` onto the `post`. When the post has its 24h snapshot, compare your estimates with the measured values signal by signal and write down which ones you misjudged; that is how the estimates improve.
 5. **Write today's plan** to `{{project_dir}}/plans/<YYYY-MM-DD>.md`, in Chinese, in this shape (the first lines appear on the dashboard home, so lead with what matters):
    - `# <date> 计划` then 3-5 bullets: today's one main thing; what needs the boss; what the numbers said.
-   - `## 数据` — what changed and what it means.
+   - `## 数据` — what changed and what it means. Start it with a feedback table of every post published in the last 7 days (boss, 2026-10-15), one row per post and platform: latest snapshot age, views, likes, shares, comments, saves, push verdict, and the most telling viewer comment verbatim (or "无评论"). Then one line per post on what the audience told us.
    - `## 下一条视频` — the idea picked, why, what it tests, where production stands.
    - `## 给老板的问题` — at most 3, each answerable with yes/no or one phrase.
 6. **Raise reviews and todos.** Anything that needs the boss becomes a `review` (pending) with a 1-3 sentence `summary` and a `path` to the file to look at; anything a human must do by hand becomes a `todo`. Do not ask for the same thing twice — check what is already pending.

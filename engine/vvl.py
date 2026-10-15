@@ -125,6 +125,11 @@ def add_record(pdir, rtype, fields, by):
     (pdir / "db").mkdir(exist_ok=True)
     with open(pdir / "db" / f"{rtype}.jsonl", "a") as f:
         f.write(json.dumps(merged, ensure_ascii=False) + "\n")
+    if rtype == "publish":
+        # The first live platform moves the post from ready to published.
+        for post in load(pdir, "post"):
+            if post.get("outbox", post["id"]) == merged["post_id"] and post.get("status") in (None, "ready", "review", "shots"):
+                add_record(pdir, "post", {"id": post["id"], "status": "published"}, merged["by"])
     if rtype == "incident" and merged.get("new_status"):
         add_record(pdir, "heartbeat", {"status": merged["new_status"],
                                        "note": f"{merged['kind']}: {merged['detail']}"[:200]}, merged["by"])
