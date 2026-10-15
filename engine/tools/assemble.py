@@ -24,7 +24,8 @@ A clip given as an object is cut to "start".."end" seconds (both optional); "cro
 sound, for silent clips cut to a song; "mute_after" silences the clip's own
 sound from that second on (in the clip's own time), keeping the picture. A caption may
 give "y" (pixels from the top) instead of "pos", a "color", "font": "rounded" for a softer
-rounded face instead of the heavy default, and "stroke" (outline width in pixels). "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
+rounded face instead of the heavy default, "stroke" (outline width in pixels), and "lit"
+(karaoke: only the first N words bright, the rest faint; one caption per word). "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
 under dialogue and fades out at the end. The mix is normalised to -14 LUFS (TikTok's loudness).
 Output: <episode>/final.mp4
 """
@@ -115,13 +116,23 @@ def caption_png(cap, dst):
     # Text is centred on the full width. TikTok's buttons sit on the right of the lower half;
     # only a line that would run under them is moved left, and only as far as needed.
     beside_buttons = y >= 900
+    stroke = cap.get("stroke", max(4, size // 12))
+    lit, n = cap.get("lit"), 0  # karaoke: the first `lit` words bright, the rest faint
     for line in wrap(cap["text"], font, draw):
         width = draw.textlength(line, font=font)
         x = (W - width) / 2
         if beside_buttons and x + width > W - 150:
             x = max(20, W - 150 - width)
-        draw.text((x, y), line, font=font, fill=cap.get("color", "white"),
-                  stroke_width=cap.get("stroke", max(4, size // 12)), stroke_fill="black")
+        if lit is None:
+            draw.text((x, y), line, font=font, fill=cap.get("color", "white"),
+                      stroke_width=stroke, stroke_fill="black")
+        else:
+            for word in line.split():
+                faint = n >= lit
+                draw.text((x, y), word, font=font, fill=(255, 255, 255, 90 if faint else 255),
+                          stroke_width=stroke, stroke_fill=(0, 0, 0, 40 if faint else 255))
+                x += draw.textlength(word + " ", font=font)
+                n += 1
         y += int(size * 1.2)
     img.save(dst)
 
