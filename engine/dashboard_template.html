@@ -290,6 +290,7 @@ const views = {
     <h2>进来的信息（近 14 天）</h2>
     <div class="grid">
       <a class="card" href="#/signals"><h3><span>${ico("🔥")}外部热点</span></h3><div class="big">${D.signals.length}<small>条 · ${D.signals.filter(s => s.stage === "rising").length} 条在起势</small></div></a>
+      <a class="card" href="/refs${location.search}" target="_blank"><h3><span>${ico("🎞️", "var(--pink)")}热点参考页</span></h3><div class="big">${D.signals.filter(s => (s.media || []).some(m => m.endsWith("sheet.jpg"))).length}<small>条带关键帧 · 点开做决定 →</small></div></a>
       <a class="card" href="#/ideas"><h3><span>${ico("💡", "var(--amber)")}点子池</span></h3><div class="big">${D.ideas.filter(i => (i.status || "new") === "new").length}<small>个待选</small></div></a>
       <a class="card" href="#/learnings"><h3><span>${ico("🧪", "var(--violet)")}规律库</span></h3><div class="big">${D.learnings.length}<small>条 · ${D.learnings.filter(l => l.status === "rule").length} 条已成规则</small></div></a>
       <a class="card" href="#/inbox"><h3><span>${ico("💬", "var(--blue)")}老板的话 / 异常</span></h3><div class="big">${D.notes.length}<small>条留言 · ${D.incidents.length} 次异常${D.rejected_files ? ` · ${D.rejected_files} 个文件被拒` : ""}</small></div></a>

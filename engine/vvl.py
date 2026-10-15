@@ -47,7 +47,9 @@ def now():
 
 
 def parse_time(text):
-    return datetime.fromisoformat(text.replace("Z", "+00:00"))
+    t = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    # Bots sometimes write times without an offset; read those as local time.
+    return t if t.tzinfo else t.astimezone()
 
 
 def history(pdir, rtype):
@@ -588,9 +590,33 @@ def cmd_predict(args, pdir, cfg):
               f"coverage {f.get('coverage', 0):.0%}{grew}" + (f"  weak: {weak}" if weak else ""))
 
 
+def cmd_ref(args, pdir, cfg):
+    """Collect one viral reference: video copy, keyframe sheet, public counts, plus the collector's judgement."""
+    import refs
+    fields = refs.collect(pdir, args.url, args.video)
+    judged = {"summary": args.summary, "why_it_works": args.why, "use_for_us": args.use,
+              "hook_text": args.hook, "title": args.title, "platform": args.platform}
+    fields.update({k: v for k, v in judged.items() if v})
+    if args.sound:
+        fields["sound"] = f"{args.sound} (track: {fields['sound']})" if fields.get("sound") else args.sound
+    try:
+        rec, updated = add_record(pdir, "signal", fields, args.by)
+    except ValueError as e:
+        sys.exit(f"REJECTED: {e}")
+    write_refs_page(pdir)
+    print(f"{'updated' if updated else 'added'} {rec['id']} · sheet {rec['media'][-1]} · "
+          f"page {pdir / 'references.html'} (live: http://localhost:{PORT}/refs?project={pdir.name})")
+
+
+def write_refs_page(pdir):
+    import refs
+    (pdir / "references.html").write_text(refs.page(pdir, load(pdir, "signal"), ""))
+
+
 def cmd_build(args, pdir, cfg):
     import dashboard
     out = dashboard.build(pdir, cfg)
+    write_refs_page(pdir)
     (REPO / "STATE.md").write_text(state_text(pdir, cfg))
     if args.cmd == "build":
         print(out)
@@ -625,7 +651,7 @@ def cmd_serve(args, pdir, cfg):
     """Serve the dashboard on localhost: rebuilt on every load, and able to open the chat."""
     import dashboard
     from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-    from urllib.parse import parse_qs, urlparse
+    from urllib.parse import parse_qs, unquote, urlparse
 
     started = time.time()
 
@@ -650,6 +676,20 @@ def cmd_serve(args, pdir, cfg):
                 body, ctype = str(data_version(target)).encode(), "text/plain"
             elif route == "/":
                 body, ctype = dashboard.build(target, config(target)).read_bytes(), "text/html; charset=utf-8"
+            elif route == "/refs":
+                import refs
+                page = refs.page(target, load(target, "signal"), f"/file/{target.name}/")
+                body, ctype = page.encode(), "text/html; charset=utf-8"
+            elif route.startswith("/file/"):
+                # Read-only access to saved references (keyframe sheets, video copies), nothing else.
+                name, _, rel = route[len("/file/"):].partition("/")
+                path = (project_dir(name) / unquote(rel)).resolve()
+                if not path.is_relative_to(project_dir(name) / "references") or not path.is_file():
+                    return self.send_error(404)
+                body = path.read_bytes()
+                ctype = {".jpg": "image/jpeg", ".png": "image/png", ".mp4": "video/mp4"}.get(path.suffix, "")
+                if not ctype:
+                    return self.send_error(404)
             else:
                 return self.send_error(404)
             self.send_response(200)
@@ -803,6 +843,17 @@ def main():
     p.add_argument("--note")
     p.add_argument("--by")
     command("cost", cmd_cost, "credits left, spent this week, spend by episode and by model")
+    p = command("ref", cmd_ref, "collect a viral reference: vvl ref <tiktok url> --by pm --summary ... --why ... --sound ...")
+    p.add_argument("url", help="link to the video (TikTok links are downloaded automatically)")
+    p.add_argument("--by", required=True, help="staff id of the collector")
+    p.add_argument("--summary", required=True, help="2-3 sentences: what happens, beat by beat")
+    p.add_argument("--why", required=True, help="爆点: the hook, twist or emotion that made it spread")
+    p.add_argument("--sound", required=True, help="what you hear: music mood, voice lines, sound effects, and when")
+    p.add_argument("--use", help="how we could remake or borrow it")
+    p.add_argument("--hook", help="first words or on-screen text, verbatim")
+    p.add_argument("--video", help="for non-TikTok links: path of a video file you saved")
+    p.add_argument("--title", help="one line (TikTok: taken from the post)")
+    p.add_argument("--platform", help="for non-TikTok links: e.g. instagram, youtube")
 
     command("staff", cmd_staff, "who is on the team and whether each is running")
     p = command("checkin", cmd_checkin, "a staff member reports it ran: vvl checkin seller_tiktok --note ...")
