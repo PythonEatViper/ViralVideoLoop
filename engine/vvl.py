@@ -604,7 +604,7 @@ def cmd_ref(args, pdir, cfg):
     except ValueError as e:
         sys.exit(f"REJECTED: {e}")
     print(f"{'updated' if updated else 'added'} {rec['id']} · sheet {rec['media'][-1]} · "
-          f"see it at http://localhost:{PORT}/?project={pdir.name}#/refs")
+          f"see it at http://localhost:{PORT}/?project={pdir.name}#/signals")
 
 
 def cmd_build(args, pdir, cfg):

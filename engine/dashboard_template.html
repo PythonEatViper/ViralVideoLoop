@@ -153,7 +153,7 @@ svg text { fill: var(--muted); font-size: 11px; }
 const D = /*DATA*/null;
 // A page built by an older engine may lack newer lists; an empty list keeps the page working.
 for (const k of ["forecasts", "engagements", "comments", "incidents", "notes", "signals", "refs", "accounts", "ideas", "learnings", "reviews", "todos", "costs", "metrics", "publishes", "posts", "plans", "ready", "due", "staff"]) D[k] = D[k] || [];
-const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "视频", "🎬"], ["signals", "热点", "🔥"], ["refs", "参考", "🎞️"], ["ideas", "点子", "💡"],
+const PAGES = [["", "总览", "🏠"], ["plan", "计划", "📅"], ["posts", "视频", "🎬"], ["signals", "热点", "🔥"], ["ideas", "点子", "💡"],
   ["learnings", "规律", "🧪"], ["cost", "成本", "💰"], ["team", "团队", "👥"], ["flow", "工作流", "🔁"], ["config", "配置", "⚙️"]];
 const STAGE_ICON = {idea: "💡", script: "📝", shots: "🎥", review: "👀", ready: "📦", published: "🚀", measured: "📊"};
 const RUNNER = {human: ["人类", "var(--teal)"], grok: ["Grok", "var(--accent)"], claude: ["Claude", "var(--violet)"], script: ["脚本", "var(--muted)"]};
@@ -295,9 +295,8 @@ const views = {
     <a class="card" href="#/posts"><div class="pipe">${STAGES.map(([k, label]) => `<div class="${counts[k] ? "has" : ""}"><i>${STAGE_ICON[k]}</i><b>${counts[k]}</b><span class="small">${label}</span></div>`).join("")}</div></a>
     <h2>进来的信息（近 14 天）</h2>
     <div class="grid">
-      <a class="card" href="#/signals"><h3><span>${ico("🔥")}外部热点</span></h3><div class="big">${D.signals.length}<small>条 · ${D.signals.filter(s => s.stage === "rising").length} 条在起势</small></div></a>
-      <a class="card" href="#/refs"><h3><span>${ico("🎞️", "var(--pink)")}参考卡片</span></h3><div class="big">${D.refs.length}<small>条带关键帧 · 点开做决定 →</small></div></a>
-      <a class="card" href="#/ideas"><h3><span>${ico("💡", "var(--amber)")}点子池</span></h3><div class="big">${D.ideas.filter(i => (i.status || "new") === "new").length}<small>个待选</small></div></a>
+      <a class="card" href="#/signals"><h3><span>${ico("🔥")}外部热点</span></h3><div class="big">${D.signals.length}<small>条 · ${D.refs.length} 张关键帧卡片 · ${D.signals.filter(s => s.stage === "rising").length} 条在起势</small></div></a>
+            <a class="card" href="#/ideas"><h3><span>${ico("💡", "var(--amber)")}点子池</span></h3><div class="big">${D.ideas.filter(i => (i.status || "new") === "new").length}<small>个待选</small></div></a>
       <a class="card" href="#/learnings"><h3><span>${ico("🧪", "var(--violet)")}规律库</span></h3><div class="big">${D.learnings.length}<small>条 · ${D.learnings.filter(l => l.status === "rule").length} 条已成规则</small></div></a>
       <a class="card" href="#/inbox"><h3><span>${ico("💬", "var(--blue)")}老板的话 / 异常</span></h3><div class="big">${D.notes.length}<small>条留言 · ${D.incidents.length} 次异常${D.rejected_files ? ` · ${D.rejected_files} 个文件被拒` : ""}</small></div></a>
     </div>`;
@@ -369,12 +368,28 @@ const views = {
   },
 
   signals(filter) {
-    if (!D.signals.length) return `<h1>热点</h1>${empty("还没有上报。推销员侦查各自的平台，产品经理盯 X。在「团队」页复制提示词，配好 Grok 定时任务后这里会有数据。")}`;
+    if (!D.signals.length && !D.refs.length) return `<h1>热点</h1>${empty("还没有上报。推销员侦查各自的平台，产品经理盯 X。在「团队」页复制提示词，配好 Grok 定时任务后这里会有数据。")}`;
+    // Saved files are served by the local server; when the page is opened as a file, paths are relative to it.
+    const file = rel => esc((location.protocol.startsWith("http") ? `/file/${D.project_id}/` : "") + rel);
+    const dl = (label, v) => v ? `<dt>${label}</dt><dd>${esc(v)}</dd>` : "";
+    const cards = D.refs.slice().sort((a, b) => (a.first_at || a.at).localeCompare(b.first_at || b.at)).map((s, i) => {
+      const sheet = s.media.find(m => m.endsWith("sheet.jpg")), video = s.media.find(m => m.endsWith(".mp4"));
+      return `<div class="card ref"><a href="${file(sheet)}" target="_blank"><img src="${file(sheet)}" loading="lazy" alt="关键帧"></a>
+        <div><h2 style="margin:0 0 6px"><span class="tag hot">R${i + 1}</span> ${esc(s.title)}</h2>
+        <p class="small">${link(s.url)} ${video ? `<a href="${file(video)}" target="_blank" style="color:var(--accent)">本地副本 ▶</a>` : ""}
+          <span class="muted">${PLAT[s.platform] || esc(s.platform)} · ${s.duration_s ?? "–"} 秒 · 发布 ${esc((s.posted_at || "").slice(0, 10)) || "–"}</span></p>
+        <p class="small">播放 <b>${num(s.views)}</b> · 赞 ${num(s.likes)} · 分享 ${num(s.shares)} · 评论 ${num(s.comments)} · 收藏 ${num(s.saves)}</p>
+        <dl>${dl("剧情", s.summary)}${dl("开头钩子", s.hook_text)}${dl("音频", s.sound)}${dl("爆点", s.why_it_works)}${dl("我们怎么用", s.use_for_us)}
+          ${dl("收集人", `${s.by} · ${ago(s.first_at || s.at)}`)}</dl></div></div>`;
+    }).reverse();
+    const refIds = new Set(D.refs.map(s => s.id));
     const [plat, stage] = (filter || "all,all").split(",");
-    const rows = D.signals.filter(s => (plat === "all" || s.platform === plat) && (stage === "all" || s.stage === stage))
+    const rows = D.signals.filter(s => !refIds.has(s.id) && (plat === "all" || s.platform === plat) && (stage === "all" || s.stage === stage))
       .sort((a, b) => (b.relevance || 0) - (a.relevance || 0) || (b.velocity_per_hour || 0) - (a.velocity_per_hour || 0));
     const opt = (list, cur, labels) => list.map(v => `<option value="${v}" ${v === cur ? "selected" : ""}>${labels[v] || v}</option>`).join("");
-    return `<h1>热点</h1><p class="sub">近 14 天推销员和产品经理上报的外部爆款和趋势，按相关度排序。点一行展开。
+    return `<h1>热点</h1><p class="sub">上面是带关键帧的爆款卡片（最新在上），点关键帧看大图，决定时说编号，比如「翻拍 R2」；下面是近 14 天推销员和产品经理上报的其他热点。</p>
+      ${cards.join("")}
+      <h2>其他热点 · ${rows.length} 条</h2><p class="sub">按相关度排序，点一行展开。
       <select onchange="location.hash='#/signals/'+this.value+',${esc(stage)}'">${opt(["all", ...new Set(D.signals.map(s => s.platform))], plat, {all: "全部平台", ...PLAT})}</select>
       <select onchange="location.hash='#/signals/${esc(plat)},'+this.value">${opt(["all", "rising", "peak", "fading"], stage, {all: "全部阶段", rising: "起势", peak: "高峰", fading: "退潮"})}</select></p>
       <div class="card scroll"><table><tr><th>相关</th><th>内容</th><th>平台</th><th>阶段</th><th class="num">播放</th><th class="num">每小时</th><th>看到</th></tr>
@@ -386,25 +401,6 @@ const views = {
           ${s.why_it_works ? `<p><b>为什么有效：</b>${esc(s.why_it_works)}</p>` : ""}${s.use_for_us ? `<p><b>我们可以怎么用：</b>${esc(s.use_for_us)}</p>` : ""}
           ${s.sound ? `<p><b>音乐：</b>${esc(s.sound)}</p>` : ""}<p class="muted">${esc(s.by)} · ${esc(s.format || "")} ${(s.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")} ${link(s.url)}</p></td></tr>`).join("")}
       </table></div>`;
-  },
-
-  refs() {
-    if (!D.refs.length) return `<h1>参考</h1>${empty("还没有带关键帧的参考。产品经理用 ./vvl ref <链接> 收集，每条一张卡片。")}`;
-    // Saved files are served by the local server; when the page is opened as a file, paths are relative to it.
-    const file = rel => esc((location.protocol.startsWith("http") ? `/file/${D.project_id}/` : "") + rel);
-    const ordered = D.refs.slice().sort((a, b) => (a.first_at || a.at).localeCompare(b.first_at || b.at));
-    const row = (label, v) => v ? `<dt>${label}</dt><dd>${esc(v)}</dd>` : "";
-    const cards = ordered.map((s, i) => {
-      const sheet = s.media.find(m => m.endsWith("sheet.jpg")), video = s.media.find(m => m.endsWith(".mp4"));
-      return `<div class="card ref"><a href="${file(sheet)}" target="_blank"><img src="${file(sheet)}" loading="lazy" alt="关键帧"></a>
-        <div><h2 style="margin:0 0 6px"><span class="tag hot">R${i + 1}</span> ${esc(s.title)}</h2>
-        <p class="small">${link(s.url)} ${video ? `<a href="${file(video)}" target="_blank" style="color:var(--accent)">本地副本 ▶</a>` : ""}
-          <span class="muted">${PLAT[s.platform] || esc(s.platform)} · ${s.duration_s ?? "–"} 秒 · 发布 ${esc((s.posted_at || "").slice(0, 10)) || "–"}</span></p>
-        <p class="small">播放 <b>${num(s.views)}</b> · 赞 ${num(s.likes)} · 分享 ${num(s.shares)} · 评论 ${num(s.comments)} · 收藏 ${num(s.saves)}</p>
-        <dl>${row("剧情", s.summary)}${row("开头钩子", s.hook_text)}${row("音频", s.sound)}${row("爆点", s.why_it_works)}${row("我们怎么用", s.use_for_us)}
-          ${row("收集人", `${s.by} · ${ago(s.first_at || s.at)}`)}</dl></div></div>`;
-    }).reverse();
-    return `<h1>参考</h1><p class="sub">${D.refs.length} 条爆款参考，最新在上。点关键帧看大图；决定时说编号，比如「翻拍 R2」。</p>${cards.join("")}`;
   },
 
   ideas() {

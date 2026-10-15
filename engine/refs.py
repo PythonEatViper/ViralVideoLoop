@@ -1,5 +1,5 @@
 """Reference cards: download a viral video and cut a keyframe sheet. `vvl ref <url> ...` calls collect();
-the dashboard's 参考 page shows every signal that has a sheet.
+the dashboard's 热点 page shows every signal that has a sheet as a card.
 """
 import json
 import subprocess
