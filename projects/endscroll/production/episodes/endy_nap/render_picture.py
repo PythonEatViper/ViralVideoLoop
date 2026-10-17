@@ -1,9 +1,9 @@
 """Render the silent picture track of endy_nap (10 s, 1080x1920, 30 fps) -> shots/picture.mp4.
 
-0-4.55 s  P1: Endy (masked from P1a over the empty plate) squashes on every beat (0.6 s),
-          mouth opens on the stressed words only (patches from P1b open, P1h half-open).
-4.55-5.1  burst: grok clip b, 0.30-0.85 s.
-5.1-7.3   P3 in his shell.   7.3-7.9  P4 floppy over the chair.   7.9-10  P5 asleep under the blanket.
+0-4.67 s  P1: Endy (masked from P1a over the empty plate) squashes on every beat (0.6 s),
+          mouth flaps steadily while he sings (P1b open, P1h half-open), closed at real breaks.
+4.67-5.22 burst: grok clip b, 0.30-0.85 s.
+5.22-7.3  P3 in his shell.   7.3-7.9  P4 floppy over the chair.   7.9-10  P5 asleep under the blanket.
 Run from anywhere: python3 render_picture.py
 """
 import subprocess
@@ -17,7 +17,7 @@ K = HERE / "keyframes"
 W, H, FPS, DUR = 1080, 1920, 30, 10.0
 
 BEAT, BEAT_PHASE, SQUASH = 0.6, 0.55, 0.03   # head is highest at 0.55 + 0.6k in the reference
-T_BURST, BURST_IN, BURST_OUT = 4.55, 0.30, 0.85
+T_BURST, BURST_IN, BURST_OUT = 4.67, 0.30, 0.85   # papers burst on "took", as in the reference
 T_P3, T_P4, T_P5 = T_BURST + (BURST_OUT - BURST_IN), 7.3, 7.9
 AV_LAG = 2 / FPS   # measured: assemble.py shows picture frame j at (j+2)/30 s, i.e. 2 frames after the audio
 MOUTH_BOX = (250, 570, 410, 670)   # in keyframe pixels (752x1344)
@@ -66,10 +66,10 @@ def burst_frames():
 
 # Boss 10-17 (final): while he is singing, the mouth just opens and closes at a steady, relaxed
 # rate (one cycle per half beat, 0.3 s), and only stops where the voice really breaks off.
-# Sung stretches measured from the song's vocal energy: a clear 0.2 s break before "took", then
-# "took" until the burst. The voice runs straight from "today" into "but", but the boss wanted a
+# Sung stretches measured from the song (band energies + sibilants): "in-stead" ends at 3.90,
+# then only a bass hit and silence until "I" at 4.37 (not 3.68 as whisper said); "took" 4.67. The voice runs straight from "today" into "but", but the boss wanted a
 # breath at the comma (where the caption line changes): closed 1.90-2.12 (0.25 s), reopening on "but".
-SUNG = [(0.20, 2.00), (2.09, 4.10), (4.36, 4.55)]
+SUNG = [(0.20, 2.00), (2.09, 3.90), (4.34, 4.67)]
 CYCLE = ["closed", "half", "open", "open", "open", "half", "closed", "closed", "closed"]   # 9 frames = 0.3 s
 
 
