@@ -1,7 +1,7 @@
 """Render the silent picture track of endy_nap (10 s, 1080x1920, 30 fps) -> shots/picture.mp4.
 
 0-4.55 s  P1: Endy (masked from P1a over the empty plate) squashes on every beat (0.6 s),
-          mouth opens on each sung word (mouth patch from P1b).
+          mouth opens on the stressed words only (mouth patch from P1b).
 4.55-5.1  burst: grok clip b, 0.30-0.85 s.
 5.1-7.3   P3 in his shell.   7.3-7.9  P4 floppy over the chair.   7.9-10  P5 asleep under the blanket.
 Run from anywhere: python3 render_picture.py
@@ -19,10 +19,9 @@ W, H, FPS, DUR = 1080, 1920, 30, 10.0
 BEAT, BEAT_PHASE, SQUASH = 0.6, 0.55, 0.03   # head is highest at 0.55 + 0.6k in the reference
 T_BURST, BURST_IN, BURST_OUT = 4.55, 0.30, 0.85
 T_P3, T_P4, T_P5 = T_BURST + (BURST_OUT - BURST_IN), 7.3, 7.9
-# sung words in the P1 section (start, end), from the reference audio
-WORDS = [(0.22, 0.34), (0.34, 0.52), (0.52, 0.64), (0.64, 0.74), (0.74, 0.88), (0.88, 1.08),
-         (1.08, 1.36), (1.36, 1.68), (1.68, 2.08), (2.10, 2.46), (2.46, 2.62), (2.62, 2.82),
-         (2.82, 3.0), (3.0, 3.15), (3.15, 3.30), (3.30, 3.68), (3.68, 4.40)]
+# mouth opens only on the stressed words (boss 10-17: every syllable looked like chewing):
+# "LOT", "to-DAY", "KNOW", "DID", and the held "I---" before "took"
+ACCENTS = [(0.64, 0.92), (1.72, 2.00), (2.62, 2.90), (3.10, 3.38), (3.68, 4.40)]
 MOUTH_BOX = (250, 570, 410, 670)   # in keyframe pixels (752x1344)
 
 
@@ -71,7 +70,7 @@ def p1_frame(t):
     phase = ((t - BEAT_PHASE) / BEAT) % 1.0
     k = (1 - np.cos(2 * np.pi * phase)) / 2          # 0 at the top, 1 at the bottom
     sy, sx = 1 - SQUASH * k, 1 + SQUASH * 0.5 * k
-    singing = any(s <= t < (e if e - s > 0.5 else s + min(0.2, (e - s) * 0.8)) for s, e in WORDS)   # a held note stays open
+    singing = any(s <= t < e for s, e in ACCENTS)
     layer = layers["open" if singing else "closed"]
     lw, lh = round(W * sx), round(H * sy)
     scaled = layer.resize((lw, lh), Image.LANCZOS)
