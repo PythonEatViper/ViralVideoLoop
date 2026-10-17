@@ -1,0 +1,273 @@
+{
+ "clips": [
+  "shots/picture.mp4"
+ ],
+ "captions": [
+  {
+   "text": "I had a lot of things",
+   "lit": 1,
+   "start": 0.22,
+   "end": 0.34,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I had a lot of things",
+   "lit": 2,
+   "start": 0.34,
+   "end": 0.52,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I had a lot of things",
+   "lit": 3,
+   "start": 0.52,
+   "end": 0.64,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I had a lot of things",
+   "lit": 4,
+   "start": 0.64,
+   "end": 0.74,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I had a lot of things",
+   "lit": 5,
+   "start": 0.74,
+   "end": 0.88,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I had a lot of things",
+   "lit": 6,
+   "start": 0.88,
+   "end": 1.08,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "to do today,",
+   "lit": 1,
+   "start": 1.08,
+   "end": 1.36,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "to do today,",
+   "lit": 2,
+   "start": 1.36,
+   "end": 1.68,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "to do today,",
+   "lit": 3,
+   "start": 1.68,
+   "end": 2.1,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "but you know",
+   "lit": 1,
+   "start": 2.1,
+   "end": 2.46,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "but you know",
+   "lit": 2,
+   "start": 2.46,
+   "end": 2.62,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "but you know",
+   "lit": 3,
+   "start": 2.62,
+   "end": 2.82,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "what I did instead,",
+   "lit": 1,
+   "start": 2.82,
+   "end": 3.0,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "what I did instead,",
+   "lit": 2,
+   "start": 3.0,
+   "end": 3.15,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "what I did instead,",
+   "lit": 3,
+   "start": 3.15,
+   "end": 3.3,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "what I did instead,",
+   "lit": 4,
+   "start": 3.3,
+   "end": 3.68,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I took a nap.",
+   "lit": 1,
+   "start": 3.68,
+   "end": 4.64,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I took a nap.",
+   "lit": 2,
+   "start": 4.64,
+   "end": 4.8,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I took a nap.",
+   "lit": 3,
+   "start": 4.8,
+   "end": 4.94,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "I took a nap.",
+   "lit": 4,
+   "start": 4.94,
+   "end": 6.4,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "It was a very good nap",
+   "lit": 1,
+   "start": 6.44,
+   "end": 6.92,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "It was a very good nap",
+   "lit": 2,
+   "start": 6.92,
+   "end": 7.1,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "It was a very good nap",
+   "lit": 3,
+   "start": 7.1,
+   "end": 7.2,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "It was a very good nap",
+   "lit": 4,
+   "start": 7.2,
+   "end": 7.44,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "It was a very good nap",
+   "lit": 5,
+   "start": 7.44,
+   "end": 7.68,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "It was a very good nap",
+   "lit": 6,
+   "start": 7.68,
+   "end": 9.0,
+   "y": 440,
+   "size": 58,
+   "font": "rounded",
+   "stroke": 3
+  }
+ ],
+ "voice_gain": 0.0,
+ "music": {
+  "file": "audio/song_i_took_a_nap.m4a",
+  "offset": 0,
+  "gain": 1.0
+ }
+}
