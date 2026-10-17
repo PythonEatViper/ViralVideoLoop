@@ -19,9 +19,12 @@ W, H, FPS, DUR = 1080, 1920, 30, 10.0
 BEAT, BEAT_PHASE, SQUASH = 0.6, 0.55, 0.03   # head is highest at 0.55 + 0.6k in the reference
 T_BURST, BURST_IN, BURST_OUT = 4.55, 0.30, 0.85
 T_P3, T_P4, T_P5 = T_BURST + (BURST_OUT - BURST_IN), 7.3, 7.9
-# mouth opens only on the stressed words (boss 10-17: every syllable looked like chewing):
-# "LOT", "to-DAY", "KNOW", "DID", and the held "I---" before "took"
-ACCENTS = [(0.64, 0.92), (1.72, 2.00), (2.62, 2.90), (3.10, 3.38), (3.68, 4.40)]
+# mouth opens only on the stressed words (boss 10-17: every syllable looked like chewing).
+# Times are the vocal onsets measured in the song (300-3500 Hz spectral flux), not whisper's word
+# starts, which were up to 0.2 s off; they match where the goose's beak opens in the reference.
+# Open 1 frame before the sound, about 0.25 s each; the "I" closes at 3.94 because the voice
+# stops there (silence 4.0-4.3), it is not held.  THINGS, to-DAY, KNOW, DID, I
+ACCENTS = [(0.91, 1.16), (1.92, 2.12), (2.61, 2.86), (3.19, 3.44), (3.61, 3.94)]
 MOUTH_BOX = (250, 570, 410, 670)   # in keyframe pixels (752x1344)
 
 
