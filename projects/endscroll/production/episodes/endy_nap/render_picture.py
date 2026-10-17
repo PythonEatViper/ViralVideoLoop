@@ -19,12 +19,17 @@ W, H, FPS, DUR = 1080, 1920, 30, 10.0
 BEAT, BEAT_PHASE, SQUASH = 0.6, 0.55, 0.03   # head is highest at 0.55 + 0.6k in the reference
 T_BURST, BURST_IN, BURST_OUT = 4.55, 0.30, 0.85
 T_P3, T_P4, T_P5 = T_BURST + (BURST_OUT - BURST_IN), 7.3, 7.9
-# mouth opens only on the stressed words (boss 10-17: every syllable looked like chewing).
-# Times are the vocal onsets measured in the song (300-3500 Hz spectral flux), not whisper's word
-# starts, which were up to 0.2 s off; they match where the goose's beak opens in the reference.
-# Open 1 frame before the sound, about 0.25 s each; the "I" closes at 3.94 because the voice
-# stops there (silence 4.0-4.3), it is not held.  THINGS, to-DAY, KNOW, DID, I
-ACCENTS = [(0.91, 1.16), (1.92, 2.12), (2.61, 2.86), (3.19, 3.44), (3.61, 3.94)]
+# Every sung syllable moves the mouth (boss 10-17): stressed ones open fully, weak ones half.
+# Onsets are measured from the song (250-4000 Hz spectral flux peaks, cross-checked against
+# where the goose's beak opens in the reference); whisper's word times were up to 0.2 s off.
+# (onset, full?, hold-until or None)
+SYLLABLES = [(0.21, 0, None), (0.38, 0, None), (0.52, 0, None), (0.66, 1, None), (0.80, 0, None),
+             (0.95, 1, None), (1.23, 0, None), (1.38, 1, None), (1.49, 0, None), (1.74, 1, 2.04),
+             (2.10, 0, None), (2.36, 0, None), (2.62, 1, None), (2.94, 0, None), (3.07, 0, None),
+             (3.24, 1, None), (3.52, 0, None), (3.66, 1, 3.88), (3.91, 0, 4.05), (4.37, 1, 4.55)]
+# I had a LOT of THINGS to DO to-DAY, but you KNOW what I DID in-STEAD? I TOOK
+OPEN_FOR = {1: 0.22, 0: 0.14}   # seconds a syllable stays open unless it is held
+AV_LAG = 2 / FPS   # measured: assemble.py shows picture frame j at (j+2)/30 s, i.e. 2 frames after the audio
 MOUTH_BOX = (250, 570, 410, 670)   # in keyframe pixels (752x1344)
 
 
@@ -70,13 +75,15 @@ def burst_frames():
 
 
 def mouth(t):
-    """closed -> half (1 frame) -> open -> half (2 frames) -> closed, so the mouth never snaps."""
-    f = 1 / FPS
-    for s, e in ACCENTS:
-        if s - f <= t < s or e - 2 * f <= t < e:
-            return "half"
-        if s <= t < e - 2 * f:
-            return "open"
+    """Each syllable: half 1 frame before the onset, then open (stressed) or half (weak),
+    closing through 1 half frame; at least 1 closed frame before the next syllable."""
+    f, t = 1 / FPS, t + AV_LAG
+    for i, (on, full, hold) in enumerate(SYLLABLES):
+        end = hold or on + OPEN_FOR[full]
+        if i + 1 < len(SYLLABLES):
+            end = min(end, SYLLABLES[i + 1][0] - 2 * f)
+        if on - f <= t < end:
+            return "open" if full and on <= t < end - f else "half"
     return "closed"
 
 
