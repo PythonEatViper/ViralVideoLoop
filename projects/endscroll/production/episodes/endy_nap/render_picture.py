@@ -74,9 +74,14 @@ def burst_frames():
     return [cover(Image.fromarray(f)) for f in arr]
 
 
+LIP_SYNC = False   # boss 10-17: lip-sync never looked right; mouth stays closed, Endy just bobs to the song
+
+
 def mouth(t):
     """Each syllable: half 1 frame before the onset, then open (stressed) or half (weak),
     closing through 1 half frame; at least 1 closed frame before the next syllable."""
+    if not LIP_SYNC:
+        return "closed"
     f, t = 1 / FPS, t + AV_LAG
     for i, (on, full, hold) in enumerate(SYLLABLES):
         end = hold or on + OPEN_FOR[full]
