@@ -66,9 +66,10 @@ def burst_frames():
 
 # Boss 10-17 (final): while he is singing, the mouth just opens and closes at a steady, relaxed
 # rate (one cycle per half beat, 0.3 s), and only stops where the voice really breaks off.
-# Sung stretches measured from the song's vocal energy: one long phrase, a clear 0.2 s break
-# before "took", then "took" until the burst.
-SUNG = [(0.20, 4.10), (4.36, 4.55)]
+# Sung stretches measured from the song's vocal energy: a clear 0.2 s break before "took", then
+# "took" until the burst. The voice runs straight from "today" into "but", but the boss wanted a
+# breath at the comma (where the caption line changes): closed 1.90-2.12 (0.25 s), reopening on "but".
+SUNG = [(0.20, 2.00), (2.09, 4.10), (4.36, 4.55)]
 CYCLE = ["closed", "half", "open", "open", "open", "half", "closed", "closed", "closed"]   # 9 frames = 0.3 s
 
 
