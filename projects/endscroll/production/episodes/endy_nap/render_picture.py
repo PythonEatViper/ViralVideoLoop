@@ -1,7 +1,7 @@
 """Render the silent picture track of endy_nap (10 s, 1080x1920, 30 fps) -> shots/picture.mp4.
 
 0-4.55 s  P1: Endy (masked from P1a over the empty plate) squashes on every beat (0.6 s),
-          mouth opens on the stressed words only (mouth patch from P1b).
+          mouth opens on the stressed words only (patches from P1b open, P1h half-open).
 4.55-5.1  burst: grok clip b, 0.30-0.85 s.
 5.1-7.3   P3 in his shell.   7.3-7.9  P4 floppy over the chair.   7.9-10  P5 asleep under the blanket.
 Run from anywhere: python3 render_picture.py
@@ -41,14 +41,15 @@ def load(name):
 
 
 plate = cover(load("plate_a.png"))
-p1a, p1b = load("P1a_v2.png"), load("P1b_v1.png")
+p1a, p1b, p1h = load("P1a_v2.png"), load("P1b_v1.png"), load("P1h_v1.png")
 box_mask = Image.new("L", p1a.size, 0)
 box_mask.paste(255, MOUTH_BOX)
 box_mask = box_mask.filter(ImageFilter.GaussianBlur(8))
 p1_open = Image.composite(p1b, p1a, box_mask)
+p1_half = Image.composite(p1h, p1a, box_mask)
 mask = Image.open(K / "P1_mask.png").convert("L")
 layers = {}
-for key, im in (("closed", p1a), ("open", p1_open)):
+for key, im in (("closed", p1a), ("half", p1_half), ("open", p1_open)):
     rgba = cover(im).convert("RGBA")
     rgba.putalpha(cover(mask.convert("RGB")).convert("L"))
     layers[key] = rgba
@@ -68,13 +69,23 @@ def burst_frames():
     return [cover(Image.fromarray(f)) for f in arr]
 
 
+def mouth(t):
+    """closed -> half (1 frame) -> open -> half (2 frames) -> closed, so the mouth never snaps."""
+    f = 1 / FPS
+    for s, e in ACCENTS:
+        if s - f <= t < s or e - 2 * f <= t < e:
+            return "half"
+        if s <= t < e - 2 * f:
+            return "open"
+    return "closed"
+
+
 def p1_frame(t):
     # squash: full height at the top of each beat, shortest half a beat later
     phase = ((t - BEAT_PHASE) / BEAT) % 1.0
     k = (1 - np.cos(2 * np.pi * phase)) / 2          # 0 at the top, 1 at the bottom
     sy, sx = 1 - SQUASH * k, 1 + SQUASH * 0.5 * k
-    singing = any(s <= t < e for s, e in ACCENTS)
-    layer = layers["open" if singing else "closed"]
+    layer = layers[mouth(t)]
     lw, lh = round(W * sx), round(H * sy)
     scaled = layer.resize((lw, lh), Image.LANCZOS)
     ox = round(ANCHOR_X - ANCHOR_X * sx)
