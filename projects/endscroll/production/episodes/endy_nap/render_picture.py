@@ -19,16 +19,6 @@ W, H, FPS, DUR = 1080, 1920, 30, 10.0
 BEAT, BEAT_PHASE, SQUASH = 0.6, 0.55, 0.03   # head is highest at 0.55 + 0.6k in the reference
 T_BURST, BURST_IN, BURST_OUT = 4.55, 0.30, 0.85
 T_P3, T_P4, T_P5 = T_BURST + (BURST_OUT - BURST_IN), 7.3, 7.9
-# Every sung syllable moves the mouth (boss 10-17): stressed ones open fully, weak ones half.
-# Onsets are measured from the song (250-4000 Hz spectral flux peaks, cross-checked against
-# where the goose's beak opens in the reference); whisper's word times were up to 0.2 s off.
-# (onset, full?, hold-until or None)
-SYLLABLES = [(0.21, 0, None), (0.38, 0, None), (0.52, 0, None), (0.66, 1, None), (0.80, 0, None),
-             (0.95, 1, None), (1.23, 0, None), (1.38, 1, None), (1.49, 0, None), (1.74, 1, 2.04),
-             (2.10, 0, None), (2.36, 0, None), (2.62, 1, None), (2.94, 0, None), (3.07, 0, None),
-             (3.24, 1, None), (3.52, 0, None), (3.66, 1, 3.88), (3.91, 0, 4.05), (4.37, 1, 4.55)]
-# I had a LOT of THINGS to DO to-DAY, but you KNOW what I DID in-STEAD? I TOOK
-OPEN_FOR = {1: 0.22, 0: 0.14}   # seconds a syllable stays open unless it is held
 AV_LAG = 2 / FPS   # measured: assemble.py shows picture frame j at (j+2)/30 s, i.e. 2 frames after the audio
 MOUTH_BOX = (250, 570, 410, 670)   # in keyframe pixels (752x1344)
 
@@ -74,21 +64,19 @@ def burst_frames():
     return [cover(Image.fromarray(f)) for f in arr]
 
 
-LIP_SYNC = False   # boss 10-17: lip-sync never looked right; mouth stays closed, Endy just bobs to the song
+# Boss 10-17 (final): while he is singing, the mouth just opens and closes at a steady, relaxed
+# rate (one cycle per half beat, 0.3 s), and only stops where the voice really breaks off.
+# Sung stretches measured from the song's vocal energy: one long phrase, a clear 0.2 s break
+# before "took", then "took" until the burst.
+SUNG = [(0.20, 4.10), (4.36, 4.55)]
+CYCLE = ["closed", "half", "open", "open", "open", "half", "closed", "closed", "closed"]   # 9 frames = 0.3 s
 
 
 def mouth(t):
-    """Each syllable: half 1 frame before the onset, then open (stressed) or half (weak),
-    closing through 1 half frame; at least 1 closed frame before the next syllable."""
-    if not LIP_SYNC:
-        return "closed"
-    f, t = 1 / FPS, t + AV_LAG
-    for i, (on, full, hold) in enumerate(SYLLABLES):
-        end = hold or on + OPEN_FOR[full]
-        if i + 1 < len(SYLLABLES):
-            end = min(end, SYLLABLES[i + 1][0] - 2 * f)
-        if on - f <= t < end:
-            return "open" if full and on <= t < end - f else "half"
+    t += AV_LAG
+    for start, end in SUNG:
+        if start <= t < end:
+            return CYCLE[int(round((t - start) * FPS)) % len(CYCLE)]
     return "closed"
 
 
