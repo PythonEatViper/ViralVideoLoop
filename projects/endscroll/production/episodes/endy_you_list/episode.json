@@ -1,0 +1,35 @@
+{
+ "clips": [
+  "shots/picture.mp4"
+ ],
+ "voice_gain": 0,
+ "captions": [
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "start": 0,
+   "end": 8.47,
+   "text": "A list of things that",
+   "y": 150,
+   "size": 64
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "start": 0,
+   "end": 8.47,
+   "text": "make me happy",
+   "y": 232,
+   "size": 64
+  },
+  {
+   "font": "rounded",
+   "stroke": 2,
+   "start": 0,
+   "end": 8.47,
+   "text": "(in no particular order)",
+   "y": 322,
+   "size": 36
+  }
+ ]
+}
