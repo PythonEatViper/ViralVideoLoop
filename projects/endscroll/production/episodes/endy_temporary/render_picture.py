@@ -5,8 +5,9 @@ same times, same original audio. The picture quietly acts out the words (boss pi
 0-11.15   K1 Endy sips on the roof next to the snail, petals drift by.
 11.15     "It won't last forever": K2 the cup is empty, he looks into it.
 13.25     "And if things are going bad": the light dims and it rains; 13.6 K3 he hides in his shell.
-16.65     the rain stops; 16.85 "It can't last forever": K4 he peeks out, the snail shares its drink.
-18.15     no more words: K5 both sip; loops back to K1.
+16.45     the rain stops; 16.65 K4 he comes out, the snail shares its drink; 16.85 "It can't last
+          forever", held to 19.00 (boss: the last beat was too short; the original holds it 1.3 s).
+19.00     no more words: K5 both sip; loops back to K1.
 Run from anywhere: python3 render_picture.py
 """
 import random
@@ -23,8 +24,8 @@ AV_LAG = 2 / FPS   # engine/tools/assemble.py shows the picture 2 frames after t
 XFADE = 3          # frames of cross-fade at each cut, hides the small noise between keyframes
 
 CUTS = [(0.0, "K1_a.png"), (11.15, "K2_empty.png"), (13.60, "K3_shell.png"),
-        (16.85, "K4_share.png"), (18.15, "K5_both.png")]
-RAIN = (13.25, 16.65)   # light dims and rain falls, with RAMP s in and out
+        (16.65, "K4_share.png"), (19.00, "K5_both.png")]
+RAIN = (13.25, 16.45)   # light dims and rain falls, with RAMP s in and out (clear again by 16.85)
 RAMP = 0.4
 
 
