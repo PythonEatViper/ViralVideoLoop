@@ -1,0 +1,98 @@
+{
+ "clips": [
+  "shots/picture.mp4"
+ ],
+ "voice_gain": 0,
+ "captions": [
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "The bad news is",
+   "start": 0.15,
+   "end": 1.05,
+   "y": 330
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "everything is temporary",
+   "start": 2.45,
+   "end": 4.05,
+   "y": 330
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "Which is also",
+   "start": 4.65,
+   "end": 6.35,
+   "y": 330
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "the good news",
+   "start": 4.65,
+   "end": 6.35,
+   "y": 400
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "So if things are going",
+   "start": 7.35,
+   "end": 10.75,
+   "y": 330
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "good, enjoy it",
+   "start": 7.35,
+   "end": 10.75,
+   "y": 400
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "It won't last forever",
+   "start": 11.15,
+   "end": 12.65,
+   "y": 330
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "And if things are going",
+   "start": 13.25,
+   "end": 16.65,
+   "y": 330
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "bad, don't worry",
+   "start": 13.25,
+   "end": 16.65,
+   "y": 400
+  },
+  {
+   "font": "rounded",
+   "stroke": 3,
+   "size": 54,
+   "text": "It can't last forever",
+   "start": 16.85,
+   "end": 18.15,
+   "y": 330
+  }
+ ]
+}
