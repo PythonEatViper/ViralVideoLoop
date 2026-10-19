@@ -1,0 +1,89 @@
+{
+ "clips": [
+  "shots/picture.mp4"
+ ],
+ "voice_gain": 0,
+ "captions": [
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "坏消息是",
+   "start": 0.15,
+   "end": 1.05,
+   "y": 330
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "一切都是暂时的",
+   "start": 2.45,
+   "end": 4.05,
+   "y": 330
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "而这也是好消息",
+   "start": 4.65,
+   "end": 6.35,
+   "y": 330
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "所以如果一切顺利",
+   "start": 7.35,
+   "end": 10.75,
+   "y": 330
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "就好好享受吧",
+   "start": 7.35,
+   "end": 10.75,
+   "y": 405
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "因为好事不会一直都在",
+   "start": 11.15,
+   "end": 12.65,
+   "y": 330
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "如果一切不顺",
+   "start": 13.25,
+   "end": 16.65,
+   "y": 330
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "也别担心",
+   "start": 13.25,
+   "end": 16.65,
+   "y": 405
+  },
+  {
+   "font": "zh",
+   "stroke": 3,
+   "size": 58,
+   "text": "因为坏事也不会一直都在",
+   "start": 16.85,
+   "end": 19.0,
+   "y": 330
+  }
+ ]
+}

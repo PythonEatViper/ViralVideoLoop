@@ -24,7 +24,7 @@ A clip given as an object is cut to "start".."end" seconds (both optional); "cro
 sound, for silent clips cut to a song; "mute_after" silences the clip's own
 sound from that second on (in the clip's own time), keeping the picture. A caption may
 give "y" (pixels from the top) instead of "pos", a "color", "font": "rounded" for a softer
-rounded face instead of the heavy default, "stroke" (outline width in pixels), and "lit"
+rounded face instead of the heavy default ("zh" for Chinese text), "stroke" (outline width in pixels), and "lit"
 (karaoke: only the first N words bright, the rest faint; one caption per word). "dur" trims a sound effect. "music" starts at "offset" seconds into the track, ducks
 under dialogue and fades out at the end. The mix is normalised to -14 LUFS (TikTok's loudness).
 Output: <episode>/final.mp4
@@ -40,7 +40,8 @@ from PIL import Image, ImageDraw, ImageFont
 REPO = Path(__file__).resolve().parents[2]
 W, H, FPS = 1080, 1920, 30
 FONT = "/System/Library/Fonts/Supplemental/Arial Black.ttf"
-FONTS = {"rounded": "/System/Library/Fonts/Supplemental/Arial Rounded Bold.ttf"}
+FONTS = {"rounded": "/System/Library/Fonts/Supplemental/Arial Rounded Bold.ttf",
+         "zh": "/System/Library/Fonts/STHeiti Medium.ttc"}   # Chinese captions
 # TikTok's UI covers the bottom ~420px and the right ~150px; keep text clear of both.
 TEXT_MAX_WIDTH = 860
 POS_Y = {"top": 300, "center": 820, "bottom": 1250}

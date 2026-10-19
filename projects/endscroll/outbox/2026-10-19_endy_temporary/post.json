@@ -1,0 +1,28 @@
+{
+  "id": "2026-10-19_endy_temporary",
+  "format": "video",
+  "platforms": [
+    "instagram",
+    "reels"
+  ],
+  "status": "hold",
+  "video": "video_en_silent.mp4",
+  "versions": {
+    "video_en_silent.mp4": "English captions, no sound: post this and attach the original audio",
+    "video_en_sound.mp4": "English captions with the original audio mixed in: only if the platform audio cannot be attached",
+    "video_zh_silent.mp4": "Chinese captions, no sound",
+    "video_zh_sound.mp4": "Chinese captions with the original audio mixed in"
+  },
+  "cover": "cover.jpg",
+  "cover_time_seconds": 0.2,
+  "caption_file": "caption.txt",
+  "caption_zh_file": "caption_zh.txt",
+  "pinned_comment_file": "pinned_comment.txt",
+  "ai_generated_label": true,
+  "add_music": "Instagram: open @sadgoose42's reel https://www.instagram.com/reel/Db3HwpNslGs/, tap Original audio · sadgoose42, Use audio, start at 0:00",
+  "privacy": "public",
+  "allow_comments": true,
+  "duration_seconds": 20.0,
+  "resolution": "1080x1920",
+  "ready_note": "Boss approved the final cut 2026-10-19 ~23:05 Beijing. HOLD for bots: the boss posts from the phone with video_en_silent.mp4 and the original audio from 0:00. Sellers: do not publish; take metric snapshots once the boss reports the URLs."
+}
