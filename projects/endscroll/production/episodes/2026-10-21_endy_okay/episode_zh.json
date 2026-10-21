@@ -1,0 +1,71 @@
+{
+ "clips": [
+  "shots/picture.mp4"
+ ],
+ "voice_gain": 0,
+ "captions": [
+  {
+   "text": "别弄丢了自己，好吗？",
+   "start": 0.0,
+   "end": 2.2,
+   "y": 420,
+   "size": 60,
+   "font": "zh",
+   "stroke": 3
+  },
+  {
+   "text": "很难，我知道。",
+   "start": 2.3,
+   "end": 3.9,
+   "y": 420,
+   "size": 60,
+   "font": "zh",
+   "stroke": 3
+  },
+  {
+   "text": "但你会没事的。",
+   "start": 3.98,
+   "end": 5.9,
+   "y": 420,
+   "size": 60,
+   "font": "zh",
+   "stroke": 3
+  },
+  {
+   "text": "别让自己",
+   "start": 6.04,
+   "end": 8.0,
+   "y": 420,
+   "size": 60,
+   "font": "zh",
+   "stroke": 3
+  },
+  {
+   "text": "被这些压力吞没。",
+   "start": 8.12,
+   "end": 10.3,
+   "y": 420,
+   "size": 60,
+   "font": "zh",
+   "stroke": 3
+  },
+  {
+   "text": "你很好。你就是你。",
+   "start": 10.44,
+   "end": 13.0,
+   "y": 420,
+   "size": 60,
+   "font": "zh",
+   "stroke": 3
+  },
+  {
+   "text": "你一定会好好的。",
+   "start": 13.1,
+   "end": 14.74,
+   "y": 420,
+   "size": 60,
+   "font": "zh",
+   "stroke": 3
+  }
+ ]
+}
