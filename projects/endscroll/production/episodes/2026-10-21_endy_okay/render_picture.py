@@ -20,6 +20,11 @@ K = HERE / "keyframes"
 W, H, FPS, DUR = 1080, 1920, 30, 14.74
 AV_LAG = 2 / FPS   # engine/tools/assemble.py shows the picture 2 frames after the audio
 T_CLIP = 10.0
+# The opening clip drifts: by its last frame the picture sits 1.25% smaller and 26 px to the left of
+# where the wave clip (and K1) starts, which jumped at 10 s (boss). Undo the drift gradually over the
+# opening, and zoom everything in 6% so the corrected edges never show (3% left a black strip).
+DRIFT_SCALE, DRIFT_X = 0.9875, 26
+ZOOM = 1.06
 
 
 def cover(im):
@@ -41,6 +46,14 @@ def clip_frames(name):
     return [cover(Image.fromarray(f)) for f in np.frombuffer(raw, np.uint8).reshape(-1, h, w, 3)]
 
 
+def warp(im, f):
+    """f = how much of the opening's drift to undo (0 at its first frame, 1 at its last)."""
+    sx = 1 + (DRIFT_SCALE - 1) * f
+    a = sx / ZOOM
+    coeffs = (a, 0, sx * (W / 2 - W / 2 / ZOOM) - DRIFT_X * f, 0, a, sx * (H / 2 - H / 2 / ZOOM))
+    return im.transform((W, H), Image.AFFINE, coeffs, resample=Image.BICUBIC)
+
+
 def main():
     opening, wave = clip_frames("opening_seedance.mp4"), clip_frames("wave_seedance.mp4")
     out = HERE / "shots/picture.mp4"
@@ -51,9 +64,10 @@ def main():
     for i in range(round(DUR * FPS)):
         t = i / FPS + AV_LAG
         if t < T_CLIP:
-            im = opening[min(int(t * FPS), len(opening) - 1)]
+            k = min(int(t * FPS), len(opening) - 1)
+            im = warp(opening[k], k / (len(opening) - 1))
         else:
-            im = wave[min(int((t - T_CLIP) * FPS), len(wave) - 1)]
+            im = warp(wave[min(int((t - T_CLIP) * FPS), len(wave) - 1)], 0)
         ff.stdin.write(im.tobytes())
     ff.stdin.close()
     ff.wait()
