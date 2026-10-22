@@ -1,0 +1,11 @@
+{
+  "clips": ["shots/01_sweet.mp4", "shots/02_night.mp4"],
+  "captions": [
+    {"text": "Fact: sleeping next to the love\nof your life reduces stress", "start": 0, "end": 4.0, "y": 200, "size": 54, "font": "rounded", "stroke": 5},
+    {"text": "2 AM", "start": 4.0, "end": 9.1, "y": 200, "size": 72, "font": "rounded", "stroke": 5}
+  ],
+  "voice_gain": 1.0,
+  "sfx": [
+    {"file": "assets/music/beautiful_dream.mp3", "start": 0, "gain": 0.55, "dur": 4.0}
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "clips": [
+    {
+      "file": "shots/takes/old_v1.mp4",
+      "end": 3.0
+    },
+    "shots/seg1_knock.mp4",
+    {
+      "file": "shots/takes/rise_c.mp4",
+      "start": 0.04
+    }
+  ],
+  "captions": [
+    {
+      "text": "what is that sound?",
+      "start": 0,
+      "end": 2.6,
+      "y": 215,
+      "size": 74,
+      "font": "rounded",
+      "stroke": 5
+    }
+  ],
+  "voice_gain": 1.0,
+  "music": {
+    "file": "assets/music/secret_garden.mp3",
+    "offset": 0,
+    "gain": 0.25
+  },
+  "sfx": [
+    {
+      "file": "audio/phone_laugh.mp3",
+      "start": 4.8,
+      "gain": 0.4,
+      "dur": 4.15
+    },
+    {
+      "file": "audio/knock1.wav",
+      "start": 8.95,
+      "gain": 0.9
+    },
+    {
+      "file": "audio/knock1.wav",
+      "start": 9.24,
+      "gain": 0.9
+    },
+    {
+      "file": "audio/knock1.wav",
+      "start": 9.62,
+      "gain": 0.9
+    },
+    {
+      "file": "audio/phone_laugh.mp3",
+      "start": 12.6,
+      "gain": 1.0,
+      "dur": 2.0
+    }
+  ]
+}

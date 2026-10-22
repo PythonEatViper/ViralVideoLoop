@@ -130,5 +130,16 @@
   "license": "Mixkit Stock Music Free License (commercial use, no attribution)",
   "source": "https://mixkit.co/free-stock-music/tag/sad/",
   "checked_by_human": false
+ },
+ {
+  "file": "assets/music/satie_gymnopedie1.mp3",
+  "title": "Satie — Gymnopédie No. 1 (Robin Alciatore)",
+  "mood": "soft",
+  "mixkit_tag": null,
+  "duration_s": null,
+  "bpm": null,
+  "license": "Public domain (composition and recording), Wikimedia Commons",
+  "source": "https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg",
+  "checked_by_human": false
  }
 ]

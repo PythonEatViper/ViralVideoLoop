@@ -27,6 +27,11 @@ SIGNALS = {
 }
 MIN_VIEWS = 100       # below this, rates are noise
 MIN_COVERAGE = 0.4    # share of the total weight that must have data
+# Lowered 2026-10-18 for Instagram: its insights never show retention, so only the five
+# interaction signals (35% of the weight) exist and no IG snapshot was ever judged. On EndScroll
+# those five alone separated the breakout (goose_keep_going 6h: 68, 274 -> 58K views) from the
+# flop (turtles_shell 6h: 20, stopped at 1.5K).
+MIN_COVERAGE_BY_PLATFORM = {"instagram": 0.35}
 
 
 def values(metric, duration_s):
@@ -82,7 +87,8 @@ def forecast(metric, duration_s):
     """Score one measured snapshot. Returns the record fields of a `forecast`."""
     total, coverage, signals = score(values(metric, duration_s))
     views = metric.get("views") or 0
-    enough = views >= MIN_VIEWS and coverage >= MIN_COVERAGE
+    min_coverage = MIN_COVERAGE_BY_PLATFORM.get(metric["platform"], MIN_COVERAGE)
+    enough = views >= MIN_VIEWS and coverage >= min_coverage
     worst = sorted((s for s in signals if s["level"] == "weak"), key=lambda s: -s["weight"])
     return {"post_id": metric["post_id"], "platform": metric["platform"],
             "age_hours": metric["age_hours"], "views": views, "score": total if enough else None,

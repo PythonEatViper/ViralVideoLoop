@@ -1,0 +1,714 @@
+{
+ "clips": [
+  {
+   "file": "shots/takes/s1_bike_a.mp4",
+   "start": 3.65,
+   "end": 7.109
+  },
+  {
+   "file": "shots/takes/s2_autumn_a.mp4",
+   "start": 0.3,
+   "end": 3.759
+  },
+  {
+   "file": "shots/takes/s3_fireflies_a.mp4",
+   "start": 0.561,
+   "end": 4.02
+  },
+  {
+   "file": "shots/takes/s4_scooter_a.mp4",
+   "start": 0.5,
+   "end": 3.959
+  },
+  {
+   "file": "shots/takes/s5_balcony_a.mp4",
+   "start": 3.581,
+   "end": 5.56,
+   "crop": [
+    0.2,
+    0.2,
+    0.6,
+    0.6
+   ]
+  },
+  {
+   "file": "shots/takes/s5_balcony_a.mp4",
+   "start": 5.56,
+   "end": 7.04
+  },
+  {
+   "file": "shots/takes/s6_parachute_a.mp4",
+   "start": 0.3,
+   "end": 3.759
+  },
+  {
+   "file": "shots/takes/s7_library_a.mp4",
+   "start": 0.5,
+   "end": 3.959
+  },
+  {
+   "file": "shots/takes/s1_bike_a.mp4",
+   "start": 0.191,
+   "end": 3.65
+  }
+ ],
+ "captions": [
+  {
+   "text": "You know,",
+   "lit": 1,
+   "start": 0.0,
+   "end": 0.74,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "You know,",
+   "lit": 2,
+   "start": 0.74,
+   "end": 0.84,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 1,
+   "start": 0.86,
+   "end": 1.56,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 2,
+   "start": 1.56,
+   "end": 1.84,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going",
+   "lit": 1,
+   "start": 1.86,
+   "end": 3.16,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going",
+   "lit": 2,
+   "start": 3.16,
+   "end": 3.48,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 1,
+   "start": 3.5,
+   "end": 3.9,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 2,
+   "start": 3.9,
+   "end": 4.26,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 3,
+   "start": 4.26,
+   "end": 4.5,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 4,
+   "start": 4.5,
+   "end": 4.68,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 5,
+   "start": 4.68,
+   "end": 4.8,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 6,
+   "start": 4.8,
+   "end": 5.12,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 7,
+   "start": 5.12,
+   "end": 5.34,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "lit": 8,
+   "start": 5.34,
+   "end": 5.6,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 1,
+   "start": 5.62,
+   "end": 7.06,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 2,
+   "start": 7.06,
+   "end": 7.32,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because your dreams are waiting",
+   "lit": 1,
+   "start": 7.34,
+   "end": 7.66,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because your dreams are waiting",
+   "lit": 2,
+   "start": 7.66,
+   "end": 7.84,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because your dreams are waiting",
+   "lit": 3,
+   "start": 7.84,
+   "end": 8.14,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because your dreams are waiting",
+   "lit": 4,
+   "start": 8.14,
+   "end": 8.32,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because your dreams are waiting",
+   "lit": 5,
+   "start": 8.32,
+   "end": 8.56,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's a brand new day",
+   "lit": 1,
+   "start": 8.58,
+   "end": 10.24,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's a brand new day",
+   "lit": 2,
+   "start": 10.24,
+   "end": 10.84,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's a brand new day",
+   "lit": 3,
+   "start": 10.84,
+   "end": 10.92,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's a brand new day",
+   "lit": 4,
+   "start": 10.92,
+   "end": 11.14,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's a brand new day",
+   "lit": 5,
+   "start": 11.14,
+   "end": 11.46,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's a brand new day",
+   "lit": 6,
+   "start": 11.46,
+   "end": 11.76,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 1,
+   "start": 11.78,
+   "end": 13.2,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 2,
+   "start": 13.2,
+   "end": 13.5,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because of cold coffee,",
+   "lit": 1,
+   "start": 13.52,
+   "end": 13.82,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because of cold coffee,",
+   "lit": 2,
+   "start": 13.82,
+   "end": 14.0,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because of cold coffee,",
+   "lit": 3,
+   "start": 14.0,
+   "end": 14.3,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because of cold coffee,",
+   "lit": 4,
+   "start": 14.3,
+   "end": 14.74,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "the smell of flowers",
+   "lit": 1,
+   "start": 14.76,
+   "end": 15.04,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "the smell of flowers",
+   "lit": 2,
+   "start": 15.04,
+   "end": 15.3,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "the smell of flowers",
+   "lit": 3,
+   "start": 15.3,
+   "end": 15.48,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "the smell of flowers",
+   "lit": 4,
+   "start": 15.48,
+   "end": 15.86,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and the bright blue sky",
+   "lit": 1,
+   "start": 15.88,
+   "end": 16.22,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and the bright blue sky",
+   "lit": 2,
+   "start": 16.22,
+   "end": 16.34,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and the bright blue sky",
+   "lit": 3,
+   "start": 16.34,
+   "end": 16.58,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and the bright blue sky",
+   "lit": 4,
+   "start": 16.58,
+   "end": 16.86,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and the bright blue sky",
+   "lit": 5,
+   "start": 16.86,
+   "end": 17.18,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 1,
+   "start": 17.2,
+   "end": 18.84,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 2,
+   "start": 18.84,
+   "end": 19.12,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "lit": 1,
+   "start": 19.14,
+   "end": 19.46,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "lit": 2,
+   "start": 19.46,
+   "end": 19.76,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "lit": 3,
+   "start": 19.76,
+   "end": 20.0,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "lit": 4,
+   "start": 20.0,
+   "end": 20.26,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "lit": 5,
+   "start": 20.26,
+   "end": 20.4,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "lit": 6,
+   "start": 20.4,
+   "end": 20.74,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "lit": 7,
+   "start": 20.74,
+   "end": 21.28,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 1,
+   "start": 21.3,
+   "end": 22.56,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 2,
+   "start": 22.56,
+   "end": 22.72,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 3,
+   "start": 22.72,
+   "end": 22.92,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 4,
+   "start": 22.92,
+   "end": 23.12,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 5,
+   "start": 23.12,
+   "end": 23.22,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 6,
+   "start": 23.22,
+   "end": 23.4,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 7,
+   "start": 23.4,
+   "end": 23.54,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "lit": 8,
+   "start": 23.54,
+   "end": 23.76,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 1,
+   "start": 23.78,
+   "end": 25.0,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going,",
+   "lit": 2,
+   "start": 25.0,
+   "end": 25.36,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's worth it",
+   "lit": 1,
+   "start": 25.38,
+   "end": 25.82,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's worth it",
+   "lit": 2,
+   "start": 25.82,
+   "end": 26.68,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's worth it",
+   "lit": 3,
+   "start": 26.68,
+   "end": 26.88,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's worth it",
+   "lit": 4,
+   "start": 26.88,
+   "end": 27.6,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  }
+ ],
+ "voice_gain": 0.0,
+ "music": {
+  "file": "audio/0_original_goose.mp3",
+  "offset": 0,
+  "gain": 1.0
+ },
+ "sfx": []
+}

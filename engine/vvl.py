@@ -587,6 +587,8 @@ def cmd_predict(args, pdir, cfg):
     latest = {(m["post_id"], m["platform"]): m for m in
               sorted(load(pdir, "metric"), key=lambda m: m["age_hours"])}
     for f in rows:
+        if (f["post_id"], f["platform"]) not in latest:
+            continue  # forecast left over from a test run, no metric behind it
         now_views = latest[(f["post_id"], f["platform"])]["views"]
         weak = ", ".join(s["label"] for s in f.get("signals", []) if s["level"] == "weak")
         score = "--" if f.get("score") is None else f"{f['score']:.0f}"

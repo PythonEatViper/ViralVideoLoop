@@ -1,0 +1,199 @@
+{
+ "clips": [
+  {
+   "file": "shots/takes/s1_bike_a.mp4",
+   "start": 3.65,
+   "end": 7.18
+  },
+  {
+   "file": "shots/takes/s2_autumn_a.mp4",
+   "start": 0.3,
+   "end": 2.97
+  },
+  {
+   "file": "shots/takes/s3_fireflies_a.mp4",
+   "start": 2.3,
+   "end": 4.02
+  },
+  {
+   "file": "shots/takes/s4_scooter_a.mp4",
+   "start": 0.5,
+   "end": 3.32
+  },
+  {
+   "file": "shots/takes/s6_parachute_a.mp4",
+   "start": 0.3,
+   "end": 3.98
+  },
+  {
+   "file": "shots/takes/s7_library_a.mp4",
+   "start": 0.5,
+   "end": 3.28
+  },
+  {
+   "file": "shots/takes/s5_balcony_a.mp4",
+   "start": 0.2,
+   "end": 3.46
+  },
+  {
+   "file": "shots/takes/s5_balcony_a.mp4",
+   "start": 3.46,
+   "end": 7.02,
+   "crop": [
+    0.2,
+    0.2,
+    0.6,
+    0.6
+   ]
+  },
+  {
+   "file": "shots/takes/s1_bike_a.mp4",
+   "start": 0.0,
+   "end": 3.65
+  }
+ ],
+ "captions": [
+  {
+   "text": "keep going",
+   "start": 0.8,
+   "end": 1.84,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going",
+   "start": 1.86,
+   "end": 3.45,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because you still have\na story to write",
+   "start": 3.5,
+   "end": 5.6,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going",
+   "start": 5.62,
+   "end": 7.3,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because your dreams are waiting",
+   "start": 7.34,
+   "end": 8.56,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's a brand new day",
+   "start": 8.58,
+   "end": 11.75,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going",
+   "start": 11.78,
+   "end": 13.5,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because of cold coffee,",
+   "start": 13.52,
+   "end": 14.74,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "the smell of flowers",
+   "start": 14.76,
+   "end": 15.86,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and the bright blue sky",
+   "start": 15.88,
+   "end": 17.18,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going",
+   "start": 17.2,
+   "end": 19.1,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because life can show you\namazing things",
+   "start": 19.14,
+   "end": 21.28,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "and you can do a lot of good",
+   "start": 21.3,
+   "end": 23.76,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "keep going",
+   "start": 23.78,
+   "end": 25.35,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  },
+  {
+   "text": "because it's worth it",
+   "start": 25.38,
+   "end": 27.6,
+   "y": 360,
+   "size": 54,
+   "font": "rounded",
+   "stroke": 3
+  }
+ ],
+ "voice_gain": 0.0,
+ "music": {
+  "file": "audio/0_original_goose.mp3",
+  "offset": 0,
+  "gain": 1.0
+ },
+ "sfx": []
+}
